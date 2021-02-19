@@ -43,6 +43,10 @@ public class User implements Serializable {
         this.email = email;
         this.enabled = enabled;
     }
+    
+    public User(){
+        
+    }
 
     
     
