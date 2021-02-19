@@ -5,14 +5,21 @@
  */
 package com.comunidad.ad2.comunidad.entity;
 
+import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
+import com.comunidad.ad2.comunidad.service.enums.GeneroUsuario;
+import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.hibernate.annotations.Type;
 
 /**
  *
@@ -24,71 +31,148 @@ public class User implements Serializable {
     
     //private static final long serialVersioinUID = -9069060843698080433L;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(length = 50)
-    private String name;
-    private String surname;
-    
-    @Column(name="mail",nullable=false,length = 50,unique = true)
-    private String email;
-    private Boolean enabled;
+     @Id
+    @Column(name = "registro_academico", length = 9)
+    private String registroAcademico;
 
-    public User(Long id, String name, String surname, String email, Boolean enabled) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.enabled = enabled;
+    @Column(name = "nombre_completo", length = 200, nullable = false)
+    private String nombreCompleto;
+
+    @Column(name = "password", length = 200, nullable = false)
+    private String password;
+
+    @Column(name = "fecha_de_nacimiento", nullable = false)
+    private Timestamp fechaDeNacimiento;
+
+    @Column(name = "genero", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private GeneroUsuario genero;
+
+    @Column(name = "foto_de_perfil", nullable = false)
+    @Type(type = "text")
+    private String fotoDePerfil;
+
+    @Column(name = "correo_electronico", length = 45, nullable = false)
+    private String correoElectronico;
+
+    @Column(name = "rol", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private RolUsuario rolUsuario;
+
+    @Column(name = "ciudad", length = 45, nullable = false)
+    private String ciudad;
+
+    @Column(name = "estado", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private EstadoUsuario estado;
+    
+    
+
+    public User(String registroAcademico, String nombreCompleto, String password, Timestamp fechaDeNacimiento, GeneroUsuario genero, String fotoDePerfil, String correoElectronico, RolUsuario rolUsuario, String ciudad, EstadoUsuario estado) {
+        this.registroAcademico = registroAcademico;
+        this.nombreCompleto = nombreCompleto;
+        this.password = password;
+        this.fechaDeNacimiento = fechaDeNacimiento;
+        this.genero = genero;
+        this.fotoDePerfil = fotoDePerfil;
+        this.correoElectronico = correoElectronico;
+        this.rolUsuario = rolUsuario;
+        this.ciudad = ciudad;
+        this.estado = estado;
+        
     }
+
+     
     
     public User(){
         
     }
 
+    public String getRegistroAcademico() {
+        return registroAcademico;
+    }
+
+    public void setRegistroAcademico(String registroAcademico) {
+        this.registroAcademico = registroAcademico;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Timestamp getFechaDeNacimiento() {
+        return fechaDeNacimiento;
+    }
+
+    public void setFechaDeNacimiento(Timestamp fechaDeNacimiento) {
+        this.fechaDeNacimiento = fechaDeNacimiento;
+    }
+
+    public GeneroUsuario getGenero() {
+        return genero;
+    }
+
+    public void setGenero(GeneroUsuario genero) {
+        this.genero = genero;
+    }
+
+    public String getFotoDePerfil() {
+        return fotoDePerfil;
+    }
+
+    public void setFotoDePerfil(String fotoDePerfil) {
+        this.fotoDePerfil = fotoDePerfil;
+    }
+
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }
+
+    public RolUsuario getRolUsuario() {
+        return rolUsuario;
+    }
+
+    public void setRolUsuario(RolUsuario rolUsuario) {
+        this.rolUsuario = rolUsuario;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public EstadoUsuario getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoUsuario estado) {
+        this.estado = estado;
+    }
+
     
     
-    public Long getId() {
-        return id;
-    }
+   
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
+    
     
     
     

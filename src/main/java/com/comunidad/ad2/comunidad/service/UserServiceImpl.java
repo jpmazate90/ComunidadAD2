@@ -38,8 +38,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public Optional<User> findById(String registroAcademico) {
+        return userRepository.findById(registroAcademico);
     }
 
     @Override
@@ -48,10 +48,15 @@ public class UserServiceImpl implements UserService{
         return userRepository.save(user);
     }
 
+//    @Override
+//    @Transactional
+//    public void deleteById(Long id) {
+//        userRepository.deleteById(id);
+//    }
+
     @Override
-    @Transactional
     public void deleteById(Long id) {
-        userRepository.deleteById(id);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

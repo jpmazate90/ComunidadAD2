@@ -20,7 +20,7 @@ public interface UserService {
     
     public Page<User> findAll(Pageable pageable);
     
-    public Optional<User> findById(Long id);
+    public Optional<User> findById(String registroAcademico);
     
     public User save(User user);
     

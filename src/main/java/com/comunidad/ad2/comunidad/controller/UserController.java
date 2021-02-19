@@ -40,7 +40,7 @@ public class UserController {
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<?> read(@PathVariable(value = "id") Long userId){
+    public ResponseEntity<?> read(@PathVariable(value = "id") String userId){
         Optional<User> oUser = userService.findById(userId);
         if(!oUser.isPresent()){
             return ResponseEntity.notFound().build();
