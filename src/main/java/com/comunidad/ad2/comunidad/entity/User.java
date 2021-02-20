@@ -32,27 +32,27 @@ public class User implements Serializable {
     //private static final long serialVersioinUID = -9069060843698080433L;
     
      @Id
-    @Column(name = "registro_academico", length = 9)
+    @Column(name = "registroAcademico", length = 9)
     private String registroAcademico;
 
-    @Column(name = "nombre_completo", length = 200, nullable = false)
+    @Column(name = "nombreCompleto", length = 200, nullable = false)
     private String nombreCompleto;
 
     @Column(name = "password", length = 200, nullable = false)
     private String password;
 
-    @Column(name = "fecha_de_nacimiento", nullable = false)
+    @Column(name = "fechaDeNacimiento", nullable = false)
     private Timestamp fechaDeNacimiento;
 
     @Column(name = "genero", nullable = false)
     @Enumerated(EnumType.STRING)
     private GeneroUsuario genero;
 
-    @Column(name = "foto_de_perfil", nullable = false)
+    @Column(name = "fotoDePerfil", nullable = false)
     @Type(type = "text")
     private String fotoDePerfil;
 
-    @Column(name = "correo_electronico", length = 45, nullable = false)
+    @Column(name = "correoElectronico", length = 45, nullable = false)
     private String correoElectronico;
 
     @Column(name = "rol", nullable = false)
@@ -65,6 +65,9 @@ public class User implements Serializable {
     @Column(name = "estado", nullable = false)
     @Enumerated(EnumType.STRING)
     private EstadoUsuario estado;
+    
+    @Column(name = "token",length = 255, nullable = true)
+    private String token;
     
     
 
