@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author jpmazate
  */
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin()
 @RestController 
 @RequestMapping("/api/users")
 public class UserController {
@@ -39,6 +39,13 @@ public class UserController {
     public ResponseEntity<?> create (@RequestBody User user){
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
+    
+    @PostMapping("/authentication")
+    public ResponseEntity<?> authentication(@RequestBody User user){
+        return ResponseEntity.ok("{mesage:TA BIEN}");
+        
+    }
+    
     
     @GetMapping("/{id}")
     public ResponseEntity<?> read(@PathVariable(value = "id") String userId){
