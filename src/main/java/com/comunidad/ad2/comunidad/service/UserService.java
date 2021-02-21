@@ -26,4 +26,6 @@ public interface UserService {
     
     public void deleteById(Long id);
     
+    public User userAuthentication(String registroAcademico,String password);
+    
 }

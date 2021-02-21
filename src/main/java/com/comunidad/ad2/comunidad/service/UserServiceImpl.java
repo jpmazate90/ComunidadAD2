@@ -58,6 +58,11 @@ public class UserServiceImpl implements UserService{
     public void deleteById(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public User userAuthentication(String registroAcademico,String password) {
+        return userRepository.userAuthentication(registroAcademico,password);
+    }
     
     
 }
