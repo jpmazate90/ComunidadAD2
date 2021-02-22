@@ -52,7 +52,7 @@ public class User implements Serializable {
     @Type(type = "text")
     private String fotoDePerfil;
 
-    @Column(name = "correoElectronico", length = 45, nullable = false)
+    @Column(name = "correoElectronico", length = 255, nullable = false)
     private String correoElectronico;
 
     @Column(name = "rol", nullable = false)
