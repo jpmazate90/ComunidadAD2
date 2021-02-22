@@ -5,6 +5,7 @@
  */
 package com.comunidad.ad2.comunidad.controller;
 
+import com.comunidad.ad2.comunidad.encriptacion.Hash;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.service.UserService;
 import java.util.Optional;
@@ -45,9 +46,11 @@ public class UserController {
         //Este user trae el registroAcademico y la contrasenia
         System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
         System.out.println("user"+user.getRegistroAcademico());
-        System.out.println("userP:"+user.getPassword());
+        System.out.println("userP:"+Hash.md5(user.getPassword()));
+
         System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.userAuthentication(user.getRegistroAcademico(),user.getPassword()));
+         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.userAuthentication(user.getRegistroAcademico(),Hash.md5(user.getPassword())));
+
     }
 
     @GetMapping("/{id}")
