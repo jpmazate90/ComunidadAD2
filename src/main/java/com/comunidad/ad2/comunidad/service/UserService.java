@@ -6,6 +6,7 @@
 package com.comunidad.ad2.comunidad.service;
 
 import com.comunidad.ad2.comunidad.entity.User;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,5 +26,7 @@ public interface UserService {
     public User save(User user);
     
     public void deleteById(Long id);
+    
+    public int adminCreation(String registroAcademico);
     
 }
