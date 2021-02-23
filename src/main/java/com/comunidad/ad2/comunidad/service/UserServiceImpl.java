@@ -5,9 +5,13 @@
  */
 package com.comunidad.ad2.comunidad.service;
 
+import com.comunidad.ad2.comunidad.encriptacion.Hash;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.UserRepository;
 import java.util.List;
+import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
+import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
+import java.sql.Timestamp;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,15 +25,22 @@ import org.springframework.transaction.annotation.Transactional;
  * @author jpmazate
  */
 @Service
-public class UserServiceImpl implements UserService{
-    
-    @Autowired
+public class UserServiceImpl implements UserService {
+
+    private final int SEIS_HORAS = 21600000;
+
     private UserRepository userRepository;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Override
     public Iterable<User> findAll() {
-        
+
         return userRepository.findAll();
-        
+
     }
 
     @Override
@@ -47,7 +58,10 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public User save(User user) {
-        return userRepository.save(user);
+        user.setFechaDeNacimiento(formatearFecha(user));
+        user.setPassword(hashearContrasena(user)); // mock
+        asignarEstado(user); // ver super o comunidad
+        return userRepository.save(user); // mock
     }
 
 //    @Override
@@ -55,7 +69,6 @@ public class UserServiceImpl implements UserService{
 //    public void deleteById(Long id) {
 //        userRepository.deleteById(id);
 //    }
-
     @Override
     public void deleteById(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -66,6 +79,30 @@ public class UserServiceImpl implements UserService{
     public int adminCreation(String registroAcademico) {
         return userRepository.adminCreation(registroAcademico); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
+    @Override
+    public User userAuthentication(String registroAcademico, String password) {
+        return userRepository.userAuthentication(registroAcademico, Hash.md5(password));
+    }
+
+    public Timestamp formatearFecha(User user) {
+        Timestamp time = new Timestamp(user.getFechaDeNacimiento().getTime() + SEIS_HORAS);
+        return time;
+    }
+
+    @Override
+    public String hashearContrasena(User user) {
+        String contrasena = Hash.md5(user.getPassword());
+        return contrasena;
+
+    }
+
+    @Override
+    public void asignarEstado(User user) {
+        if (user.getRolUsuario() == RolUsuario.COMUNIDAD) {
+            user.setEstado(EstadoUsuario.EN_ESPERA);
+        } else if (user.getRolUsuario() == RolUsuario.SUPER) {
+            user.setEstado(EstadoUsuario.EN_ESPERA);
+        }
+    }
 }
