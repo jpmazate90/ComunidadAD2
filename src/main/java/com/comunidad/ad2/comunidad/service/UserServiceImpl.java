@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User save(User user) {
-        //user.setFechaDeNacimiento(formatearFecha(user));
+        user.setFechaDeNacimiento(formatearFecha(user));
         user.setPassword(hashearContrasena(user)); // mock
         asignarEstado(user); // ver super o comunidad
         return userRepository.save(user); // mock
