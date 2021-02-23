@@ -55,6 +55,15 @@ public class UserController {
 
     }
 
+    @PostMapping("/adminCreation")
+    public ResponseEntity<?> adminCreation(@RequestBody User user) {//Recibe un user, donde se incluira el registro academico y el usuario
+        //Este user trae el registroAcademico y el estado
+        System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
+        System.out.println("user" + user.getRegistroAcademico());
+        System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.adminCreation(user.getRegistroAcademico()));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> read(@PathVariable(value = "id") String userId) {
         Optional<User> oUser = userService.findById(userId);
@@ -62,6 +71,11 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(oUser);
+    }
+
+    @GetMapping("/accounts")
+    public Iterable<?> all() {
+        return userService.findAll();
     }
 
     public UserController(@Autowired UserService userService) {

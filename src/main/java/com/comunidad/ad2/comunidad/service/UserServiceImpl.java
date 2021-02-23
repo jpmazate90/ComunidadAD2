@@ -8,6 +8,7 @@ package com.comunidad.ad2.comunidad.service;
 import com.comunidad.ad2.comunidad.encriptacion.Hash;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.UserRepository;
+import java.util.List;
 import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
 import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
 import java.sql.Timestamp;
@@ -15,6 +16,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,6 +73,12 @@ public class UserServiceImpl implements UserService {
     public void deleteById(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    @Modifying
+    public int adminCreation(String registroAcademico) {
+        return userRepository.adminCreation(registroAcademico); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public User userAuthentication(String registroAcademico, String password) {
@@ -97,5 +105,4 @@ public class UserServiceImpl implements UserService {
             user.setEstado(EstadoUsuario.EN_ESPERA);
         }
     }
-
 }

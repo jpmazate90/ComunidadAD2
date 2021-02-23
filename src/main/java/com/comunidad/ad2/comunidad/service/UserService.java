@@ -6,6 +6,7 @@
 package com.comunidad.ad2.comunidad.service;
 
 import com.comunidad.ad2.comunidad.entity.User;
+import java.util.List;
 import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
 import java.sql.Timestamp;
 import java.util.Optional;
@@ -28,6 +29,8 @@ public interface UserService {
     
     public void deleteById(Long id);
     
+    public int adminCreation(String registroAcademico);
+
     public User userAuthentication(String registroAcademico,String password);
 
     public Timestamp formatearFecha(User user);
@@ -35,6 +38,5 @@ public interface UserService {
     public String hashearContrasena(User user);
     
     public void asignarEstado(User user);
-
     
 }
