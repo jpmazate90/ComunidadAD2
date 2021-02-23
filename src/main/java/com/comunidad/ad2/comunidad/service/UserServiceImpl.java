@@ -27,9 +27,14 @@ public class UserServiceImpl implements UserService {
 
     private final int SEIS_HORAS = 21600000;
 
-    @Autowired
+    
     private UserRepository userRepository;
 
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
+    
     @Override
     public Iterable<User> findAll() {
 
@@ -52,10 +57,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User save(User user) {
-        user.setFechaDeNacimiento(formatearFecha(user));
-        user.setPassword(hashearContrasena(user));
-        asignarEstado(user);
-        return userRepository.save(user);
+        //user.setFechaDeNacimiento(formatearFecha(user));
+        user.setPassword(hashearContrasena(user)); // mock
+        asignarEstado(user); // ver super o comunidad
+        return userRepository.save(user); // mock
     }
 
 //    @Override
