@@ -27,14 +27,13 @@ public class UserServiceImpl implements UserService {
 
     private final int SEIS_HORAS = 21600000;
 
-    
     private UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository){
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    
+
     @Override
     public Iterable<User> findAll() {
 
@@ -74,6 +73,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User userAuthentication(String registroAcademico, String password) {
+        return userRepository.userAuthentication(registroAcademico, Hash.md5(password));
+    }
+
     public Timestamp formatearFecha(User user) {
         Timestamp time = new Timestamp(user.getFechaDeNacimiento().getTime() + SEIS_HORAS);
         return time;

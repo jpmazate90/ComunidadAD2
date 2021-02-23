@@ -43,9 +43,16 @@ public class UserController {
     public ResponseEntity<?> create(@RequestBody User user) {
         if (userService.findById(user.getRegistroAcademico()).isEmpty()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
-        }else{
+        } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("YA EXISTE EL USUARIO");
         }
+    }
+
+    @PostMapping("/authentication")
+    public ResponseEntity<?> authentication(@RequestBody User user) {//Recibe un user, donde se incluira el registro academico y el usuario
+        //Este user trae el registroAcademico y la contrasenia
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.userAuthentication(user.getRegistroAcademico(), user.getPassword()));
+
     }
 
     @GetMapping("/{id}")
@@ -56,9 +63,8 @@ public class UserController {
         }
         return ResponseEntity.ok(oUser);
     }
-    
-    
-    public UserController(@Autowired UserService userService){
+
+    public UserController(@Autowired UserService userService) {
         this.userService = userService;
     }
 

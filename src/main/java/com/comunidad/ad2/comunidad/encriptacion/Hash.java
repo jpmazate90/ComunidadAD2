@@ -40,6 +40,4 @@ public class Hash {
         return Hash.getHash(txt, "SHA1");
     }
  
-
-    
 }

@@ -28,10 +28,13 @@ public interface UserService {
     
     public void deleteById(Long id);
     
+    public User userAuthentication(String registroAcademico,String password);
+
     public Timestamp formatearFecha(User user);
     
     public String hashearContrasena(User user);
     
     public void asignarEstado(User user);
+
     
 }

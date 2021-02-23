@@ -91,6 +91,13 @@ public class User implements Serializable {
         
     }
 
+    public User(String registroAcademico, String password) {
+        this.registroAcademico = registroAcademico;
+        this.password = password;
+    }
+    
+    
+
     public String getRegistroAcademico() {
         return registroAcademico;
     }
