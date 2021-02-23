@@ -5,6 +5,7 @@
  */
 package com.comunidad.ad2.comunidad.service;
 
+import com.comunidad.ad2.comunidad.encriptacion.Hash;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.UserRepository;
 import java.util.Optional;
@@ -61,7 +62,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User userAuthentication(String registroAcademico,String password) {
-        return userRepository.userAuthentication(registroAcademico,password);
+        return userRepository.userAuthentication(registroAcademico,Hash.md5(password));
     }
     
     

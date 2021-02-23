@@ -44,12 +44,7 @@ public class UserController {
     @PostMapping("/authentication")
     public ResponseEntity<?> authentication(@RequestBody User user) {//Recibe un user, donde se incluira el registro academico y el usuario
         //Este user trae el registroAcademico y la contrasenia
-        System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
-        System.out.println("user"+user.getRegistroAcademico());
-        System.out.println("userP:"+Hash.md5(user.getPassword()));
-
-        System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
-         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.userAuthentication(user.getRegistroAcademico(),Hash.md5(user.getPassword())));
+         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.userAuthentication(user.getRegistroAcademico(),user.getPassword()));
 
     }
 
