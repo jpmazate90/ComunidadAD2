@@ -8,6 +8,9 @@ package com.comunidad.ad2.comunidad.controller;
 import com.comunidad.ad2.comunidad.encriptacion.Hash;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.service.UserService;
+import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
+import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
+import java.sql.Timestamp;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -21,30 +24,34 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author jpmazate
  */
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin()
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
-    @Autowired
     //@ComponentScan("com.comunidad.ad2.comunidad.service")
     private UserService userService;
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody User user) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
+        if (userService.findById(user.getRegistroAcademico()).isEmpty()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("YA EXISTE EL USUARIO");
+        }
     }
 
     @PostMapping("/authentication")
     public ResponseEntity<?> authentication(@RequestBody User user) {//Recibe un user, donde se incluira el registro academico y el usuario
         //Este user trae el registroAcademico y la contrasenia
-         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.userAuthentication(user.getRegistroAcademico(),user.getPassword()));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.userAuthentication(user.getRegistroAcademico(), user.getPassword()));
 
     }
 
@@ -55,6 +62,10 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(oUser);
+    }
+
+    public UserController(@Autowired UserService userService) {
+        this.userService = userService;
     }
 
 }

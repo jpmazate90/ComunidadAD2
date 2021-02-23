@@ -6,6 +6,8 @@
 package com.comunidad.ad2.comunidad.service;
 
 import com.comunidad.ad2.comunidad.entity.User;
+import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
+import java.sql.Timestamp;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,5 +29,12 @@ public interface UserService {
     public void deleteById(Long id);
     
     public User userAuthentication(String registroAcademico,String password);
+
+    public Timestamp formatearFecha(User user);
+    
+    public String hashearContrasena(User user);
+    
+    public void asignarEstado(User user);
+
     
 }
