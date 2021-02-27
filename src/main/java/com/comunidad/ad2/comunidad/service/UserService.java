@@ -39,4 +39,9 @@ public interface UserService {
     
     public void asignarEstado(User user);
     
+    public String login(String username, String password) ;
+    
+    public Optional<org.springframework.security.core.userdetails.User> findByToken(String token);
+
+    
 }

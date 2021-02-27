@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin()
 @RestController
-@RequestMapping("/api/users")
+//@RequestMapping("/api/users")
 public class UserController {
 
     //@ComponentScan("com.comunidad.ad2.comunidad.service")
@@ -48,14 +48,14 @@ public class UserController {
         }
     }
 
-    @PostMapping("/authentication")
+    @PostMapping("/api/users/authentication")
     public ResponseEntity<?> authentication(@RequestBody User user) {//Recibe un user, donde se incluira el registro academico y el usuario
         //Este user trae el registroAcademico y la contrasenia
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.userAuthentication(user.getRegistroAcademico(), user.getPassword()));
 
     }
 
-    @PostMapping("/adminCreation")
+    @PostMapping("/api/users/adminCreation")
     public ResponseEntity<?> adminCreation(@RequestBody User user) {//Recibe un user, donde se incluira el registro academico y el usuario
         //Este user trae el registroAcademico y el estado
         System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
@@ -64,7 +64,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.adminCreation(user.getRegistroAcademico()));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/api/users/{id}")
     public ResponseEntity<?> read(@PathVariable(value = "id") String userId) {
         Optional<User> oUser = userService.findById(userId);
         if (!oUser.isPresent()) {
@@ -73,7 +73,7 @@ public class UserController {
         return ResponseEntity.ok(oUser);
     }
 
-    @GetMapping("/accounts")
+    @GetMapping("/api/users/accounts")
     public Iterable<?> all() {
         return userService.findAll();
     }
