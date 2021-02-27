@@ -38,7 +38,9 @@ public class UserController {
 
     //@ComponentScan("com.comunidad.ad2.comunidad.service")
     private UserService userService;
-
+    
+    private TokenController tokenController;
+    
     @PostMapping
     public ResponseEntity<?> create(@RequestBody User user) {
         if (userService.findById(user.getRegistroAcademico()).isEmpty()) {
@@ -78,8 +80,9 @@ public class UserController {
         return userService.findAll();
     }
 
-    public UserController(@Autowired UserService userService) {
+    public UserController(@Autowired UserService userService, @Autowired TokenController tokenController) {
         this.userService = userService;
+        this.tokenController = tokenController;
     }
 
 }
