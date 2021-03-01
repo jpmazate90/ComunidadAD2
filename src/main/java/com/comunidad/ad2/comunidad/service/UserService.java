@@ -42,6 +42,8 @@ public interface UserService {
     public String login(String username, String password) ;
     
     public Optional<org.springframework.security.core.userdetails.User> findByToken(String token);
+    
+    public Optional<User> findByTokenOwnUser(String token);
 
     
 }

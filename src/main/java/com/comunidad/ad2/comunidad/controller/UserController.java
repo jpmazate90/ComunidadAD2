@@ -41,7 +41,7 @@ public class UserController {
     
     private TokenController tokenController;
     
-    @PostMapping
+    @PostMapping("/creation/users")
     public ResponseEntity<?> create(@RequestBody User user) {
         if (userService.findById(user.getRegistroAcademico()).isEmpty()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
@@ -69,6 +69,17 @@ public class UserController {
     @GetMapping("/api/users/{id}")
     public ResponseEntity<?> read(@PathVariable(value = "id") String userId) {
         Optional<User> oUser = userService.findById(userId);
+        if (!oUser.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(oUser);
+    }
+    
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/api/users/token/")
+    public ResponseEntity<?> getUserByToken(@RequestBody String token) {
+        System.out.println("ENTREEEE*****************\n"+token);
+        Optional<User> oUser = userService.findByTokenOwnUser(token);
         if (!oUser.isPresent()) {
             return ResponseEntity.notFound().build();
         }
