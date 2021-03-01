@@ -11,6 +11,7 @@ import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
 import com.comunidad.ad2.comunidad.service.enums.GeneroUsuario;
 import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
 import java.sql.Timestamp;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 //import static org.junit.Assert.assertEquals;
 
 
@@ -19,6 +20,7 @@ import java.sql.Timestamp;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +40,7 @@ public class UserServiceImplTest {
     private UserServiceImpl userService; // es la implementacion
 
     public UserServiceImplTest() {
+        MockitoAnnotations.initMocks(this);
     }
 
     /**
@@ -47,15 +50,21 @@ public class UserServiceImplTest {
     public void testSave() {
         // arrange
         User usuario = crearUsuario(RolUsuario.SUPER);
+        UserServiceImpl spy = Mockito.spy(userService);
         //UserServiceImpl userService = Mockito.mock(new UserServiceImpl(userRepository));
         System.out.println(userService);
             
-        Mockito.when(userService.hashearContrasena(usuario)).thenReturn("xxxxx");
+        Mockito.when(spy.hashearContrasena(usuario)).thenReturn("xxxxx");
+        Mockito.when(userRepository.save(usuario)).thenReturn(usuario);
+        
+        
+        
+        
         
         //act
-        User resultado =  userService.save(usuario);
+        User resultado =  spy.save(usuario);
         //assert
-        //assertEquals("xxxxx",resultado.getPassword());
+        assertEquals("xxxxx",resultado.getPassword());
     }
     
     private User crearUsuario(RolUsuario a){

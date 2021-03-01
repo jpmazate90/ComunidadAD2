@@ -13,10 +13,13 @@ import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
 import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
 import java.sql.Timestamp;
 import java.util.Optional;
+import java.util.UUID;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,7 +85,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User userAuthentication(String registroAcademico, String password) {
-        return userRepository.userAuthentication(registroAcademico, Hash.md5(password));
+        return userRepository.userAuthentication(registroAcademico, Hash.md5(password)).get();
+    }
+    
+    @Override
+    public String login(String username, String password) {
+        Optional<User> user = userRepository.userAuthentication(username,Hash.md5(password));
+        if(user.isPresent()){
+            String token = UUID.randomUUID().toString();
+            User datosUser= user.get();
+            datosUser.setToken(token);
+            userRepository.save(datosUser);
+            return token;
+        }
+
+        return StringUtils.EMPTY;
     }
 
     public Timestamp formatearFecha(User user) {
@@ -104,5 +121,18 @@ public class UserServiceImpl implements UserService {
         } else if (user.getRolUsuario() == RolUsuario.SUPER) {
             user.setEstado(EstadoUsuario.EN_ESPERA);
         }
+    }
+
+    @Override
+    public Optional<org.springframework.security.core.userdetails.User> findByToken(String token) { 
+        Optional<User> customer= userRepository.findByToken(token);
+        if(customer.isPresent()){
+            User ownUser = customer.get();
+            org.springframework.security.core.userdetails.User user= new org.springframework.security.core.userdetails.User(ownUser.getRegistroAcademico(), ownUser.getPassword(), true, true, true, true,
+                    AuthorityUtils.createAuthorityList("USER"));
+            return Optional.of(user);
+        }
+        return  Optional.empty();
+    
     }
 }
