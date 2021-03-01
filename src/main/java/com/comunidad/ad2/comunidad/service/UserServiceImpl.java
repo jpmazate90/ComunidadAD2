@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
     public void deleteById(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     @Modifying
     public int adminCreation(String registroAcademico) {
@@ -87,13 +87,13 @@ public class UserServiceImpl implements UserService {
     public User userAuthentication(String registroAcademico, String password) {
         return userRepository.userAuthentication(registroAcademico, Hash.md5(password)).get();
     }
-    
+
     @Override
     public String login(String username, String password) {
-        Optional<User> user = userRepository.userAuthentication(username,Hash.md5(password));
-        if(user.isPresent()){
+        Optional<User> user = userRepository.userAuthentication(username, Hash.md5(password));
+        if (user.isPresent()) {
             String token = UUID.randomUUID().toString();
-            User datosUser= user.get();
+            User datosUser = user.get();
             datosUser.setToken(token);
             userRepository.save(datosUser);
             return token;
@@ -124,15 +124,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<org.springframework.security.core.userdetails.User> findByToken(String token) { 
-        Optional<User> customer= userRepository.findByToken(token);
-        if(customer.isPresent()){
+    public Optional<org.springframework.security.core.userdetails.User> findByToken(String token) {
+        Optional<User> customer = userRepository.findByToken(token);
+        if (customer.isPresent()) {
             User ownUser = customer.get();
-            org.springframework.security.core.userdetails.User user= new org.springframework.security.core.userdetails.User(ownUser.getRegistroAcademico(), ownUser.getPassword(), true, true, true, true,
+            org.springframework.security.core.userdetails.User user = new org.springframework.security.core.userdetails.User(ownUser.getRegistroAcademico(), ownUser.getPassword(), true, true, true, true,
                     AuthorityUtils.createAuthorityList("USER"));
             return Optional.of(user);
         }
-        return  Optional.empty();
-    
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<User> findByTokenOwnUser(String token) {
+        Optional<User> user = userRepository.findByToken(token);
+        return user;
+
     }
 }
