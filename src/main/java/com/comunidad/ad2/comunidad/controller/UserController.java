@@ -41,7 +41,7 @@ public class UserController {
     
     private TokenController tokenController;
     
-    @PostMapping("/creation/users")
+    @PostMapping("/creation/users")//Al no estar bajo /api/users no se necesita autenticacion
     public ResponseEntity<?> create(@RequestBody User user) {
         if (userService.findById(user.getRegistroAcademico()).isEmpty()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));

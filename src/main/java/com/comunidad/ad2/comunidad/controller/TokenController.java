@@ -31,7 +31,7 @@ public class TokenController {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/token")
-    public ResponseEntity<?> getToken(@RequestBody User user){
+    public ResponseEntity<?> getToken(@RequestBody User user){//Metodo al que se llama cuando se inicia sesion y actualiza el token en la base de datos si encuentra al usuario
        String token= userService.login(user.getRegistroAcademico(),user.getPassword());
        if(StringUtils.isEmpty(token)){
            return ResponseEntity.status(HttpStatus.CONFLICT).body("ERROR, USUARIO O CONTRASENA INVALIDO");

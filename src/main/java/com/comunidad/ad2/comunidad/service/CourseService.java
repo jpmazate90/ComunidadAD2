@@ -16,4 +16,6 @@ public interface CourseService {
     
     public Optional<Course> findById(String codigoDeCurso);
     
-}
+    public Iterable<Course> findAll();
+
+    }

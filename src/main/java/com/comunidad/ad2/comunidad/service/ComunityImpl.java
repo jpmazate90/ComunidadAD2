@@ -8,11 +8,13 @@ package com.comunidad.ad2.comunidad.service;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.repository.ComunityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author jesfrin
  */
+@Service
 public class ComunityImpl implements ComunityService{
     
     private ComunityRepository comunityRepository;

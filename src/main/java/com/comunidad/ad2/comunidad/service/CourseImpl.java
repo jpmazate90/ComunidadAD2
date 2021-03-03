@@ -9,11 +9,13 @@ import com.comunidad.ad2.comunidad.entity.Course;
 import com.comunidad.ad2.comunidad.repository.CourseRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author jesfrin
  */
+@Service
 public class CourseImpl implements CourseService{
     
     private CourseRepository courseRepository;
@@ -27,4 +29,10 @@ public class CourseImpl implements CourseService{
     public Optional<Course> findById(String codigoDeCurso) {
         return this.courseRepository.findById(codigoDeCurso);
     }
+
+    @Override
+    public Iterable<Course> findAll() {
+        return this.courseRepository.findAll();
+    }
+    
 }
