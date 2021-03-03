@@ -8,6 +8,7 @@ package com.comunidad.ad2.comunidad.entity;
 import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
 import com.comunidad.ad2.comunidad.service.enums.GeneroUsuario;
 import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
+import com.comunidad.ad2.comunidad.service.enums.Visibilidad;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.annotation.Generated;
@@ -69,6 +70,10 @@ public class User implements Serializable {
     @Column(name = "token",length = 255, nullable = true)
     private String token;
     
+    @Enumerated(EnumType.STRING)
+    @Column(name = "privacidad",length = 255, columnDefinition = "varchar(255) default 'PUBLICO'")
+    private Visibilidad privacidad;
+    
     
 
     public User(String registroAcademico, String nombreCompleto, String password, Timestamp fechaDeNacimiento, GeneroUsuario genero, String fotoDePerfil, String correoElectronico, RolUsuario rolUsuario, String ciudad, EstadoUsuario estado) {
@@ -81,9 +86,25 @@ public class User implements Serializable {
         this.correoElectronico = correoElectronico;
         this.rolUsuario = rolUsuario;
         this.ciudad = ciudad;
-        this.estado = estado;
-        
+        this.estado = estado; 
     }
+
+    public User(String registroAcademico, String nombreCompleto, String password, Timestamp fechaDeNacimiento, GeneroUsuario genero, String fotoDePerfil, String correoElectronico, RolUsuario rolUsuario, String ciudad, EstadoUsuario estado, String token, Visibilidad privacidad) {
+        this.registroAcademico = registroAcademico;
+        this.nombreCompleto = nombreCompleto;
+        this.password = password;
+        this.fechaDeNacimiento = fechaDeNacimiento;
+        this.genero = genero;
+        this.fotoDePerfil = fotoDePerfil;
+        this.correoElectronico = correoElectronico;
+        this.rolUsuario = rolUsuario;
+        this.ciudad = ciudad;
+        this.estado = estado;
+        this.token = token;
+        this.privacidad = privacidad;
+    }
+    
+    
 
      
     
@@ -188,6 +209,19 @@ public class User implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Visibilidad getPrivacidad() {
+        return privacidad;
+    }
+
+    public void setPrivacidad(Visibilidad privacidad) {
+        this.privacidad = privacidad;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "registroAcademico=" + registroAcademico + ", nombreCompleto=" + nombreCompleto + ", password=" + password + ", fechaDeNacimiento=" + fechaDeNacimiento + ", genero=" + genero + ", fotoDePerfil=" + fotoDePerfil + ", correoElectronico=" + correoElectronico + ", rolUsuario=" + rolUsuario + ", ciudad=" + ciudad + ", estado=" + estado + ", token=" + token + ", privacidad=" + privacidad + '}';
     }
 
     
