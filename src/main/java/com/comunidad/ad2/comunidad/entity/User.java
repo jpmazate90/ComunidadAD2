@@ -90,6 +90,10 @@ public class User implements Serializable {
     public User(){
         
     }
+    
+    public User(String token){
+        this.token = token;
+    }
 
     public User(String registroAcademico, String password) {
         this.registroAcademico = registroAcademico;
