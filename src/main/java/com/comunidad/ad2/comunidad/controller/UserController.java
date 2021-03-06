@@ -96,7 +96,6 @@ public class UserController {
     
     
     
-    
 
     @GetMapping("/api/users/accounts")
     public Iterable<?> all() {

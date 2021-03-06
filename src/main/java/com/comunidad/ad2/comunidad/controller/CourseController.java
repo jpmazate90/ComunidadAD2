@@ -25,11 +25,23 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/getCourses")
-    public ResponseEntity<?> getCourses(User user) {
+    @PostMapping("api/users/getCourses")
+    public ResponseEntity<?> getCourses() {
+        System.out.println("n\n\n\n\n\n\n");
+        System.out.println("Coursess");
+        System.out.println("n\n\n\n\n\n\n");
         return ResponseEntity.ok(this.courseService.findAll());
     }
 
+    /**
+     *
+     * SOLO CON GET
+     *
+     * @CrossOrigin(origins = "http://localhost:4200")
+     * @PostMapping("/getCourses") public ResponseEntity<?> getCourses() {
+     * return ResponseEntity.ok(this.courseService.findAll()); }
+     *
+     *
+     */
 }
