@@ -22,6 +22,26 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table(name = "comunity")
 public class Comunity {
+
+    public Comunity(Course course, User user, String nombre, String descripcion) {
+        this.course = course;
+        this.user = user;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+    
+ 
+    public Comunity(int id, Course course, User user, String nombre, String descripcion, String foto) {
+        this.id = id;
+        this.course = course;
+        this.user = user;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.foto = foto;
+    }
+    
+    
+    
     
     
     @Id

@@ -28,9 +28,6 @@ public class CourseController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("api/users/getCourses")
     public ResponseEntity<?> getCourses() {
-        System.out.println("n\n\n\n\n\n\n");
-        System.out.println("Coursess");
-        System.out.println("n\n\n\n\n\n\n");
         return ResponseEntity.ok(this.courseService.findAll());
     }
 

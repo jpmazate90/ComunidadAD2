@@ -55,6 +55,10 @@ public class Course {
 
     public Course() {
     }
+
+    public Course(String codigoDeCurso) {
+        this.codigoDeCurso = codigoDeCurso;
+    }
    
    
    
