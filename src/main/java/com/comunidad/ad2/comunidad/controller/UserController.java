@@ -65,6 +65,16 @@ public class UserController {
         System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.adminCreation(user.getRegistroAcademico()));
     }
+    
+    @PostMapping("/api/users/changePassword")
+    public ResponseEntity<?> changePassword(@RequestBody User user) {//Recibe un user, donde se incluira el registro academico y el usuario
+        //Este user trae el registroAcademico y el estado
+        System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
+        System.out.println("Registro: " + user.getRegistroAcademico());
+        System.out.println("User pass: " + user.getPassword());
+        System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.changePasswordUser(user.getRegistroAcademico(), user.getPassword()));
+    }
 
     @GetMapping("/api/users/{id}")
     public ResponseEntity<?> read(@PathVariable(value = "id") String userId) {

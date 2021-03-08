@@ -28,6 +28,12 @@ public interface UserRepository extends JpaRepository<User, String>{
     @Modifying
     @Query("UPDATE User u set u.estado='ACTIVO' WHERE u.registroAcademico=?1 AND u.estado='EN_ESPERA'")
     int adminCreation(String registroAcademico);
+    
+    @Transactional
+    @Modifying
+    @Query("UPDATE User u set u.password=?2 WHERE u.registroAcademico=?1")
+    int changePasswordUser(String registroAcademico, String password);
+    
     @Query("SELECT u FROM User u WHERE u.registroAcademico=?1 AND u.password=?2 AND u.estado='ACTIVO'")
     Optional<User> userAuthentication(String registroAcademico,String password);
     
