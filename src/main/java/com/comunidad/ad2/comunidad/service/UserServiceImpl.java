@@ -143,7 +143,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByTokenOwnUser(String token) {
-        Optional<User> user = userRepository.findByToken(token);
+        Optional<User> user = userRepository.findByOwnToken(token);
         return user;
 
     }

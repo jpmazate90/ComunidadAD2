@@ -41,7 +41,7 @@ public class UserController {
     
     private TokenController tokenController;
     
-    @PostMapping("/creation/users")
+    @PostMapping("/creation/users")//Al no estar bajo /api/users no se necesita autenticacion
     public ResponseEntity<?> create(@RequestBody User user) {
         if (userService.findById(user.getRegistroAcademico()).isEmpty()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
@@ -54,6 +54,25 @@ public class UserController {
     public ResponseEntity<?> authentication(@RequestBody User user) {//Recibe un user, donde se incluira el registro academico y el usuario
         //Este user trae el registroAcademico y la contrasenia
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.userAuthentication(user.getRegistroAcademico(), user.getPassword()));
+
+    }
+    
+    @CrossOrigin(origins = "http://localhost:4200")
+     @PostMapping("/api/users/findbytoken")
+    public ResponseEntity<?> findUserByToken(@RequestBody User token) {//Recibe un user, donde se incluira el registro academico y el usuario
+        //Este user trae el registroAcademico y la contrasenia
+         
+         System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
+         System.out.println("Token:"+token.getToken());
+        System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
+        
+        
+        Optional<User> user = userService.findByTokenOwnUser(token.getToken());
+        if(user.isPresent()){
+            return ResponseEntity.ok(user);
+            
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("NO EXISTE EL TOKEN DE AUTENTICACION");
 
     }
 
@@ -85,16 +104,8 @@ public class UserController {
         return ResponseEntity.ok(oUser);
     }
     
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/api/users/token/")
-    public ResponseEntity<?> getUserByToken(@RequestBody String token) {
-        System.out.println("ENTREEEE*****************\n"+token);
-        Optional<User> oUser = userService.findByTokenOwnUser(token);
-        if (!oUser.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(oUser);
-    }
+    
+    
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/accounts")
