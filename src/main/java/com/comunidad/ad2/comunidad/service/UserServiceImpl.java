@@ -82,6 +82,12 @@ public class UserServiceImpl implements UserService {
     public int adminCreation(String registroAcademico) {
         return userRepository.adminCreation(registroAcademico); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    @Modifying
+    public int changePasswordUser(String registroAcademico, String password) {
+        return userRepository.changePasswordUser(registroAcademico, Hash.md5(password)); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public User userAuthentication(String registroAcademico, String password) {
@@ -137,7 +143,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByTokenOwnUser(String token) {
-        Optional<User> user = userRepository.findByToken(token);
+        Optional<User> user = userRepository.findByOwnToken(token);
         return user;
 
     }
