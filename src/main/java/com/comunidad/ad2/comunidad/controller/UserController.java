@@ -86,9 +86,10 @@ public class UserController {
         return ResponseEntity.ok(oUser);
     }
 
-    @GetMapping("/api/users/accounts")
-    public Iterable<?> all() {
-        return userService.findAll();
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/api/users/accounts")
+    public ResponseEntity<?> all() {
+        return ResponseEntity.ok(this.userService.findAll());
     }
 
     public UserController(@Autowired UserService userService, @Autowired TokenController tokenController) {
