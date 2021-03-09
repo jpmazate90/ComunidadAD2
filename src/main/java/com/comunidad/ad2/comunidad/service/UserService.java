@@ -30,6 +30,8 @@ public interface UserService {
     public void deleteById(Long id);
     
     public int adminCreation(String registroAcademico);
+    
+    public int changePasswordUser(String registroAcademico, String password);
 
     public User userAuthentication(String registroAcademico,String password);
 
