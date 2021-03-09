@@ -53,7 +53,7 @@ public class UserServiceImplTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
     }*/
-
+ 
     /**
      * Test of findAll method, of class UserServiceImpl.
      */
@@ -182,5 +182,34 @@ public class UserServiceImplTest {
         //assert
         assertEquals(resultado.getRegistroAcademico(),usuario.getRegistroAcademico());
     }
+    @Test
+    public void testAdminCreation(){
+        // arrange
+        UserServiceImpl spy = Mockito.spy(userService);
+        Mockito.when(userRepository.adminCreation("201832431")).thenReturn(1);
+        
+        //act
+        int admin = spy.adminCreation("201832431");
+        int response = admin;
+        
+        //assert
+        Assertions.assertEquals(1, response);
+    }
+    
+    @Test
+    public void testChangePasswordUser(){
+        // arrange
+        UserServiceImpl spy = Mockito.spy(userService);
+        Mockito.when(userRepository.changePasswordUser("201832431", Hash.md5("xxxx"))).thenReturn(1);
+        
+        //act
+        int changePass = spy.changePasswordUser("201832431", "xxxx");
+        int response = changePass;
+        
+        //assert
+        Assertions.assertEquals(1, response);
+    }
+    
+    
 
 }
