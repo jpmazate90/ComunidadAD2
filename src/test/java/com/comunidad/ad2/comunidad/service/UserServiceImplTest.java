@@ -5,6 +5,7 @@
  */
 package com.comunidad.ad2.comunidad.service;
 
+import com.comunidad.ad2.comunidad.encriptacion.Hash;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.UserRepository;
 import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
@@ -12,6 +13,7 @@ import static com.comunidad.ad2.comunidad.service.enums.EstadoUsuario.EN_ESPERA;
 import com.comunidad.ad2.comunidad.service.enums.GeneroUsuario;
 import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
 import java.sql.Timestamp;
+import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,7 +50,7 @@ public class UserServiceImplTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
     }*/
-
+ 
     /**
      * Test of findAll method, of class UserServiceImpl.
      */
@@ -89,5 +91,35 @@ public class UserServiceImplTest {
         User user = new User("201029301","aaa", "aaa", new Timestamp(400000000), GeneroUsuario.N, "aa", "aa@a.com", a, "xela", EstadoUsuario.ACTIVO);
         return user;
     }
+    
+    @Test
+    public void testAdminCreation(){
+        // arrange
+        UserServiceImpl spy = Mockito.spy(userService);
+        Mockito.when(userRepository.adminCreation("201832431")).thenReturn(1);
+        
+        //act
+        int admin = spy.adminCreation("201832431");
+        int response = admin;
+        
+        //assert
+        Assertions.assertEquals(1, response);
+    }
+    
+    @Test
+    public void testChangePasswordUser(){
+        // arrange
+        UserServiceImpl spy = Mockito.spy(userService);
+        Mockito.when(userRepository.changePasswordUser("201832431", Hash.md5("xxxx"))).thenReturn(1);
+        
+        //act
+        int changePass = spy.changePasswordUser("201832431", "xxxx");
+        int response = changePass;
+        
+        //assert
+        Assertions.assertEquals(1, response);
+    }
+    
+    
 
 }
