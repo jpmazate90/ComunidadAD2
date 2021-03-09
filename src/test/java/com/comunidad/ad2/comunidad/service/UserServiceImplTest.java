@@ -8,10 +8,13 @@ package com.comunidad.ad2.comunidad.service;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.UserRepository;
 import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
+import static com.comunidad.ad2.comunidad.service.enums.EstadoUsuario.EN_ESPERA;
 import com.comunidad.ad2.comunidad.service.enums.GeneroUsuario;
 import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
 import java.sql.Timestamp;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 //import static org.junit.Assert.assertEquals;
 
 
@@ -20,17 +23,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  *
  * @author jpmazate
  */
-//@RunWith(MockitoJUnitRunner.class)
-
+@ExtendWith(MockitoExtension.class)
 public class UserServiceImplTest {
 
     @Mock
@@ -40,31 +42,47 @@ public class UserServiceImplTest {
     private UserServiceImpl userService; // es la implementacion
 
     public UserServiceImplTest() {
-        MockitoAnnotations.initMocks(this);
     }
+    
+    /*@BeforeEach
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+    }*/
 
     /**
      * Test of findAll method, of class UserServiceImpl.
      */
-    //@Test
+    @Test
     public void testSave() {
         // arrange
         User usuario = crearUsuario(RolUsuario.SUPER);
         UserServiceImpl spy = Mockito.spy(userService);
-        //UserServiceImpl userService = Mockito.mock(new UserServiceImpl(userRepository));
-        System.out.println(userService);
-            
-        Mockito.when(spy.hashearContrasena(usuario)).thenReturn("xxxxx");
-        Mockito.when(userRepository.save(usuario)).thenReturn(usuario);
         
-        
-        
-        
+        when(spy.hashearContrasena(usuario)).thenReturn("xxxxx");
+        doNothing().when(spy).asignarEstado(usuario);
+        when(userRepository.save(usuario)).thenReturn(usuario);
         
         //act
         User resultado =  spy.save(usuario);
+        
         //assert
-        assertEquals("xxxxx",resultado.getPassword());
+        //assertEquals(EN_ESPERA, resultado.getEstado());
+        assertEquals("xxxxx", resultado.getPassword());
+        verify(spy).asignarEstado(usuario);
+        verify(userRepository).save(usuario);
+        
+    }
+    
+    @Test
+    public void testAsignarEstadoWhenRoleIsCOMUNIDAD() {
+        // arreange
+        User usuario = crearUsuario(RolUsuario.COMUNIDAD);
+        
+        // act
+        userService.asignarEstado(usuario);
+        
+        //assert
+        assertEquals(EN_ESPERA, usuario.getEstado());
     }
     
     private User crearUsuario(RolUsuario a){
@@ -72,49 +90,4 @@ public class UserServiceImplTest {
         return user;
     }
 
-    /**
-     * Test of deleteById method, of class UserServiceImpl.
-     */
-    /**
-     * Test of formatearFecha method, of class UserServiceImpl.
-     */
-//    @Test
-//    public void testFormatearFecha() {
-//        System.out.println("formatearFecha");
-//        User user = null;
-//        UserServiceImpl instance = null;
-//        Timestamp expResult = null;
-//        Timestamp result = instance.formatearFecha(user);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of hashearContrasena method, of class UserServiceImpl.
-//     */
-//    @Test
-//    public void testHashearContrasena() {
-//        System.out.println("hashearContrasena");
-//        User user = null;
-//        UserServiceImpl instance = null;
-//        String expResult = "";
-//        String result = instance.hashearContrasena(user);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of asignarEstado method, of class UserServiceImpl.
-//     */
-//    @Test
-//    public void testAsignarEstado() {
-//        System.out.println("asignarEstado");
-//        User user = null;
-//        UserServiceImpl instance = null;
-//        instance.asignarEstado(user);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
 }
