@@ -12,6 +12,8 @@ import com.comunidad.ad2.comunidad.service.enums.GeneroUsuario;
 import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
 import java.sql.Timestamp;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 //import static org.junit.Assert.assertEquals;
 
 
@@ -22,6 +24,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -29,8 +32,7 @@ import org.springframework.data.domain.Pageable;
  *
  * @author jpmazate
  */
-//@RunWith(MockitoJUnitRunner.class)
-
+@ExtendWith(MockitoExtension.class)
 public class UserServiceImplTest {
 
     @Mock
@@ -40,36 +42,58 @@ public class UserServiceImplTest {
     private UserServiceImpl userService; // es la implementacion
 
     public UserServiceImplTest() {
-        MockitoAnnotations.initMocks(this);
+        
     }
 
     /**
      * Test of findAll method, of class UserServiceImpl.
      */
-    //@Test
+    @Test
     public void testSave() {
         // arrange
         User usuario = crearUsuario(RolUsuario.SUPER);
         UserServiceImpl spy = Mockito.spy(userService);
-        //UserServiceImpl userService = Mockito.mock(new UserServiceImpl(userRepository));
-        System.out.println(userService);
-            
+        
         Mockito.when(spy.hashearContrasena(usuario)).thenReturn("xxxxx");
+        Mockito.doNothing().when(spy).asignarEstado(usuario);
         Mockito.when(userRepository.save(usuario)).thenReturn(usuario);
         
-        
-        
-        
-        
+
         //act
         User resultado =  spy.save(usuario);
         //assert
         assertEquals("xxxxx",resultado.getPassword());
+        Mockito.verify(spy).asignarEstado(usuario);
+        Mockito.verify(userRepository).save(usuario);
     }
     
     private User crearUsuario(RolUsuario a){
         User user = new User("201029301","aaa", "aaa", new Timestamp(400000000), GeneroUsuario.N, "aa", "aa@a.com", a, "xela", EstadoUsuario.ACTIVO);
         return user;
+    }
+    
+    @Test
+    public void testAsignarEstadoWhenRoleIsCOMUNIDAD() {
+        // arreange
+        User usuario = crearUsuario(RolUsuario.COMUNIDAD);
+        
+        // act
+        userService.asignarEstado(usuario);
+        
+        //assert
+        assertEquals(EstadoUsuario.EN_ESPERA, usuario.getEstado());
+    }
+    
+    @Test
+    public void testAsignarEstadoWhenRoleIsNORMAL() {
+        // arreange
+        User usuario = crearUsuario(RolUsuario.NORMAL);
+        
+        // act
+        userService.asignarEstado(usuario);
+        
+        //assert
+        assertEquals(EstadoUsuario.ACTIVO, usuario.getEstado());
     }
 
     /**
