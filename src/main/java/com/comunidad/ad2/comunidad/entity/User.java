@@ -19,6 +19,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
@@ -60,6 +61,7 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private RolUsuario rolUsuario;
 
+    
     @Column(name = "ciudad", length = 45, nullable = false)
     private String ciudad;
 
@@ -194,6 +196,9 @@ public class User implements Serializable {
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
     }
+
+     
+    
 
     public EstadoUsuario getEstado() {
         return estado;

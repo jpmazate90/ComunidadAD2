@@ -5,6 +5,7 @@
  */
 package com.comunidad.ad2.comunidad.entity;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "course")
-public class Course {
+public class Course implements Serializable {
     
     
     @Id

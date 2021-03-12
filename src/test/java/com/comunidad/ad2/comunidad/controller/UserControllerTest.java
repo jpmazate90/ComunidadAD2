@@ -42,120 +42,120 @@ public class UserControllerTest {
     /**
      * Test of create method, of class UserController.
      */
-    @Test
-    public void testCreate() {
-        System.out.println("create");
-        User user = null;
-        UserController instance = null;
-        ResponseEntity expResult = null;
-        ResponseEntity result = instance.create(user);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of authentication method, of class UserController.
-     */
-    @Test
-    public void testAuthentication() {
-        System.out.println("authentication");
-        User user = null;
-        UserController instance = null;
-        ResponseEntity expResult = null;
-        ResponseEntity result = instance.authentication(user);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of findUserByToken method, of class UserController.
-     */
-    @Test
-    public void testFindUserByToken() {
-        System.out.println("findUserByToken");
-        User token = null;
-        UserController instance = null;
-        ResponseEntity expResult = null;
-        ResponseEntity result = instance.findUserByToken(token);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of adminCreation method, of class UserController.
-     */
-    @Test
-    public void testAdminCreation() {
-        System.out.println("adminCreation");
-        User user = null;
-        UserController instance = null;
-        ResponseEntity expResult = null;
-        ResponseEntity result = instance.adminCreation(user);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of changePassword method, of class UserController.
-     */
-    @Test
-    public void testChangePassword() {
-        System.out.println("changePassword");
-        User user = null;
-        UserController instance = null;
-        ResponseEntity expResult = null;
-        ResponseEntity result = instance.changePassword(user);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of read method, of class UserController.
-     */
-    @Test
-    public void testRead() {
-        System.out.println("read");
-        String userId = "";
-        UserController instance = null;
-        ResponseEntity expResult = null;
-        ResponseEntity result = instance.read(userId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of all method, of class UserController.
-     */
-    @Test
-    public void testAll() {
-        System.out.println("all");
-        UserController instance = null;
-        ResponseEntity expResult = null;
-        ResponseEntity result = instance.all();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of actualizarDatosUser method, of class UserController.
-     */
-    @Test
-    public void testActualizarDatosUser() {
-        System.out.println("actualizarDatosUser");
-        User user = null;
-        UserController instance = null;
-        ResponseEntity expResult = null;
-        ResponseEntity result = instance.actualizarDatosUser(user);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+//    @Test
+//    public void testCreate() {
+//        System.out.println("create");
+//        User user = null;
+//        UserController instance = null;
+//        ResponseEntity expResult = null;
+//        ResponseEntity result = instance.create(user);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of authentication method, of class UserController.
+//     */
+//    @Test
+//    public void testAuthentication() {
+//        System.out.println("authentication");
+//        User user = null;
+//        UserController instance = null;
+//        ResponseEntity expResult = null;
+//        ResponseEntity result = instance.authentication(user);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of findUserByToken method, of class UserController.
+//     */
+//    @Test
+//    public void testFindUserByToken() {
+//        System.out.println("findUserByToken");
+//        User token = null;
+//        UserController instance = null;
+//        ResponseEntity expResult = null;
+//        ResponseEntity result = instance.findUserByToken(token);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of adminCreation method, of class UserController.
+//     */
+//    @Test
+//    public void testAdminCreation() {
+//        System.out.println("adminCreation");
+//        User user = null;
+//        UserController instance = null;
+//        ResponseEntity expResult = null;
+//        ResponseEntity result = instance.adminCreation(user);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of changePassword method, of class UserController.
+//     */
+//    @Test
+//    public void testChangePassword() {
+//        System.out.println("changePassword");
+//        User user = null;
+//        UserController instance = null;
+//        ResponseEntity expResult = null;
+//        ResponseEntity result = instance.changePassword(user);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of read method, of class UserController.
+//     */
+//    @Test
+//    public void testRead() {
+//        System.out.println("read");
+//        String userId = "";
+//        UserController instance = null;
+//        ResponseEntity expResult = null;
+//        ResponseEntity result = instance.read(userId);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of all method, of class UserController.
+//     */
+//    @Test
+//    public void testAll() {
+//        System.out.println("all");
+//        UserController instance = null;
+//        ResponseEntity expResult = null;
+//        ResponseEntity result = instance.all();
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of actualizarDatosUser method, of class UserController.
+//     */
+//    @Test
+//    public void testActualizarDatosUser() {
+//        System.out.println("actualizarDatosUser");
+//        User user = null;
+//        UserController instance = null;
+//        ResponseEntity expResult = null;
+//        ResponseEntity result = instance.actualizarDatosUser(user);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
     
 }

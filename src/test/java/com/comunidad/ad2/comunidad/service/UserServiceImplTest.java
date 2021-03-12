@@ -6,6 +6,7 @@
 package com.comunidad.ad2.comunidad.service;
 
 import com.comunidad.ad2.comunidad.encriptacion.Hash;
+import com.comunidad.ad2.comunidad.entity.Department;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.UserRepository;
 import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
