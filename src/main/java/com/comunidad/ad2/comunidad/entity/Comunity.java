@@ -5,6 +5,7 @@
  */
 package com.comunidad.ad2.comunidad.entity;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 @Table(name = "comunity")
-public class Comunity {
+public class Comunity implements Serializable{
 
     public Comunity(Course course, User user, String nombre, String descripcion) {
         this.course = course;

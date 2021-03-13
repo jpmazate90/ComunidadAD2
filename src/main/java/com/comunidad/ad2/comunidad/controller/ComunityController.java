@@ -9,6 +9,13 @@ import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.service.ComunityService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.filechooser.FileSystemView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,19 +54,37 @@ public class ComunityController {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.comunityService.save(comunity));
     }
 
-    
-    
     @PostMapping("/api/users/pruebaImagen")
-    public ResponseEntity<?> prueba(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> prueba(@RequestBody MultipartFile file) {
+        if (file != null) {
+            String path = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
+            String path2 = path + "/imagenesDeComunidad";
+            File directorio = new File(path2);
+            directorio.mkdir();
+            try {
+                //Directorio es el directorio y path es la ruta
+                byte[] bytesImg = file.getBytes();
+                Path rutaCompleta = Paths.get(path2 + "/" + file.getOriginalFilename());
+                Files.write(rutaCompleta, bytesImg);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            return ResponseEntity.ok(HttpStatus.ACCEPTED);//Si se manda un texto va a tirar error de HttpErrorResponse
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE RECIBIO LA IMAGEN");
+    }
+
+    /*        @PostMapping("/api/users/pruebaImagen")
+    public ResponseEntity<?> prueba(@RequestParam("file") String  file) {
                 System.out.println("\n\n\n\n\n\n\n");
-                System.out.println(file.getResource());
-                System.out.println(file.getOriginalFilename());
+                //System.out.println(file.getResource());
+                //System.out.println(file.getOriginalFilename());
+                //System.out.println(file.getResource());
                 System.out.println("\n\n\n\n\n\n\n");
         
-        return ResponseEntity.status(HttpStatus.CREATED).body(file);
+        return ResponseEntity.ok(file);
 
-    }
-    
+    }*/
  /*   @PostMapping("/prueba/imagen")
     public ResponseEntity<?> prueba(@RequestBody Comunity comunity, @RequestParam("file") String nombreImagen) {
         System.out.println("\n\n\n\n\n\n\n");
@@ -72,7 +97,4 @@ public class ComunityController {
         return ResponseEntity.ok(nombreImagen);
 
     }*/
-
-    
-    
 }
