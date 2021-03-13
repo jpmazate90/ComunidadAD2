@@ -54,8 +54,9 @@ public class ComunityController {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.comunityService.save(comunity));
     }
 
-    @PostMapping("/api/users/pruebaImagen")
-    public ResponseEntity<?> prueba(@RequestBody MultipartFile file) {
+    @PostMapping("/api/users/uploadImageComunity")
+    public ResponseEntity<?> uploadImage(@RequestBody MultipartFile file) {
+        Comunity comunidad = new Comunity();
         if (file != null) {
             String path = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
             String path2 = path + "/imagenesDeComunidad";
@@ -66,10 +67,13 @@ public class ComunityController {
                 byte[] bytesImg = file.getBytes();
                 Path rutaCompleta = Paths.get(path2 + "/" + file.getOriginalFilename());
                 Files.write(rutaCompleta, bytesImg);
+                comunidad.setFoto(rutaCompleta.toString());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            return ResponseEntity.ok(HttpStatus.ACCEPTED);//Si se manda un texto va a tirar error de HttpErrorResponse
+           // return ResponseEntity.ok(HttpStatus.ACCEPTED);//Si se manda un texto va a tirar error de HttpErrorResponse
+           
+           return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunidad);
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE RECIBIO LA IMAGEN");
     }
