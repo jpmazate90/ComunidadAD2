@@ -6,6 +6,7 @@
 package com.comunidad.ad2.comunidad.service;
 
 import com.comunidad.ad2.comunidad.entity.Comunity;
+import com.comunidad.ad2.comunidad.entity.User;
 
 /**
  *
@@ -15,8 +16,6 @@ public interface ComunityService {
     
     //    public User save(User user); 
     public Comunity save(Comunity comunity);
-    
-    public Iterable<Comunity> findAll();
-   
-    
+       
+    public Iterable<Comunity> findByRegistroAcademico(String user);
 }

@@ -8,7 +8,7 @@
             <packaging>ejb</packaging>
         </packagings>
         <goals>
-            <goal>package</goal>
+            <goal>org.springframework.boot:spring-boot-maven-plugin:1.3.2.RELEASE:run</goal>
         </goals>
     </action>
     <action>
