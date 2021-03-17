@@ -48,6 +48,8 @@ public interface UserService {
     public Optional<User> findByTokenOwnUser(String token);
     
     public User actualizarDatosUser(User user);
+    
+    public User cambiarEstadoUser(User user);
 
     
 }
