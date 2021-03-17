@@ -46,6 +46,10 @@ public interface UserService {
     public Optional<org.springframework.security.core.userdetails.User> findByToken(String token);
     
     public Optional<User> findByTokenOwnUser(String token);
+    
+    public User actualizarDatosUser(User user);
+    
+    public User cambiarEstadoUser(User user);
 
     
 }

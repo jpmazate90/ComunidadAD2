@@ -67,11 +67,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user); // mock
     }
 
-//    @Override
-//    @Transactional
-//    public void deleteById(Long id) {
-//        userRepository.deleteById(id);
-//    }
+
     @Override
     public void deleteById(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -145,6 +141,20 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findByTokenOwnUser(String token) {
         Optional<User> user = userRepository.findByOwnToken(token);
         return user;
-
     }
+
+    @Override
+    public User actualizarDatosUser(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User cambiarEstadoUser(User user) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+
+    
+    
 }

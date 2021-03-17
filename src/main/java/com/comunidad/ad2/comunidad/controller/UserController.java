@@ -40,7 +40,7 @@ public class UserController {
     private UserService userService;
     
     private TokenController tokenController;
-    
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/creation/users")//Al no estar bajo /api/users no se necesita autenticacion
     public ResponseEntity<?> create(@RequestBody User user) {
         if (userService.findById(user.getRegistroAcademico()).isEmpty()) {
@@ -117,5 +117,17 @@ public class UserController {
         this.userService = userService;
         this.tokenController = tokenController;
     }
+    
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/api/update/user")
+    public ResponseEntity<?> actualizarDatosUser(@RequestBody User user) {
+        if (userService.findById(user.getRegistroAcademico()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(userService.actualizarDatosUser(user));
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("NO EXISTE NINGUN USUARIO CON LOS DATOS: "+user);
+        }
+    }
+    
+    
 
 }
