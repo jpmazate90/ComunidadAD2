@@ -6,6 +6,7 @@
 package com.comunidad.ad2.comunidad.service;
 
 import com.comunidad.ad2.comunidad.entity.Comunity;
+import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.ComunityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,8 @@ public class ComunityImpl implements ComunityService{
     }
 
     @Override
-    public Iterable<Comunity> findAll() {
-        return this.comunityRepository.findAll();
+    public Iterable<Comunity> findByRegistroAcademico(String registroAcademico) {
+        return this.comunityRepository.findByRegistroAcademico(registroAcademico);
     }
     
 }
