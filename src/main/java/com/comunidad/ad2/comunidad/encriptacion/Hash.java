@@ -36,8 +36,6 @@ public class Hash {
     }
  
     /* Retorna un hash SHA1 a partir de un texto */
-    public static String sha1(String txt) {
-        return Hash.getHash(txt, "SHA1"); /// sha 256
-    }
+    
  
 }
