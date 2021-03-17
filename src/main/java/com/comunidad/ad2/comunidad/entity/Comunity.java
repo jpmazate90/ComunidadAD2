@@ -5,6 +5,8 @@
  */
 package com.comunidad.ad2.comunidad.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.hibernate.annotations.Type;
 
 /**
@@ -21,7 +24,7 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 @Table(name = "comunity")
-public class Comunity {
+public class Comunity implements Serializable{
 
     public Comunity(Course course, User user, String nombre, String descripcion) {
         this.course = course;
@@ -65,6 +68,10 @@ public class Comunity {
     @Type(type = "text")
     private String foto;
 
+    @JsonInclude
+    @Transient
+    private byte[] datosFoto;
+    
     public int getId() {
         return id;
     }
@@ -114,6 +121,14 @@ public class Comunity {
     }
 
     public Comunity() {
+    }
+
+    public byte[] getDatosFoto() {
+        return datosFoto;
+    }
+
+    public void setDatosFoto(byte[] datosFoto) {
+        this.datosFoto = datosFoto;
     }
 
     

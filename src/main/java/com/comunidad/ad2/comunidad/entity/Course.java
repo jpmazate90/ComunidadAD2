@@ -17,9 +17,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "course")
+
 public class Course implements Serializable {
-    
-    
+        
     @Id
     @Column(name = "codigo_curso", length = 5)
     private String codigoDeCurso;
