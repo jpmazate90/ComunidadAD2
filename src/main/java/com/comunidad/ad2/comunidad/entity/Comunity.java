@@ -42,9 +42,12 @@ public class Comunity implements Serializable{
         this.descripcion = descripcion;
         this.foto = foto;
     }
-    
-    
-    
+
+    public Comunity(int id) {
+        this.id = id;
+    }
+
+
     
     
     @Id
@@ -129,6 +132,11 @@ public class Comunity implements Serializable{
 
     public void setDatosFoto(byte[] datosFoto) {
         this.datosFoto = datosFoto;
+    }
+
+    @Override
+    public String toString() {
+        return "Comunity{" + "id=" + id + ", course=" + course + ", user=" + user + ", nombre=" + nombre + ", descripcion=" + descripcion + ", foto=" + foto + ", datosFoto=" + datosFoto + '}';
     }
 
     

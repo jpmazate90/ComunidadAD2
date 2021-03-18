@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.filechooser.FileSystemView;
@@ -110,11 +111,35 @@ public class ComunityController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/findComunityByRegistroAcademico")//Al no estar bajo /api/users no se necesita autenticacion
-    public ResponseEntity<?> findByRegistroAcademico(@RequestBody User user) {
+    public ResponseEntity<?> findByRegistroAcademico(@RequestBody User user) throws IOException {
         System.out.println("\n\n\n\n\n\n\n");
-        System.out.println("User registro academico:"+user.getRegistroAcademico());
+        System.out.println("User registro academico:" + user.getRegistroAcademico());
         System.out.println("\n\n\n\n\n\n\n");
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.comunityService.findByRegistroAcademico(user.getRegistroAcademico()));
+        //Iterable
+        //Recuperar las fotos
+        //Eniar el iterable
+        Iterable<Comunity> comunidades = this.comunityService.findByRegistroAcademico(user.getRegistroAcademico());
+        for (Comunity comunity : comunidades) {
+            if (comunity.getFoto() != null) {
+                Path rutaImagen = Paths.get(comunity.getFoto());//Ruta de la imagen
+                byte[] imagenBytes = Files.readAllBytes(rutaImagen);
+                comunity.setDatosFoto(imagenBytes);
+            }
+
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunidades);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/api/users/findComunityById")//Al no estar bajo /api/users no se necesita autenticacion
+    public ResponseEntity<?> findComunityById(@RequestBody Comunity com) {
+        System.out.println("\n\n\n\n\n");
+        System.out.println(com.toString());
+        System.out.println("\n\n\n\n\n");
+        Optional<Comunity> comunityFind = this.comunityService.findById(Integer.valueOf(com.getId()));
+        if (comunityFind.isPresent()) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunityFind);
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE ENCONTRO LA COMUNIDAD");
+    }
 }
