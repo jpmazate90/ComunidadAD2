@@ -132,12 +132,18 @@ public class ComunityController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/findComunityById")//Al no estar bajo /api/users no se necesita autenticacion
-    public ResponseEntity<?> findComunityById(@RequestBody Comunity com) {
+    public ResponseEntity<?> findComunityById(@RequestBody Comunity com) throws IOException {
         System.out.println("\n\n\n\n\n");
         System.out.println(com.toString());
         System.out.println("\n\n\n\n\n");
         Optional<Comunity> comunityFind = this.comunityService.findById(Integer.valueOf(com.getId()));
         if (comunityFind.isPresent()) {
+            Comunity comunity = comunityFind.get();
+            if (comunity.getFoto() != null) {
+                Path rutaImagen = Paths.get(comunity.getFoto());//Ruta de la imagen
+                byte[] imagenBytes = Files.readAllBytes(rutaImagen);
+                comunity.setDatosFoto(imagenBytes);
+            }
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunityFind);
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE ENCONTRO LA COMUNIDAD");
