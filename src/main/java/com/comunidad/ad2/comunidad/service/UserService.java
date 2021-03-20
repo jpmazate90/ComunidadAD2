@@ -49,6 +49,8 @@ public interface UserService {
     
     public User actualizarDatosUser(User user);
     
+    public Iterable<User> filtrarUsuarios(String carnet);
+    
     
     
 }
