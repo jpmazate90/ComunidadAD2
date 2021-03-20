@@ -7,6 +7,7 @@ package com.comunidad.ad2.comunidad.controller;
 
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.User;
+import com.comunidad.ad2.comunidad.service.ComunityAssignService;
 import com.comunidad.ad2.comunidad.service.ComunityService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
@@ -46,14 +47,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class ComunityController {
 
     private ComunityService comunityService;
-
+    
     @Autowired
     public ComunityController(ComunityService comunityService) {
-        this.comunityService = comunityService;
+        this.comunityService = comunityService;     
     }
 
     /**
-     * Permite crear una comunidad
+     * Permite guardar una comunidad
      *
      * @param comunity
      * @return
@@ -109,43 +110,6 @@ public class ComunityController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunity);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/api/users/findComunityByRegistroAcademico")//Al no estar bajo /api/users no se necesita autenticacion
-    public ResponseEntity<?> findByRegistroAcademico(@RequestBody User user) throws IOException {
-        System.out.println("\n\n\n\n\n\n\n");
-        System.out.println("User registro academico:" + user.getRegistroAcademico());
-        System.out.println("\n\n\n\n\n\n\n");
-        //Iterable
-        //Recuperar las fotos
-        //Eniar el iterable
-        Iterable<Comunity> comunidades = this.comunityService.findByRegistroAcademico(user.getRegistroAcademico());
-        for (Comunity comunity : comunidades) {
-            if (comunity.getFoto() != null) {
-                Path rutaImagen = Paths.get(comunity.getFoto());//Ruta de la imagen
-                byte[] imagenBytes = Files.readAllBytes(rutaImagen);
-                comunity.setDatosFoto(imagenBytes);
-            }
+    
 
-        }
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunidades);
-    }
-
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/api/users/findComunityById")//Al no estar bajo /api/users no se necesita autenticacion
-    public ResponseEntity<?> findComunityById(@RequestBody Comunity com) throws IOException {
-        System.out.println("\n\n\n\n\n");
-        System.out.println(com.toString());
-        System.out.println("\n\n\n\n\n");
-        Optional<Comunity> comunityFind = this.comunityService.findById(Integer.valueOf(com.getId()));
-        if (comunityFind.isPresent()) {
-            Comunity comunity = comunityFind.get();
-            if (comunity.getFoto() != null) {
-                Path rutaImagen = Paths.get(comunity.getFoto());//Ruta de la imagen
-                byte[] imagenBytes = Files.readAllBytes(rutaImagen);
-                comunity.setDatosFoto(imagenBytes);
-            }
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunityFind);
-        }
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE ENCONTRO LA COMUNIDAD");
-    }
 }

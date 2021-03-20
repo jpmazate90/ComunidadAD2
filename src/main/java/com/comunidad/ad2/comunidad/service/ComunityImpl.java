@@ -32,10 +32,10 @@ public class ComunityImpl implements ComunityService {
         return this.comunityRepository.save(comunity);
     }
 
-    @Override
-    public Iterable<Comunity> findByRegistroAcademico(String registroAcademico) {
-        return this.comunityRepository.findByRegistroAcademico(registroAcademico);
-    }
+//    @Override
+//    public Iterable<Comunity> findByRegistroAcademico(String registroAcademico) {
+//        return this.comunityRepository.findByRegistroAcademico(registroAcademico);
+//    }
 
     @Override
     @Transactional(readOnly = true)
