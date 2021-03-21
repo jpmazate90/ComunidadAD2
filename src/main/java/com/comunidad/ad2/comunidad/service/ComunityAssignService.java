@@ -17,9 +17,9 @@ public interface ComunityAssignService {
 
     public ComunityAssign save(ComunityAssign comunityAssign);
 
-    public Iterable<ComunityAssign> findByRegistroAcademico(String registroAcademico);
+    public Iterable<ComunityAssign> findComunityTypeAdminitrationByRegistroAcademico(String registroAcademico);
 
-    public Optional<ComunityAssign> findByIdComunity(int idComunidad);
+    public Optional<ComunityAssign> findComunityOwnerByIdComunity(int idComunidad);
 
     public Optional<ComunityAssign> findByIdComunityMiembro(int idComunidad,String registroAcademico);
 }

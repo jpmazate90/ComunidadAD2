@@ -59,27 +59,12 @@ public class ComunityAssignController {
      */
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/findComunityByRegistroAcademico")//Al no estar bajo /api/users no se necesita autenticacion
-    public ResponseEntity<?> findByRegistroAcademico(@RequestBody User user) throws IOException {
-        System.out.println("\n\n\n\n\n\n\n");
-        System.out.println("User registro academico:" + user.getRegistroAcademico());
-        System.out.println("\n\n\n\n\n\n\n");
-        //Iterable
-        //Recuperar las fotos
-        //Eniar el iterable
-        Iterable<ComunityAssign> comunidadesAsignadas = this.comunityAssignService.findByRegistroAcademico(user.getRegistroAcademico());
-        for (ComunityAssign comunityAssign : comunidadesAsignadas) {
-            if (comunityAssign.getComunity().getFoto() != null) {
-                Path rutaImagen = Paths.get(comunityAssign.getComunity().getFoto());//Ruta de la imagen
-                byte[] imagenBytes = Files.readAllBytes(rutaImagen);
-                comunityAssign.getComunity().setDatosFoto(imagenBytes);
-            }
-
-        }
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunidadesAsignadas);
+    public ResponseEntity<?> findComunityTypeAdminitrationByRegistroAcademico(@RequestBody User user) throws IOException {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.comunityAssignService.findComunityTypeAdminitrationByRegistroAcademico(user.getRegistroAcademico()));
     }
 
     /**
-     * Permite buscar una comunidad por un ID
+     * Permite buscar el creador de una comunidad por ID
      *
      * @param com
      * @return
@@ -87,32 +72,23 @@ public class ComunityAssignController {
      */
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/findComunityById")//Al no estar bajo /api/users no se necesita autenticacion
-    public ResponseEntity<?> findComunityById(@RequestBody Comunity com) throws IOException {
-        System.out.println("\n\n\n\n\n");
-        System.out.println(com.toString());
-        System.out.println("\n\n\n\n\n");
-        Optional<ComunityAssign> comunityFind = this.comunityAssignService.findByIdComunity(Integer.valueOf(com.getId()));
+    public ResponseEntity<?> findComunityOwnerByIdComunity(@RequestBody Comunity com) throws IOException {
+        Optional<ComunityAssign> comunityFind = this.comunityAssignService.findComunityOwnerByIdComunity(Integer.valueOf(com.getId()));
         if (comunityFind.isPresent()) {
-            ComunityAssign comunityAssign = comunityFind.get();
-            if (comunityAssign.getComunity().getFoto() != null) {
-                Path rutaImagen = Paths.get(comunityAssign.getComunity().getFoto());//Ruta de la imagen
-                byte[] imagenBytes = Files.readAllBytes(rutaImagen);
-                comunityAssign.getComunity().setDatosFoto(imagenBytes);
-            }
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunityAssign);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunityFind.get());
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE ENCONTRO LA COMUNIDAD");
     }
 
+    /**
+     * Permite buscar un usuario y la comunidad donde es miembro, segun id de comunidad
+     * @param comRes
+     * @return 
+     */
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/findMemberComunityById")
     public ResponseEntity<?> findMemberComunityById(@RequestBody ComunityAssign comRes) {
-        
-        System.out.println("\n\n\n\n\n\n");
-        System.out.println("Id comunidad:"+comRes.getComunity().getId());
-        System.out.println("Registro Academico:"+comRes.getUser().getRegistroAcademico());
-        System.out.println("\n\n\n\n\n\n");
-        Optional<ComunityAssign> comAsig = this.comunityAssignService.findByIdComunityMiembro(comRes.getComunity().getId(),comRes.getUser().getRegistroAcademico());
+        Optional<ComunityAssign> comAsig = this.comunityAssignService.findByIdComunityMiembro(comRes.getComunity().getId(), comRes.getUser().getRegistroAcademico());
         if (comAsig.isPresent()) {
             ComunityAssign comSend = comAsig.get();
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(comSend);

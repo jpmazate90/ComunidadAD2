@@ -21,7 +21,7 @@ public interface ComunityAssignRepository extends JpaRepository<ComunityAssign, 
 
     //Devuelve todas las comunidades creadas de un usuario
     @Query("SELECT comunity from ComunityAssign comunity where comunity.user.registroAcademico=?1 AND comunity.tipo='ADMINISTRADOR'")
-    public Iterable<ComunityAssign> findByRegistroAcademico(String registroAcademico);
+    public Iterable<ComunityAssign> findComunityTypeAdminitrationByRegistroAcademico(String registroAcademico);
 
     /**
      * Devuelve una comunidad, y el usuario que la creo
@@ -29,7 +29,7 @@ public interface ComunityAssignRepository extends JpaRepository<ComunityAssign, 
      * @return 
      */ 
     @Query("SELECT comunity from ComunityAssign comunity where comunity.comunity.id=?1 AND comunity.tipo='ADMINISTRADOR'")
-    public Optional<ComunityAssign> findByIdComunity(int idComunidad);
+    public Optional<ComunityAssign> findComunityOwnerByIdComunity(int idComunidad);
 
     /**
      * Se busca una solicitud de union a comunidad, en base a IDComunidad,RegistroAcademico y que sea Miembro
