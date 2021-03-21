@@ -50,6 +50,8 @@ public interface UserService {
     public User actualizarDatosUser(User user);
     
     public User cambiarEstadoUser(User user);
+    
+    public Iterable<User> getByFiltering(User user);
 
     
 }
