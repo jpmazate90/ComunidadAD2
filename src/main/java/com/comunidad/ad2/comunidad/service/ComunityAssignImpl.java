@@ -45,6 +45,11 @@ public class ComunityAssignImpl implements ComunityAssignService {
         return this.comunityAssignRepository.findByRegistroAcademico(registroAcademico);
     }
 
+    @Override
+    public Optional<ComunityAssign> findByIdComunityMiembro(int idComunidad,String registroAcademico) {
+        return this.comunityAssignRepository.findByIdComunityMiembro(idComunidad,registroAcademico);
+    }
+
     public Timestamp getFechaActual() {
         Date fecha = new Date();
         return new Timestamp(fecha.getTime());

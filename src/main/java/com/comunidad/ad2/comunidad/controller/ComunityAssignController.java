@@ -50,10 +50,12 @@ public class ComunityAssignController {
     }
 
     /**
-     * Permite buscar todas las comunidades que haya creado un usuario, ya sea de COMUNIDAD, o SUPER
+     * Permite buscar todas las comunidades que haya creado un usuario, ya sea
+     * de COMUNIDAD, o SUPER
+     *
      * @param user
      * @return
-     * @throws IOException 
+     * @throws IOException
      */
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/findComunityByRegistroAcademico")//Al no estar bajo /api/users no se necesita autenticacion
@@ -76,11 +78,12 @@ public class ComunityAssignController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunidadesAsignadas);
     }
 
-        /**
+    /**
      * Permite buscar una comunidad por un ID
+     *
      * @param com
      * @return
-     * @throws IOException 
+     * @throws IOException
      */
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/findComunityById")//Al no estar bajo /api/users no se necesita autenticacion
@@ -100,4 +103,21 @@ public class ComunityAssignController {
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE ENCONTRO LA COMUNIDAD");
     }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/api/users/findMemberComunityById")
+    public ResponseEntity<?> findMemberComunityById(@RequestBody ComunityAssign comRes) {
+        
+        System.out.println("\n\n\n\n\n\n");
+        System.out.println("Id comunidad:"+comRes.getComunity().getId());
+        System.out.println("Registro Academico:"+comRes.getUser().getRegistroAcademico());
+        System.out.println("\n\n\n\n\n\n");
+        Optional<ComunityAssign> comAsig = this.comunityAssignService.findByIdComunityMiembro(comRes.getComunity().getId(),comRes.getUser().getRegistroAcademico());
+        if (comAsig.isPresent()) {
+            ComunityAssign comSend = comAsig.get();
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(comSend);
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE ENCONTRO LA SUSCRIPCION A LA COMUNIDAD");
+    }
+
 }

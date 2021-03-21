@@ -21,4 +21,5 @@ public interface ComunityAssignService {
 
     public Optional<ComunityAssign> findByIdComunity(int idComunidad);
 
+    public Optional<ComunityAssign> findByIdComunityMiembro(int idComunidad,String registroAcademico);
 }
