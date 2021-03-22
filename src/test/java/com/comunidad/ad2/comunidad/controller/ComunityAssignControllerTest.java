@@ -77,39 +77,39 @@ public class ComunityAssignControllerTest {
     }
 
 
-    /**
-     * Test of findByRegistroAcademico method, of class
-     * ComunityAssignController.
-     */
-    @Test
-    public void testFindByRegistroAcademico() throws IOException {
-        User user = crearUsuario(RolUsuario.SUPER);
-        ComunityAssignService spyService = Mockito.spy(comunityAssignService);
-        Iterable<ComunityAssign> comunidadesAsignadas = obtenerComunitysAsignsList();        
-        when(spyService.findByRegistroAcademico(user.getRegistroAcademico())).thenReturn(comunidadesAsignadas);
-        ResponseEntity expResult = ResponseEntity.status(HttpStatus.ACCEPTED).body(comunidadesAsignadas);
-        ResponseEntity result = this.comunityAssignController.findByRegistroAcademico(user);
-        Object body = result.getBody();
-        Object body2 = expResult.getBody();
-        assertEquals(expResult.getStatusCode(), result.getStatusCode());
-        //falta validar las dos iterables lists
-    }
-
-    /**
-     * Test of findComunityById method, of class ComunityAssignController.
-     */
-    @Test
-    public void testFindComunityById() throws Exception {
-        Comunity com = crearComunidad();
-        ComunityAssignController instance = this.comunityAssignController;
-        ComunityAssignService spyService = Mockito.spy(comunityAssignService);
-        Optional<ComunityAssign> comunidadAsignada = Optional.of(createComunityAssign());        
-        Mockito.lenient().when(spyService.findByIdComunity(com.getId())).thenReturn(comunidadAsignada);
-        ResponseEntity expResult = ResponseEntity.status(HttpStatus.CONFLICT).body(comunidadAsignada);
-        ResponseEntity result = instance.findComunityById(com);
-        assertEquals(expResult.getStatusCode(), result.getStatusCode());
-        
-    }
+//    /**
+//     * Test of findByRegistroAcademico method, of class
+//     * ComunityAssignController.
+//     */
+//    @Test
+//    public void testFindByRegistroAcademico() throws IOException {
+//        User user = crearUsuario(RolUsuario.SUPER);
+//        ComunityAssignService spyService = Mockito.spy(comunityAssignService);
+//        Iterable<ComunityAssign> comunidadesAsignadas = obtenerComunitysAsignsList();        
+//        when(spyService.findByRegistroAcademico(user.getRegistroAcademico())).thenReturn(comunidadesAsignadas);
+//        ResponseEntity expResult = ResponseEntity.status(HttpStatus.ACCEPTED).body(comunidadesAsignadas);
+//        ResponseEntity result = this.comunityAssignController.findByRegistroAcademico(user);
+//        Object body = result.getBody();
+//        Object body2 = expResult.getBody();
+//        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+//        //falta validar las dos iterables lists
+//    }
+//
+//    /**
+//     * Test of findComunityById method, of class ComunityAssignController.
+//     */
+//    @Test
+//    public void testFindComunityById() throws Exception {
+//        Comunity com = crearComunidad();
+//        ComunityAssignController instance = this.comunityAssignController;
+//        ComunityAssignService spyService = Mockito.spy(comunityAssignService);
+//        Optional<ComunityAssign> comunidadAsignada = Optional.of(createComunityAssign());        
+//        Mockito.lenient().when(spyService.findByIdComunity(com.getId())).thenReturn(comunidadAsignada);
+//        ResponseEntity expResult = ResponseEntity.status(HttpStatus.CONFLICT).body(comunidadAsignada);
+//        ResponseEntity result = instance.findComunityById(com);
+//        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+//        
+//    }
 
     /**
      * Test of findComunityAsignsByIdComunity method, of class
