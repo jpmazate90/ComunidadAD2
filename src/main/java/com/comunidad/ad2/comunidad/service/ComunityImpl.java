@@ -42,12 +42,8 @@ public class ComunityImpl implements ComunityService {
         return this.comunityRepository.save(comunity);
     }
 
+    
     @Override
-    @Transactional(readOnly = true)
-    public Optional<Comunity> findById(Integer idComunidad) {
-        return this.comunityRepository.findById(idComunidad);
-    }
-
     public Comunity guardarImagen(MultipartFile file) throws IOException {
         Comunity com = new Comunity();
         this.creadorDeDirectoriosDeComunidad.createDirectory();
