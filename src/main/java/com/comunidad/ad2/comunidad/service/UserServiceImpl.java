@@ -149,9 +149,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User cambiarEstadoUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Iterable<User> filtrarUsuarios(String carnet) {
+//    return null;
+        return userRepository.filtrarUsuarios(carnet);
     }
+
+
 
     
 
