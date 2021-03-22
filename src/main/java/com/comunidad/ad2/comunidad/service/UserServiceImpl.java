@@ -41,16 +41,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Iterable<User> findAll() {
-
         return userRepository.findAll();
-
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Page<User> findAll(Pageable pageable) {
-        return userRepository.findAll(pageable);
-    }
+     
 
     @Override
     @Transactional(readOnly = true)
@@ -68,10 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
-    public void deleteById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
     @Override
     @Modifying
