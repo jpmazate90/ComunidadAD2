@@ -5,6 +5,7 @@
  */
 package com.comunidad.ad2.comunidad.controller;
 
+import com.comunidad.ad2.comunidad.AuxObject.ComunityAssignFilters;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.ComunityAssign;
 import com.comunidad.ad2.comunidad.entity.User;
@@ -100,4 +101,24 @@ public class ComunityAssignController {
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE ENCONTRO LA COMUNIDAD");
     }
+    
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/api/comunity/filtrarSolicitudesComunidades")//Al no estar bajo /api/users no se necesita autenticacion
+    public ResponseEntity<?> findComunityAsignsByIdComunity(@RequestBody ComunityAssignFilters filters) throws IOException {
+        System.out.println("\n\n\n\n\n");
+        System.out.println(filters.toString());
+        System.out.println("\n\n\n\n\n");
+        Iterable<ComunityAssign> comunityFind = this.comunityAssignService.findRequestInEspera(filters.getIdComunidad(), filters.getRegistroAcademico());
+      
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunityFind);
+    }
+    
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/api/users/updateStateComunityRequest")//Al no estar bajo /api/users no se necesita autenticacion
+    public ResponseEntity<?> updateStateComunityRequest(@RequestBody ComunityAssign comunityAssign) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.comunityAssignService.save(comunityAssign));
+    }
+    
+    
+    
 }

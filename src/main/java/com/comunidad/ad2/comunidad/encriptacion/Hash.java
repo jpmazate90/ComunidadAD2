@@ -35,7 +35,7 @@ public class Hash {
         return Hash.getHash(txt, "MD5");
     }
  
-    /* Retorna un hash SHA1 a partir de un texto */
+
     
  
 }
