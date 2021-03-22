@@ -133,5 +133,20 @@ public class UserController {
         }
         return ResponseEntity.ok(this.userService.getUsersBySearch(searchObject.getStringParam().trim()));
     }
+    
+    @PostMapping("/api/users/find/byId")
+    public ResponseEntity<?> findUserById(@RequestBody User usr) {//Recibe un user, donde se incluira el registro academico y el usuario
+        //Este user trae el registroAcademico y la contrasenia
+
+        System.out.println("Entrando>>>>>");
+         System.out.println("User::::"+usr.getRegistroAcademico());
+        
+        Optional<User> user = userService.findById(usr.getRegistroAcademico());
+        if(user.isPresent()){
+            return ResponseEntity.ok(user);
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("NO EXISTE EL TOKEN DE AUTENTICACION");
+
+    }
 
 }
