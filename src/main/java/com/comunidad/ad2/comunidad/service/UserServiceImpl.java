@@ -148,7 +148,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    
+    @Override
+    public Iterable<User> filtrarUsuarios(String carnet) {
+//    return null;
+        return userRepository.filtrarUsuarios(carnet);
+    }
+
+
 
     
 

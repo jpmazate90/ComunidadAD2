@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import javax.persistence.NamedNativeQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,11 +43,8 @@ public interface UserRepository extends JpaRepository<User, String>{
     
     @Query("SELECT u FROM User u WHERE u.token=?1")
     Optional<User> findByOwnToken(String token);
-    /***
-     * 
-         @Query("SELECT u FROM User u WHERE u.registroAcademico=?1 AND u.password=2? AND u.estado='ACTIVO'")
-        User userAuthentication(String registroAcademico,String password);
-        
-        */
-     
+    
+    @Query("SELECT u FROM User u WHERE u.registroAcademico LIKE %:carnet%")
+    Iterable<User> filtrarUsuarios(@Param("carnet") String carnet); 
+    
 }
