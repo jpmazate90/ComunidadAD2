@@ -24,46 +24,40 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 @Table(name = "comunity")
-public class Comunity implements Serializable{
+public class Comunity implements Serializable {
 
-    public Comunity(Course course, User user, String nombre, String descripcion) {
+    public Comunity(Course course, String nombre, String descripcion) {
         this.course = course;
-        this.user = user;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
-    
- 
-    public Comunity(int id, Course course, User user, String nombre, String descripcion, String foto) {
+
+    public Comunity(int id, Course course, String nombre, String descripcion, String foto) {
         this.id = id;
         this.course = course;
-        this.user = user;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.foto = foto;
     }
-    
-    
-    
-    
-    
+
+    public Comunity(int id) {
+        this.id = id;
+    }
+
     @Id
     @Column(name = "id_comunity")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    
+
     @ManyToOne//Un curso puede estar en varias comunidades 
     private Course course;
-    
-    @ManyToOne //Un suario tendra varias comunidades
-    private User user;
-    
-    @Column(name = "nombre_comunidad", length = 100,nullable = false)
+
+    @Column(name = "nombre_comunidad", length = 100, nullable = false)
     private String nombre;
-    
+
     @Column(name = "descripcion_comunidad", length = 100)
     private String descripcion;
-    
+
     @Column(name = "foto_comunidad", length = 100)
     @Type(type = "text")
     private String foto;
@@ -71,7 +65,7 @@ public class Comunity implements Serializable{
     @JsonInclude
     @Transient
     private byte[] datosFoto;
-    
+
     public int getId() {
         return id;
     }
@@ -86,14 +80,6 @@ public class Comunity implements Serializable{
 
     public void setCourse(Course course) {
         this.course = course;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getNombre() {
@@ -131,7 +117,9 @@ public class Comunity implements Serializable{
         this.datosFoto = datosFoto;
     }
 
-    
-    
-    
+    @Override
+    public String toString() {
+        return "Comunity{" + "id=" + id + ", course=" + course + ", nombre=" + nombre + ", descripcion=" + descripcion + ", foto=" + foto + ", datosFoto=" + datosFoto + '}';
+    }
+
 }

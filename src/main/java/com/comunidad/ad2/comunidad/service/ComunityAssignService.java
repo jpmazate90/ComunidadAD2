@@ -6,19 +6,19 @@
 package com.comunidad.ad2.comunidad.service;
 
 import com.comunidad.ad2.comunidad.entity.Comunity;
-import com.comunidad.ad2.comunidad.entity.User;
+import com.comunidad.ad2.comunidad.entity.ComunityAssign;
 import java.util.Optional;
 
 /**
  *
  * @author jesfrin
  */
-public interface ComunityService {
-    
-    //    public User save(User user); 
-    public Comunity save(Comunity comunity);
-       
-//    public Iterable<Comunity> findByRegistroAcademico(String user);
-    
-    public Optional<Comunity> findById(Integer idComunidad);
+public interface ComunityAssignService {
+
+    public ComunityAssign save(ComunityAssign comunityAssign);
+
+    public Iterable<ComunityAssign> findByRegistroAcademico(String registroAcademico);
+
+    public Optional<ComunityAssign> findByIdComunity(int idComunidad);
+
 }
