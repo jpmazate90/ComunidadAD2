@@ -54,8 +54,8 @@ public interface ComunityAssignRepository extends JpaRepository<ComunityAssign, 
 //INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',4,999999999);
 //INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',4,888888888);
 
-INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',5,999999999);
-INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',5,888888888);
-INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',4,999999999);
-INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',4,888888888);
+INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',8,999999999);
+INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',8,888888888);
+INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',9,999999999);
+INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',9,888888888);
 */

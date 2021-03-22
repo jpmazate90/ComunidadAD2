@@ -6,9 +6,12 @@
 package com.comunidad.ad2.comunidad.controller;
 
 import com.comunidad.ad2.comunidad.AuxObject.CreacionUsuarioParaPruebas;
+import com.comunidad.ad2.comunidad.AuxObject.NumeroCarnet;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.service.UserServiceImpl;
 import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -208,5 +211,24 @@ public class UserControllerTest {
         assertEquals(expResult.getStatusCode(), result.getStatusCode());
         
     }
+    
+    @Test
+    public void testFiltrarUsuarios() {
+        User user = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
+        List<User> lista = listaUsuarios();
+        when(this.userService.filtrarUsuarios(ArgumentMatchers.any())).thenReturn(lista);
+        
+        ResponseEntity expResult = ResponseEntity.ok(lista);
+        ResponseEntity result = this.userController.filtrarUsuarios(new NumeroCarnet("1"));
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+        
+    }
 
+    private List<User> listaUsuarios(){
+        List<User> a = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+           a.add(CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER));            
+        }
+        return a;
+    }
 }

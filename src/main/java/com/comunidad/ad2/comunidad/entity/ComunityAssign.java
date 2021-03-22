@@ -9,6 +9,7 @@ import com.comunidad.ad2.comunidad.service.enums.EstadoComunityAssign;
 import com.comunidad.ad2.comunidad.service.enums.TipoComunityAssign;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -39,6 +40,7 @@ public class ComunityAssign implements Serializable {
         this.fecha_decision = fecha_decision;
         this.estado = estado;
         this.fechaCreacion = fechaCreacion_O_Aceptacion;
+        
     }
 
     public ComunityAssign(ComunityAssignKey idComunityAssign, TipoComunityAssign tipo, Timestamp fecha_decision, EstadoComunityAssign estado, Timestamp fechaCreacion) {

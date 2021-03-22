@@ -306,6 +306,20 @@ public class UserServiceImplTest {
         Assertions.assertEquals(user.getRegistroAcademico(),result.getRegistroAcademico());
     }
     
+    @Test
+    public void testFiltrarUsuarios(){
+        // arrange
+        
+        User user = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
+        List<User> lista = obtenerUserList();
+        Mockito.when(userRepository.filtrarUsuarios(ArgumentMatchers.any())).thenReturn(lista);
+        //act
+        Iterable<User> result = this.userService.filtrarUsuarios("1");
+
+        //assert
+        Assertions.assertEquals(tamanio(result),lista.size());
+    }
+    
     
     
     

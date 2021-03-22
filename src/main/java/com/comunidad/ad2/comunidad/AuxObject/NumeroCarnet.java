@@ -16,9 +16,7 @@ public class NumeroCarnet {
         this.numeroCarnet = numeroCarnet;
     }
 
-    public NumeroCarnet() {
-    }
-
+   
     
     
     
@@ -26,9 +24,7 @@ public class NumeroCarnet {
         return numeroCarnet;
     }
 
-    public void setNumeroCarnet(String numeroCarnet) {
-        this.numeroCarnet = numeroCarnet;
-    }
+     
     
     
     
