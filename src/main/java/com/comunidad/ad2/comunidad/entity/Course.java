@@ -61,7 +61,13 @@ public class Course implements Serializable {
         this.codigoDeCurso = codigoDeCurso;
     }
 
-   
+    public Course(String codigoDeCurso, String nombre, int noDeSemestre) {
+        this.codigoDeCurso = codigoDeCurso;
+        this.nombre = nombre;
+        this.noDeSemestre = noDeSemestre;
+    }
+
+    
    
    
 }

@@ -21,41 +21,35 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * @author jesfrin
  */
 @ExtendWith(MockitoExtension.class)
-public class ComunityServiceImplTest {
-    
-    public static final String NOMBRE_COMUNIDAD="Comunidad AD2";
-    
+public class ComunityImplTest {
+
+    public static final String NOMBRE_COMUNIDAD = "Comunidad AD2";
+
     @Mock
     private ComunityRepository comunityRepository;
-    
+
     @InjectMocks
     private ComunityImpl comunityImpl;
-    
-    public ComunityServiceImplTest(){
-        
+
+    public ComunityImplTest() {
+
     }
-    
+
     @Test
-    public void testSave(){
+    public void testSave() {
         //Arrange
         Comunity comunity = crearComunidad(NOMBRE_COMUNIDAD);
         ComunityImpl spy = Mockito.spy(this.comunityImpl);
-        
+
         Mockito.when(comunityRepository.save(comunity)).thenReturn(comunity);
         //act
         Comunity resultado = spy.save(comunity);
         //assert
-        Assertions.assertEquals(NOMBRE_COMUNIDAD,resultado.getNombre());
+        Assertions.assertEquals(NOMBRE_COMUNIDAD, resultado.getNombre());
         //Assertions.assertEquals(NOMBRE_COMUNIDAD,"d");
-        
+
     }
-    
-    public Comunity crearComunidad(String nombreComunidad){
-        Course curso = new Course();
-        return new Comunity(curso, nombreComunidad, "");
-    }
-    
- 
+
 //    /**
 //     * Test of findById method, of class ComunityImpl.
 //     */
@@ -85,5 +79,8 @@ public class ComunityServiceImplTest {
 //        // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
 //    }
-
+    public Comunity crearComunidad(String nombreComunidad) {
+        Course curso = new Course();
+        return new Comunity(curso, nombreComunidad, "");
+    }
 }
