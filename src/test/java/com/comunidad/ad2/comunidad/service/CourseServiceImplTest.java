@@ -15,7 +15,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.comunidad.ad2.comunidad.entity.Course;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
+import org.mockito.ArgumentMatchers;
 /**
  *
  * @author jesfrin
@@ -49,6 +51,19 @@ public class CourseServiceImplTest {
         ArrayList<Course> resultado =(ArrayList<Course>)misCursos;
         //assert
         Assertions.assertEquals(CODIGO_DE_CURSO,(resultado.get(0).getCodigoDeCurso()));
+        //Assertions.assertEquals(CODIGO_DE_CURSO,"HOLA");
+
+    }
+    
+    @Test
+    public void testFindById(){
+        //arrange
+        Mockito.when(courseRepository.findById(ArgumentMatchers.any())).thenReturn(Optional.of(new Course("1")));
+        //act
+        Optional<Course> curso = Optional.of(new Course("1"));
+        Optional<Course> result = this.courseImpl.findById("1");
+        //assert
+        Assertions.assertEquals(result.get().getCodigoDeCurso(),curso.get().getCodigoDeCurso());
         //Assertions.assertEquals(CODIGO_DE_CURSO,"HOLA");
 
     }

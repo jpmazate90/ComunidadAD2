@@ -12,6 +12,7 @@ import com.comunidad.ad2.comunidad.entity.User;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
@@ -40,5 +41,21 @@ public interface ComunityAssignRepository extends JpaRepository<ComunityAssign, 
     @Query("SELECT comunity from ComunityAssign comunity where comunity.comunity.id=?1 AND comunity.user.registroAcademico=?2 AND comunity.tipo='MIEMBRO'")
     public Optional<ComunityAssign> findByIdComunityMiembro(int idComunidad, String registroAcademico);
 
+    @Query("SELECT comunity from ComunityAssign comunity where comunity.comunity.id=?1 AND comunity.tipo='ADMINISTRADOR'")
+    public Optional<ComunityAssign> findByIdComunity(int idComunidad);
+    
+    @Query("SELECT comunity from ComunityAssign comunity where comunity.comunity.id=?1 AND comunity.user.registroAcademico LIKE %?2% AND comunity.estado='ESPERA' AND comunity.tipo='MIEMBRO'")
+    public Iterable<ComunityAssign> findUserRequest(int idComunidad, String carnet);
+
+
 
 }
+/*
+//INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',4,999999999);
+//INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',4,888888888);
+
+INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',5,999999999);
+INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',5,888888888);
+INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',4,999999999);
+INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',4,888888888);
+*/

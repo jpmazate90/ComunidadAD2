@@ -21,5 +21,17 @@ public interface ComunityAssignService {
 
     public Optional<ComunityAssign> findComunityOwnerByIdComunity(int idComunidad);
 
+    /**
+     * 
+     *@param idComunidad es id comunidad 
+     * *@param registroAcademico es el registro academico
+     * @param registroAcademico
+     * @return iterable data
+     * 
+     */
+    public Iterable<ComunityAssign> findRequestInEspera(Integer idComunidad, String registroAcademico);
+    public ComunityAssign updateStateComunityRequest(ComunityAssign comunityAssign);
+
+
     public Optional<ComunityAssign> findByIdComunityMiembro(int idComunidad,String registroAcademico);
 }

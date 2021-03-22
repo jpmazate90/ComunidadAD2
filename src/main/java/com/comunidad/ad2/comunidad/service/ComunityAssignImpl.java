@@ -107,5 +107,19 @@ public class ComunityAssignImpl implements ComunityAssignService {
         }
         return comunityAssign;
     }
+    
+    @Override
+    public Iterable<ComunityAssign> findRequestInEspera(Integer idComunidad, String registroAcademico) {
+        return this.comunityAssignRepository.findUserRequest(idComunidad,registroAcademico+"");
+    }
+
+    @Override
+    public ComunityAssign updateStateComunityRequest(ComunityAssign comunityAssign) {
+        comunityAssign.setFecha_decision(getFechaActual());
+        return this.comunityAssignRepository.save(comunityAssign);
+
+    }
+
+
 
 }

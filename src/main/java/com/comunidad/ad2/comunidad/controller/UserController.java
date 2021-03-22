@@ -114,6 +114,7 @@ public class UserController {
         return ResponseEntity.ok(this.userService.findAll());
     }
 
+       @Autowired
     public UserController(@Autowired UserService userService, @Autowired TokenController tokenController) {
         this.userService = userService;
         this.tokenController = tokenController;
