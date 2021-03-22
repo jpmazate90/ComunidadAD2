@@ -51,5 +51,7 @@ public interface UserService {
     
     public User cambiarEstadoUser(User user);
 
+    public Iterable<User> getUsersBySearch(String searchText);
+    
     
 }

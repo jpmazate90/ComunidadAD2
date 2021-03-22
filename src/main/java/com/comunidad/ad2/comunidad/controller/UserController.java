@@ -5,6 +5,7 @@
  */
 package com.comunidad.ad2.comunidad.controller;
 
+import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.encriptacion.Hash;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.service.UserService;
@@ -103,9 +104,6 @@ public class UserController {
         }
         return ResponseEntity.ok(oUser);
     }
-    
-    
-    
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/accounts")
@@ -128,6 +126,12 @@ public class UserController {
         }
     }
     
-    
+    @PostMapping("/api/users/search")
+    public ResponseEntity<?> getUsersBySearch(@RequestBody OrdinaryObject searchObject) {
+        if(searchObject.getStringParam().trim().isEmpty()){
+            return ResponseEntity.ok(this.userService.findAll());
+        }
+        return ResponseEntity.ok(this.userService.getUsersBySearch(searchObject.getStringParam().trim()));
+    }
 
 }
