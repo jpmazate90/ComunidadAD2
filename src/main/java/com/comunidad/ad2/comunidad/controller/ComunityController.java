@@ -6,6 +6,8 @@
 package com.comunidad.ad2.comunidad.controller;
 
 import com.comunidad.ad2.comunidad.entity.Comunity;
+import com.comunidad.ad2.comunidad.entity.User;
+import com.comunidad.ad2.comunidad.service.ComunityAssignService;
 import com.comunidad.ad2.comunidad.service.ComunityService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
@@ -15,6 +17,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.filechooser.FileSystemView;
@@ -44,25 +47,30 @@ import org.springframework.web.multipart.MultipartFile;
 public class ComunityController {
 
     private ComunityService comunityService;
-
+    
     @Autowired
     public ComunityController(ComunityService comunityService) {
-        this.comunityService = comunityService;
+        this.comunityService = comunityService;     
     }
 
+    /**
+     * Permite guardar una comunidad
+     *
+     * @param comunity
+     * @return
+     */
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/creationComunity")//Al no estar bajo /api/users no se necesita autenticacion
     public ResponseEntity<?> create(@RequestBody Comunity comunity) {
-        System.out.println("\n\n\n\n\n\n\n");
-        System.out.println("Descripcion:" + comunity.getDescripcion());
-        System.out.println("Nombre:" + comunity.getNombre());
-        System.out.println("Usuario:" + comunity.getUser().getRegistroAcademico());
-        System.out.println("Curso:" + comunity.getCourse().getCodigoDeCurso());
-        System.out.println("\n\n\n\n\n\n\n");
-
         return ResponseEntity.status(HttpStatus.CREATED).body(this.comunityService.save(comunity));
     }
 
+    /**
+     * Permite que se suba una imagen
+     *
+     * @param file
+     * @return
+     */
     @PostMapping("/api/users/uploadImageComunity")
     public ResponseEntity<?> uploadImage(@RequestBody MultipartFile file) {
         Comunity comunidad = new Comunity();
@@ -87,54 +95,21 @@ public class ComunityController {
         return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE RECIBIO LA IMAGEN");
     }
 
-     @PostMapping("/api/users/pruebaCargarImagen")
-    public ResponseEntity<?> pruebaCargaImagen(@RequestBody Comunity comunity)  throws IOException{
-         Path rutaImagen = Paths.get(comunity.getFoto());//Ruta de la imagen
-          byte[] imagenBytes=Files.readAllBytes(rutaImagen);
-         /*String nombreImagen="nombreImagen";
-         String originalName="nombreOriginal";
-         String contentType =MediaType.IMAGE_PNG_VALUE;
-         MockMultipartFile resultv= new MockMultipartFile(nombreImagen, originalName, contentType, imagenBytes);
-
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(resultv);
-          */  
+    /**
+     * Envia una comunidad con la informacion necesaria para crear una imagen
+     *
+     * @param comunity
+     * @return
+     * @throws IOException
+     */
+    @PostMapping("/api/users/pruebaCargarImagen")
+    public ResponseEntity<?> pruebaCargaImagen(@RequestBody Comunity comunity) throws IOException {
+        Path rutaImagen = Paths.get(comunity.getFoto());//Ruta de la imagen
+        byte[] imagenBytes = Files.readAllBytes(rutaImagen);
         comunity.setDatosFoto(imagenBytes);
-         //MultiValueMap<String,Object> parameters = new LinkedMultiValueMap<>();
-         //parameters.add("file",comunity);
-         return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunity);
-
-         /*
-         NO FUNCIONO
-         
-         MultipartBodyBuilder bodyBuilder = new MultipartBodyBuilder();
-         bodyBuilder.part("file", new ByteArrayResource(Files.readAllBytes(rutaImagen)));
-         comunity.setDatosFoto(imagenBytes);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunity);*/
- 
-         
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunity);
     }
+
     
-    /*        @PostMapping("/api/users/pruebaImagen")
-    public ResponseEntity<?> prueba(@RequestParam("file") String  file) {
-                System.out.println("\n\n\n\n\n\n\n");
-                //System.out.println(file.getResource());
-                //System.out.println(file.getOriginalFilename());
-                //System.out.println(file.getResource());
-                System.out.println("\n\n\n\n\n\n\n");
-        
-        return ResponseEntity.ok(file);
 
-    }*/
- /*   @PostMapping("/prueba/imagen")
-    public ResponseEntity<?> prueba(@RequestBody Comunity comunity, @RequestParam("file") String nombreImagen) {
-        System.out.println("\n\n\n\n\n\n\n");
-        System.out.println("Descripcion:" + comunity.getDescripcion());
-        System.out.println("Nombre:" + comunity.getNombre());
-        System.out.println("Usuario:" + comunity.getUser().getRegistroAcademico());
-        System.out.println("Curso:" + comunity.getCourse().getCodigoDeCurso());
-        System.out.println("Imagen:" + nombreImagen);
-        System.out.println("\n\n\n\n\n\n\n");
-        return ResponseEntity.ok(nombreImagen);
-
-    }*/
 }
