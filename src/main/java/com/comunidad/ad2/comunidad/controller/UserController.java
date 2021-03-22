@@ -5,6 +5,7 @@
  */
 package com.comunidad.ad2.comunidad.controller;
 
+import com.comunidad.ad2.comunidad.AuxObject.NumeroCarnet;
 import com.comunidad.ad2.comunidad.encriptacion.Hash;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.service.UserService;
@@ -128,6 +129,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("NO EXISTE NINGUN USUARIO CON LOS DATOS: "+user);
         }
     }
+    
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/api/users/filtrarUsuarios")
+    public ResponseEntity<?> filtrarUsuarios(@RequestBody NumeroCarnet carnet) {
+        
+        System.out.println("****************Entre aqui: "+carnet.getNumeroCarnet());
+        return ResponseEntity.ok(userService.filtrarUsuarios(carnet.getNumeroCarnet()));
+    }
+    
+    
+    
     
     
 

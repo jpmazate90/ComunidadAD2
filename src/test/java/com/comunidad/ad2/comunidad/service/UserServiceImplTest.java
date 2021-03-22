@@ -111,6 +111,7 @@ public class UserServiceImplTest {
         assertEquals(EN_ESPERA, usuario.getEstado());
     }
     
+    
     private User crearUsuario(RolUsuario a){
         User user = new User("201029301","aaa", "aaa", new Timestamp(400000000), GeneroUsuario.N, "aa", "aa@a.com", a, "xela", EstadoUsuario.ACTIVO);
         return user;

@@ -35,6 +35,7 @@ public class Hash {
         return Hash.getHash(txt, "MD5");
     }
  
+
     
  
 }
