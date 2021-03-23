@@ -51,6 +51,8 @@ public interface UserService {
     
     public Iterable<User> getByFiltering(User user);
 
+    public Iterable<User> getUsersBySearch(String searchText);
+    
     public Iterable<User> filtrarUsuarios(String carnet);
     
 }

@@ -6,6 +6,7 @@
 package com.comunidad.ad2.comunidad.controller;
 
 import com.comunidad.ad2.comunidad.AuxObject.CreacionUsuarioParaPruebas;
+import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.service.UserServiceImpl;
 import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
@@ -207,6 +208,34 @@ public class UserControllerTest {
         ResponseEntity result = this.userController.actualizarDatosUser(user);
         assertEquals(expResult.getStatusCode(), result.getStatusCode());
         
+    }
+    
+    @Test
+    public void testGetUsersBySearch() {
+        OrdinaryObject ordinaryObject = new OrdinaryObject();
+        String stringParam = "stringParam";
+        ordinaryObject.setStringParam(stringParam);
+        ResponseEntity expResult = ResponseEntity.ok(this.userService.getUsersBySearch(stringParam));
+        ResponseEntity result = this.userController.getUsersBySearch(ordinaryObject);
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+    }
+    
+    @Test
+    public void testGetUsersBySearchEmptyData() {
+        OrdinaryObject ordinaryObject = new OrdinaryObject();
+        String stringParam = " ";
+        ordinaryObject.setStringParam(stringParam);
+        ResponseEntity expResult = ResponseEntity.ok(this.userService.getUsersBySearch(stringParam));
+        ResponseEntity result = this.userController.getUsersBySearch(ordinaryObject);
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+    }
+    
+    @Test
+    public void testByFiltering() {
+        User usr = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
+        ResponseEntity expResult = ResponseEntity.ok(this.userService.getByFiltering(usr));
+        ResponseEntity result = this.userController.getByFiltering(usr);
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
     }
 
 }

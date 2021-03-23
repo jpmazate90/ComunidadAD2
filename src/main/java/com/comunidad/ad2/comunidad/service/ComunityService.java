@@ -21,6 +21,10 @@ public interface ComunityService {
     public Comunity save(Comunity comunity);
        
 //    public Iterable<Comunity> findByRegistroAcademico(String user);
+    
+    public Iterable<Comunity> findAll();
+    
+    public Iterable<Comunity> getCommunitiesBySearch(String searchText);
         
     public Comunity guardarImagen(MultipartFile file) throws IOException;
 }
