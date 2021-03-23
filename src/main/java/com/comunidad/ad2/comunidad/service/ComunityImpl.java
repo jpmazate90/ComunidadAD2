@@ -43,4 +43,14 @@ public class ComunityImpl implements ComunityService {
         return this.comunityRepository.findById(idComunidad);
     }
 
+    @Override
+    public Iterable<Comunity> findAll() {
+        return this.comunityRepository.findAll();
+    }
+
+    @Override
+    public Iterable<Comunity> getCommunitiesBySearch(String searchText) {
+        return this.comunityRepository.getCommunitiesBySearch(searchText);
+    }
+
 }

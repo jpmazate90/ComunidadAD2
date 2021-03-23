@@ -5,6 +5,7 @@
  */
 package com.comunidad.ad2.comunidad.controller;
 
+import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.service.ComunityAssignService;
@@ -47,10 +48,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class ComunityController {
 
     private ComunityService comunityService;
-    
+
     @Autowired
     public ComunityController(ComunityService comunityService) {
-        this.comunityService = comunityService;     
+        this.comunityService = comunityService;
     }
 
     /**
@@ -110,6 +111,12 @@ public class ComunityController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunity);
     }
 
-    
+    @PostMapping("/api/communities/search")
+    public ResponseEntity<?> getCommunitiesBySearch(@RequestBody OrdinaryObject searchObject) {
+        if (searchObject.getStringParam().trim().isEmpty()) {
+            return ResponseEntity.ok(this.comunityService.findAll());
+        }
+        return ResponseEntity.ok(this.comunityService.getCommunitiesBySearch(searchObject.getStringParam().trim()));
+    }
 
 }

@@ -6,7 +6,6 @@
 package com.comunidad.ad2.comunidad.service;
 
 import com.comunidad.ad2.comunidad.entity.Comunity;
-import com.comunidad.ad2.comunidad.entity.User;
 import java.util.Optional;
 
 /**
@@ -21,4 +20,9 @@ public interface ComunityService {
 //    public Iterable<Comunity> findByRegistroAcademico(String user);
     
     public Optional<Comunity> findById(Integer idComunidad);
+    
+    public Iterable<Comunity> findAll();
+    
+    public Iterable<Comunity> getCommunitiesBySearch(String searchText);
+    
 }

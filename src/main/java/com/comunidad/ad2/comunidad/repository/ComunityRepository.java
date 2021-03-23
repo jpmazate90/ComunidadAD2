@@ -6,7 +6,7 @@
 package com.comunidad.ad2.comunidad.repository;
 
 import com.comunidad.ad2.comunidad.entity.Comunity;
-import com.comunidad.ad2.comunidad.entity.User;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.context.jdbc.Sql;
@@ -21,5 +21,7 @@ public interface ComunityRepository extends JpaRepository<Comunity, Integer> {
     //@Query("SELECT comunity from Comunity comunity where comunity.user.registroAcademico=?1")
     //public Iterable<Comunity> findByRegistroAcademico(String registroAcademico);
 
+    @Query(value = "CALL get_communities_by_search(?1);", nativeQuery = true)
+    List<Comunity> getCommunitiesBySearch(String searchText);
      
 }

@@ -14,6 +14,8 @@ import static com.comunidad.ad2.comunidad.service.enums.EstadoUsuario.EN_ESPERA;
 import com.comunidad.ad2.comunidad.service.enums.GeneroUsuario;
 import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
 import java.sql.Timestamp;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
@@ -48,6 +50,18 @@ public class UserServiceImplTest {
     private UserServiceImpl userService; // es la implementacion
 
     public UserServiceImplTest() {
+    }
+    
+    private User createUser(String id){
+        return new User(id);
+    }
+    
+    private List<User> getUsersList(int sizeList){
+        List<User> result = new LinkedList<>();
+        for (int i = 0; i < sizeList; i++) {
+            result.add(createUser(Integer.toString(i)));
+        }
+        return result;
     }
     
     /*@BeforeEach
@@ -209,6 +223,20 @@ public class UserServiceImplTest {
         
         //assert
         Assertions.assertEquals(1, response);
+    }
+    
+    @Test
+    public void testGetUsersBySearch(){
+        String param = "1";
+        List<User> listaUsuarios = getUsersList(3);
+        //arrange
+        UserServiceImpl spy = Mockito.spy(userService);
+        Mockito.when(userRepository.getUsersBySearch(param)).thenReturn(listaUsuarios);
+        //act
+        List<User> resultList = (List<User>) spy.getUsersBySearch(param);
+        
+        //assert
+        Assertions.assertEquals(listaUsuarios.size(), resultList.size());
     }
     
     
