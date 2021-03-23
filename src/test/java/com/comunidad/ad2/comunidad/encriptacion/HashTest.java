@@ -50,6 +50,22 @@ public class HashTest {
         assertEquals(expResult, result);
         
     }
+    
+        /**
+     * Test of getHash method, of class Hash.
+     */
+    @Test
+    public void testGetHashWithError() {
+        Hash hash = new Hash();
+        System.out.println("getHash");
+        String txt = "1";
+        String hashType = "aaa";
+        String expResult = null;
+        String result = Hash.getHash(txt, hashType);
+        assertEquals(expResult, result);
+        
+    }
+
 
     /**
      * Test of md5 method, of class Hash.
