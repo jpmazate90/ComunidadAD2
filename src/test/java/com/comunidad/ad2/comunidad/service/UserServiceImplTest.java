@@ -112,6 +112,7 @@ public class UserServiceImplTest {
         //assert
         assertEquals(EN_ESPERA, usuario.getEstado());
     }
+    
     @Test
     public void testAsignarEstadoWhenRoleIsSUPER() {
          // arreange
@@ -330,6 +331,34 @@ public class UserServiceImplTest {
 
         //assert
         Assertions.assertEquals(user.getRegistroAcademico(),result.getRegistroAcademico());
+    }
+    
+    @Test
+    public void testGetByFiltering(){
+        User usr = new User("1", "n1", "xxxxx", null, GeneroUsuario.N, "foto", "c1", RolUsuario.SUPER, "c1", EN_ESPERA);
+        List<User> listaUsuarios = getUsersList(3);
+        //arrange
+        UserServiceImpl spy = Mockito.spy(userService);
+        Mockito.when(userRepository.getUsersByFiltering(usr.getRegistroAcademico(), usr.getNombreCompleto(), usr.getCorreoElectronico())).thenReturn(listaUsuarios);
+        //act
+        List<User> resultList = (List<User>) spy.getByFiltering(usr);
+        
+        //assert
+        Assertions.assertEquals(listaUsuarios.size(), resultList.size());
+    }
+    
+    @Test
+    public void testGetByFiltering2(){
+        User usr = new User(" ", " ", "xxxxx", null, GeneroUsuario.N, "foto", " ", RolUsuario.SUPER, "c1", EN_ESPERA);
+        List<User> listaUsuarios = getUsersList(3);
+        //arrange
+        UserServiceImpl spy = Mockito.spy(userService);
+        Mockito.when(userRepository.getUsersByFiltering(spy.NOT_VALUE, spy.NOT_VALUE, spy.NOT_VALUE)).thenReturn(listaUsuarios);
+        //act
+        List<User> resultList = (List<User>) spy.getByFiltering(usr);
+        
+        //assert
+        Assertions.assertEquals(listaUsuarios.size(), resultList.size());
     }
 
 }

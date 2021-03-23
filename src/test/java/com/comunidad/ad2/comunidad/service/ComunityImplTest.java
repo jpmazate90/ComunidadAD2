@@ -8,6 +8,8 @@ package com.comunidad.ad2.comunidad.service;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.Course;
 import com.comunidad.ad2.comunidad.repository.ComunityRepository;
+import java.util.LinkedList;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -83,4 +85,38 @@ public class ComunityImplTest {
         Course curso = new Course();
         return new Comunity(curso, nombreComunidad, "");
     }
+    
+    private List<Comunity> getCommunitiesList(int sizeList){
+        List<Comunity> result = new LinkedList<>();
+        for (int i = 0; i < sizeList; i++) {
+            result.add(crearComunidad("n" + i));
+        }
+        return result;
+    }
+    
+    @Test
+    public void testGetCommunitiesBySearch(){
+        List<Comunity> listaCommunities = getCommunitiesList(3);
+        String param = NOMBRE_COMUNIDAD;
+        //arrange
+        ComunityImpl spy = Mockito.spy(comunityImpl);
+        Mockito.when(comunityImpl.getCommunitiesBySearch(param)).thenReturn(listaCommunities);
+        //act
+        List<Comunity> resulList = (List<Comunity>) spy.getCommunitiesBySearch(param);
+        //assert
+        Assertions.assertEquals(listaCommunities.size(), resulList.size());
+    }
+    
+    @Test
+    public void testFindAll(){
+        List<Comunity> listaCommunities = getCommunitiesList(3);
+        //arrange
+        ComunityImpl spy = Mockito.spy(comunityImpl);
+        Mockito.when(comunityImpl.findAll()).thenReturn(listaCommunities);
+        //act
+        List<Comunity> resulList = (List<Comunity>) spy.findAll();
+        //assert
+        Assertions.assertEquals(listaCommunities.size(), resulList.size());
+    }
+    
 }
