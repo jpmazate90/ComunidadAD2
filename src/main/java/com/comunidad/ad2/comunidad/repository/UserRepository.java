@@ -13,7 +13,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import javax.persistence.NamedNativeQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,5 +47,9 @@ public interface UserRepository extends JpaRepository<User, String>{
    
     @Query(value = "CALL get_users_by_filtering(?1,?2,?3);", nativeQuery = true)
     List<User> getUsersByFiltering(String registroAcademico, String nombreCompleto, String correoElectronico);
+
+    
+    @Query("SELECT u FROM User u WHERE u.registroAcademico LIKE %:carnet%")
+    Iterable<User> filtrarUsuarios(@Param("carnet") String carnet);
     
 }

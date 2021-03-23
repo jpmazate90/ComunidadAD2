@@ -21,13 +21,13 @@ public interface UserService {
     
     public Iterable<User> findAll();
     
-    public Page<User> findAll(Pageable pageable);
+    
     
     public Optional<User> findById(String registroAcademico);
     
     public User save(User user);
     
-    public void deleteById(Long id);
+    
     
     public int adminCreation(String registroAcademico);
     
@@ -49,9 +49,8 @@ public interface UserService {
     
     public User actualizarDatosUser(User user);
     
-    public User cambiarEstadoUser(User user);
-    
     public Iterable<User> getByFiltering(User user);
 
+    public Iterable<User> filtrarUsuarios(String carnet);
     
 }
