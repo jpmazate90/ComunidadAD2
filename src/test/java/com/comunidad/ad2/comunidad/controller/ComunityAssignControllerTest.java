@@ -8,6 +8,7 @@ package com.comunidad.ad2.comunidad.controller;
 import com.comunidad.ad2.comunidad.AuxObject.ComunityAssignFilters;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.ComunityAssign;
+import com.comunidad.ad2.comunidad.entity.ComunityAssignKey;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.ComunityAssignRepository;
 import com.comunidad.ad2.comunidad.repository.ComunityRepository;
@@ -143,6 +144,19 @@ public class ComunityAssignControllerTest {
         assertEquals(expResult.getStatusCode(), result.getStatusCode());
     }
 
+    @Test
+    public void testFindMemberComunityById() {
+        Comunity com = crearComunidad();
+        //ComunityAssignController instance = this.comunityAssignController;
+        //ComunityAssignService spyService = Mockito.spy(comunityAssignService);
+        Optional<ComunityAssign> comunidadAsignada = Optional.of(crearComunityAsignJJ());
+        when(this.comunityAssignService.findByIdComunityMiembro(1, "1")).thenReturn(comunidadAsignada);
+        ResponseEntity expResult = ResponseEntity.status(HttpStatus.ACCEPTED).body(comunidadAsignada.get());
+        ResponseEntity result = this.comunityAssignController.findMemberComunityById(comunidadAsignada.get());
+
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+    }
+
     private ComunityAssign createComunityAssign() {
         return new ComunityAssign(TipoComunityAssign.MIEMBRO, EstadoComunityAssign.ESPERA, new Timestamp(new Date().getTime()), new Timestamp(new Date().getTime()));
     }
@@ -166,6 +180,8 @@ public class ComunityAssignControllerTest {
 
     }
 
+    private ComunityAssign crearComunityAsignJJ() {
+        return new ComunityAssign(new ComunityAssignKey("1", 1), new User("1"), new Comunity(1), TipoComunityAssign.ADMINISTRADOR, new Timestamp(new Date().getTime()), EstadoComunityAssign.ACTIVO, new Timestamp(new Date().getTime()));
+    }
 
-  
 }
