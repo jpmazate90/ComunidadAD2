@@ -16,6 +16,7 @@ import static com.comunidad.ad2.comunidad.service.enums.EstadoUsuario.EN_ESPERA;
 import com.comunidad.ad2.comunidad.service.enums.GeneroUsuario;
 import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
 import java.sql.Timestamp;
+import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,6 +60,18 @@ public class UserServiceImplTest {
     public UserServiceImplTest() {
     }
     
+    private User createUser(String id){
+        return new User(id);
+    }
+    
+    private List<User> getUsersList(int sizeList){
+        List<User> result = new LinkedList<>();
+        for (int i = 0; i < sizeList; i++) {
+            result.add(createUser(Integer.toString(i)));
+        }
+        return result;
+    }
+    
     /*@BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -99,6 +112,7 @@ public class UserServiceImplTest {
         //assert
         assertEquals(EN_ESPERA, usuario.getEstado());
     }
+    
     @Test
     public void testAsignarEstadoWhenRoleIsSUPER() {
          // arreange
@@ -264,6 +278,19 @@ public class UserServiceImplTest {
     }
     
     @Test
+    public void testGetUsersBySearch(){
+        String param = "1";
+        List<User> listaUsuarios = getUsersList(3);
+        //arrange
+        UserServiceImpl spy = Mockito.spy(userService);
+        Mockito.when(userRepository.getUsersBySearch(param)).thenReturn(listaUsuarios);
+        //act
+        List<User> resultList = (List<User>) spy.getUsersBySearch(param);
+        
+        //assert
+        Assertions.assertEquals(listaUsuarios.size(), resultList.size());
+    }
+    
     public void testfindByToken(){
         // arrange
         UserServiceImpl spy = Mockito.spy(userService);
@@ -306,8 +333,32 @@ public class UserServiceImplTest {
         Assertions.assertEquals(user.getRegistroAcademico(),result.getRegistroAcademico());
     }
     
+    @Test
+    public void testGetByFiltering(){
+        User usr = new User("1", "n1", "xxxxx", null, GeneroUsuario.N, "foto", "c1", RolUsuario.SUPER, "c1", EN_ESPERA);
+        List<User> listaUsuarios = getUsersList(3);
+        //arrange
+        UserServiceImpl spy = Mockito.spy(userService);
+        Mockito.when(userRepository.getUsersByFiltering(usr.getRegistroAcademico(), usr.getNombreCompleto(), usr.getCorreoElectronico())).thenReturn(listaUsuarios);
+        //act
+        List<User> resultList = (List<User>) spy.getByFiltering(usr);
+        
+        //assert
+        Assertions.assertEquals(listaUsuarios.size(), resultList.size());
+    }
     
-    
-    
+    @Test
+    public void testGetByFiltering2(){
+        User usr = new User(" ", " ", "xxxxx", null, GeneroUsuario.N, "foto", " ", RolUsuario.SUPER, "c1", EN_ESPERA);
+        List<User> listaUsuarios = getUsersList(3);
+        //arrange
+        UserServiceImpl spy = Mockito.spy(userService);
+        Mockito.when(userRepository.getUsersByFiltering(spy.NOT_VALUE, spy.NOT_VALUE, spy.NOT_VALUE)).thenReturn(listaUsuarios);
+        //act
+        List<User> resultList = (List<User>) spy.getByFiltering(usr);
+        
+        //assert
+        Assertions.assertEquals(listaUsuarios.size(), resultList.size());
+    }
 
 }

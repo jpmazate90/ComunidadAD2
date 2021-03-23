@@ -5,6 +5,7 @@
  */
 package com.comunidad.ad2.comunidad.controller;
 
+import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.AuxObject.NumeroCarnet;
 import com.comunidad.ad2.comunidad.encriptacion.Hash;
 import com.comunidad.ad2.comunidad.entity.User;
@@ -132,6 +133,14 @@ public class UserController {
         }
     }
     
+    @PostMapping("/api/users/search")
+    public ResponseEntity<?> getUsersBySearch(@RequestBody OrdinaryObject searchObject) {
+        if(searchObject.getStringParam().trim().isEmpty()){
+            return ResponseEntity.ok(this.userService.findAll());
+        }
+        return ResponseEntity.ok(this.userService.getUsersBySearch(searchObject.getStringParam().trim()));
+    }
+    
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/filtrarUsuarios")
     public ResponseEntity<?> filtrarUsuarios(@RequestBody NumeroCarnet carnet) {
@@ -140,5 +149,19 @@ public class UserController {
         return ResponseEntity.ok(userService.filtrarUsuarios(carnet.getNumeroCarnet()));
     }
     
+    @PostMapping("/api/users/find/byId")
+    public ResponseEntity<?> findUserById(@RequestBody User usr) {//Recibe un user, donde se incluira el registro academico y el usuario
+        //Este user trae el registroAcademico y la contrasenia
+
+        System.out.println("Entrando>>>>>");
+         System.out.println("User::::"+usr.getRegistroAcademico());
+        
+        Optional<User> user = userService.findById(usr.getRegistroAcademico());
+        if(user.isPresent()){
+            return ResponseEntity.ok(user);
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("NO EXISTE EL TOKEN DE AUTENTICACION");
+
+    }
 
 }

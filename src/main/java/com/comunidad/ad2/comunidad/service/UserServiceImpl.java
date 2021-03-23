@@ -161,6 +161,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUsersByFiltering(user.getRegistroAcademico(), user.getNombreCompleto(), user.getCorreoElectronico());
     }
 
+    @Override
+    public Iterable<User> getUsersBySearch(String searchText) {
+        return userRepository.getUsersBySearch(searchText);
+    }
+
     
 
     

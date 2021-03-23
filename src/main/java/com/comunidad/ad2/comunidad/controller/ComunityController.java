@@ -5,6 +5,7 @@
  */
 package com.comunidad.ad2.comunidad.controller;
 
+import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.controllImage.CreadorDeDirectoriosComunidad;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.User;
@@ -83,6 +84,14 @@ public class ComunityController {
         }
         // return ResponseEntity.ok(HttpStatus.ACCEPTED);//Si se manda un texto va a tirar error de HttpErrorResponse
 
+    }
+
+    @PostMapping("/api/communities/search")
+    public ResponseEntity<?> getCommunitiesBySearch(@RequestBody OrdinaryObject searchObject) {
+        if (searchObject.getStringParam().trim().isEmpty()) {
+            return ResponseEntity.ok(this.comunityService.findAll());
+        }
+        return ResponseEntity.ok(this.comunityService.getCommunitiesBySearch(searchObject.getStringParam().trim()));
     }
 
 }
