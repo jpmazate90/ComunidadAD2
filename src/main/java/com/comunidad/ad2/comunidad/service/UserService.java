@@ -49,8 +49,8 @@ public interface UserService {
     
     public User actualizarDatosUser(User user);
     
+    public Iterable<User> getByFiltering(User user);
+
     public Iterable<User> filtrarUsuarios(String carnet);
-    
-    
     
 }
