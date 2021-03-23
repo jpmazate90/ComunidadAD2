@@ -5,6 +5,7 @@
  */
 package com.comunidad.ad2.comunidad.controller;
 
+import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.Course;
@@ -108,4 +109,26 @@ public class ComunityControllerTest {
         assertEquals(expResult, result);
 
     }
+    
+    
+    @Test
+    public void testGetCommunitiesBySearch() {
+        OrdinaryObject ordinaryObject = new OrdinaryObject();
+        String stringParam = "stringParam";
+        ordinaryObject.setStringParam(stringParam);
+        ResponseEntity expResult = ResponseEntity.ok(this.comunityService.getCommunitiesBySearch(stringParam));
+        ResponseEntity result = this.comunityController.getCommunitiesBySearch(ordinaryObject);
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+    }
+    
+    @Test
+    public void testGetCommunitiesBySearchEmptyData() {
+        OrdinaryObject ordinaryObject = new OrdinaryObject();
+        String stringParam = " ";
+        ordinaryObject.setStringParam(stringParam);
+        ResponseEntity expResult = ResponseEntity.ok(this.comunityService.getCommunitiesBySearch(stringParam));
+        ResponseEntity result = this.comunityController.getCommunitiesBySearch(ordinaryObject);
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+    }
+    
 }
