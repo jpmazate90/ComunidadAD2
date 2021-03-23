@@ -5,9 +5,12 @@
  */
 package com.comunidad.ad2.comunidad.service;
 
+import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.Course;
 import com.comunidad.ad2.comunidad.repository.ComunityRepository;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +18,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -31,8 +36,10 @@ public class ComunityImplTest {
     @InjectMocks
     private ComunityImpl comunityImpl;
 
-    public ComunityImplTest() {
+    private RecuperadorDeImagenesDeDisco recuperadorDeImagenesDeDisco;
 
+    public ComunityImplTest() {
+        this.recuperadorDeImagenesDeDisco = new RecuperadorDeImagenesDeDisco();
     }
 
     @Test
@@ -50,35 +57,28 @@ public class ComunityImplTest {
 
     }
 
-//    /**
-//     * Test of findById method, of class ComunityImpl.
-//     */
-//    @Test
-//    public void testFindById() {
-//        System.out.println("findById");
-//        Integer idComunidad = null;
-//        ComunityImpl instance = null;
-//        Optional<Comunity> expResult = null;
-//        Optional<Comunity> result = instance.findById(idComunidad);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of guardarImagen method, of class ComunityImpl.
-//     */
-//    @Test
-//    public void testGuardarImagen() throws Exception {
-//        System.out.println("guardarImagen");
-//        MultipartFile file = null;
-//        ComunityImpl instance = null;
-//        Comunity expResult = null;
-//        Comunity result = instance.guardarImagen(file);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+
+    /**
+     * Test of guardarImagen method, of class ComunityImpl.
+     */
+    @Test
+    public void testGuardarImagen() throws Exception {
+        //Arrange
+        System.out.println("guardarImagen");
+        Comunity comunity = new Comunity();
+        comunity.setFoto("/foto");
+        ComunityImpl spy = Mockito.spy(this.comunityImpl);
+        byte[] bytesImg = this.recuperadorDeImagenesDeDisco.recuperarBytesDeImagen("src/test/java/com/comunidad/ad2/comunidad/controllImage/image.png");
+        Path rutaImagen = Paths.get("src/test/java/com/comunidad/ad2/comunidad/controllImage/image2.png");
+        MockMultipartFile file = new MockMultipartFile("data", bytesImg);
+        //Act
+        Mockito.when(spy.guardarImagen(file)).thenReturn(comunity);
+        Comunity expResult = comunity;
+        Comunity result= spy.guardarImagen(file);
+        //Arrange
+        Assertions.assertEquals(expResult,result);
+    }
+
     public Comunity crearComunidad(String nombreComunidad) {
         Course curso = new Course();
         return new Comunity(curso, nombreComunidad, "");

@@ -5,6 +5,7 @@
  */
 package com.comunidad.ad2.comunidad.entity;
 
+import ch.qos.logback.core.encoder.ByteArrayUtil;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -14,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class ComunityTest {
 
-    public Comunity comunidad;
-    public Course course;
+    private Comunity comunidad;
+    private Course course;
 
     public ComunityTest() {
         this.course = new Course("001", "MATEMATICA", 0);
@@ -46,7 +47,7 @@ public class ComunityTest {
         //Arrange
         System.out.println("setId");
         Comunity instance = this.comunidad;
-        int nuevoId=5;
+        int nuevoId = 5;
         //Act
         instance.setId(nuevoId);
         int expResult = nuevoId;
@@ -71,141 +72,118 @@ public class ComunityTest {
         // TODO review the generated test code and remove the default call to fail.
     }
 
-//    /**
-//     * Test of setCourse method, of class Comunity.
-//     */
-//    @Test
-//    public void testSetCourse() {
-//        //Act
-//        //Arrange
-//        //Assert 
-//        System.out.println("setCourse");
-//        Course course = null;
-//        Comunity instance = new Comunity();
-//        instance.setCourse(course);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    /**
+     * Test of setCourse method, of class Comunity.
+     */
+    @Test
+    public void testSetCourse() {
+        //Act
+        System.out.println("getCourse");
+        Comunity instance = this.comunidad;
+        Course newCourse = new Course("005", "Otro curso", 1);
+        //Arrange
+        instance.setCourse(newCourse);
+        Course expResult = newCourse;
+        Course result = instance.getCourse();
+        //Asset
+        assertEquals(expResult.getCodigoDeCurso(), result.getCodigoDeCurso());
+        // TODO review the generated test code and remove the default call to fail.
+    }
 
-//    /**
-//     * Test of getNombre method, of class Comunity.
-//     */
-//    @Test
-//    public void testGetNombre() {
-//        System.out.println("getNombre");
-//        Comunity instance = new Comunity();
-//        String expResult = "";
-//        String result = instance.getNombre();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of setNombre method, of class Comunity.
-//     */
-//    @Test
-//    public void testSetNombre() {
-//        System.out.println("setNombre");
-//        String nombre = "";
-//        Comunity instance = new Comunity();
-//        instance.setNombre(nombre);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of getDescripcion method, of class Comunity.
-//     */
-//    @Test
-//    public void testGetDescripcion() {
-//        System.out.println("getDescripcion");
-//        Comunity instance = new Comunity();
-//        String expResult = "";
-//        String result = instance.getDescripcion();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of setDescripcion method, of class Comunity.
-//     */
-//    @Test
-//    public void testSetDescripcion() {
-//        System.out.println("setDescripcion");
-//        String descripcion = "";
-//        Comunity instance = new Comunity();
-//        instance.setDescripcion(descripcion);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of getFoto method, of class Comunity.
-//     */
-//    @Test
-//    public void testGetFoto() {
-//        System.out.println("getFoto");
-//        Comunity instance = new Comunity();
-//        String expResult = "";
-//        String result = instance.getFoto();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of setFoto method, of class Comunity.
-//     */
-//    @Test
-//    public void testSetFoto() {
-//        System.out.println("setFoto");
-//        String foto = "";
-//        Comunity instance = new Comunity();
-//        instance.setFoto(foto);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of getDatosFoto method, of class Comunity.
-//     */
-//    @Test
-//    public void testGetDatosFoto() {
-//        System.out.println("getDatosFoto");
-//        Comunity instance = new Comunity();
-//        byte[] expResult = null;
-//        byte[] result = instance.getDatosFoto();
-//        assertArrayEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of setDatosFoto method, of class Comunity.
-//     */
-//    @Test
-//    public void testSetDatosFoto() {
-//        System.out.println("setDatosFoto");
-//        byte[] datosFoto = null;
-//        Comunity instance = new Comunity();
-//        instance.setDatosFoto(datosFoto);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of toString method, of class Comunity.
-//     */
-//    @Test
-//    public void testToString() {
-//        System.out.println("toString");
-//        Comunity instance = new Comunity();
-//        String expResult = "";
-//        String result = instance.toString();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    /**
+     * Test of getNombre method, of class Comunity.
+     */
+    @Test
+    public void testGetNombre() {
+        //Act
+        System.out.println("getNombre");
+        Comunity instance = this.comunidad;
+        //Assert
+        String expResult = "Primera Comunidad";
+        String result = instance.getNombre();
+        //Arrange
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+    }
+
+    /**
+     * Test of setNombre method, of class Comunity.
+     */
+    @Test
+    public void testSetNombre() {
+        //Act
+        System.out.println("setNombre");
+        String nombre = "";
+        Comunity instance = this.comunidad; //Arrange
+        //Assert
+        instance.setNombre(nombre);
+        String expResult = nombre;
+        String result = instance.getNombre();
+        // TODO review the generated test code and remove the default call to fail.
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getDescripcion method, of class Comunity.
+     */
+    @Test
+    public void testGetDescripcion() {
+        //Act
+        System.out.println("getDescripcion");
+        Comunity instance = this.comunidad;
+        //Arrange
+        String expResult="Descripcion comunidad";
+        String result=instance.getDescripcion();
+        //Assert
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+    }
+
+    /**
+     * Test of setDescripcion method, of class Comunity.
+     */
+    @Test
+    public void testSetDescripcion() {
+     //Act
+        System.out.println("getDescripcion");
+        Comunity instance = this.comunidad;
+        String newDescription="newDescription";
+        //Arrange
+        instance.setDescripcion(newDescription);
+        String expResult=newDescription;
+        String result=instance.getDescripcion();
+        //Assert
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+    }
+
+    /**
+     * Test of getFoto method, of class Comunity.
+     */
+    @Test
+    public void testGetFoto() {
+        //Act
+         System.out.println("getFoto");
+        Comunity instance = new Comunity();
+        instance.setFoto("/direccion/foto");
+        //Arrange
+        String expResult="/direccion/foto";
+        String result = instance.getFoto();
+        //Asset        
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+    }
+
+    /**
+     * Test of toString method, of class Comunity.
+     */
+    @Test
+    public void testToString() {
+        System.out.println("toString");
+        Comunity instance = this.comunidad;
+        String expResult = "Comunity{" + "id=" + instance.getId() + ", course=" + instance.getCourse() + ", nombre=" + instance.getNombre() + ", descripcion=" + instance.getDescripcion() + ", foto=" + instance.getFoto() + ", datosFoto=" + instance.getDatosFoto() + '}';
+        String result = instance.toString();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+    }
 }
