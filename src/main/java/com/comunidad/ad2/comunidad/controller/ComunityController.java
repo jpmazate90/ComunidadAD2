@@ -6,6 +6,7 @@
 package com.comunidad.ad2.comunidad.controller;
 
 import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
+import com.comunidad.ad2.comunidad.controllImage.CreadorDeDirectoriosComunidad;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.service.ComunityAssignService;
@@ -74,41 +75,15 @@ public class ComunityController {
      */
     @PostMapping("/api/users/uploadImageComunity")
     public ResponseEntity<?> uploadImage(@RequestBody MultipartFile file) {
-        Comunity comunidad = new Comunity();
-        if (file != null) {
-            String path = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
-            String path2 = path + "/imagenesDeComunidad";
-            File directorio = new File(path2);
-            directorio.mkdir();
-            try {
-                //Directorio es el directorio y path es la ruta
-                byte[] bytesImg = file.getBytes();
-                Path rutaCompleta = Paths.get(path2 + "/" + file.getOriginalFilename());
-                Files.write(rutaCompleta, bytesImg);
-                comunidad.setFoto(rutaCompleta.toString());
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            // return ResponseEntity.ok(HttpStatus.ACCEPTED);//Si se manda un texto va a tirar error de HttpErrorResponse
-
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunidad);//Si se crea la entidad Imagen, devolver el objeto de tipo imagen
+        try {
+            Comunity com = this.comunityService.guardarImagen(file);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(com);//Si se crea la entidad Imagen, devolver el objeto de tipo imagen
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE RECIBIO LA IMAGEN");
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE RECIBIO LA IMAGEN");
-    }
+        // return ResponseEntity.ok(HttpStatus.ACCEPTED);//Si se manda un texto va a tirar error de HttpErrorResponse
 
-    /**
-     * Envia una comunidad con la informacion necesaria para crear una imagen
-     *
-     * @param comunity
-     * @return
-     * @throws IOException
-     */
-    @PostMapping("/api/users/pruebaCargarImagen")
-    public ResponseEntity<?> pruebaCargaImagen(@RequestBody Comunity comunity) throws IOException {
-        Path rutaImagen = Paths.get(comunity.getFoto());//Ruta de la imagen
-        byte[] imagenBytes = Files.readAllBytes(rutaImagen);
-        comunity.setDatosFoto(imagenBytes);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunity);
     }
 
     @PostMapping("/api/communities/search")

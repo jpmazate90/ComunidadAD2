@@ -31,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
     private final int SEIS_HORAS = 21600000;
+    public final String NOT_VALUE = " *";
 
     private UserRepository userRepository;
 
@@ -41,16 +42,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Iterable<User> findAll() {
-
         return userRepository.findAll();
-
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Page<User> findAll(Pageable pageable) {
-        return userRepository.findAll(pageable);
-    }
+     
 
     @Override
     @Transactional(readOnly = true)
@@ -68,10 +63,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
-    public void deleteById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
     @Override
     @Modifying
@@ -149,8 +141,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User cambiarEstadoUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Iterable<User> filtrarUsuarios(String carnet) {
+//    return null;
+        return userRepository.filtrarUsuarios(carnet);
+    }
+
+    @Override
+    public Iterable<User> getByFiltering(User user) {
+        user.setRegistroAcademico(user.getRegistroAcademico().trim());
+        user.setNombreCompleto(user.getNombreCompleto().trim());
+        user.setCorreoElectronico(user.getCorreoElectronico().trim());
+        if(user.getRegistroAcademico().isEmpty())
+            user.setRegistroAcademico(NOT_VALUE);
+        if(user.getNombreCompleto().isEmpty())
+            user.setNombreCompleto(NOT_VALUE);
+        if(user.getCorreoElectronico().isEmpty())
+            user.setCorreoElectronico(NOT_VALUE);
+        System.out.println(":::::::::::: Registro: " + user.getRegistroAcademico() + ", Nombre: " + user.getNombreCompleto() + "Correo: " + user.getCorreoElectronico());
+        return userRepository.getUsersByFiltering(user.getRegistroAcademico(), user.getNombreCompleto(), user.getCorreoElectronico());
     }
 
     @Override

@@ -7,6 +7,7 @@ package com.comunidad.ad2.comunidad.controller;
 
 import com.comunidad.ad2.comunidad.AuxObject.TokenCreated;
 import com.comunidad.ad2.comunidad.entity.User;
+import com.comunidad.ad2.comunidad.repository.UserRepository;
 import com.comunidad.ad2.comunidad.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,14 @@ public class TokenController {
        if(StringUtils.isEmpty(token)){
            return ResponseEntity.status(HttpStatus.CONFLICT).body("ERROR, USUARIO O CONTRASENA INVALIDO");
        }
-       return ResponseEntity.status(HttpStatus.CREATED).body(new TokenCreated(token));
-       
+       return ResponseEntity.status(HttpStatus.CREATED).body(new TokenCreated(token));  
     }
+    
+    @Autowired
+    public TokenController(UserService userService){
+        this.userService = userService;
+    }
+    
     
     
 }

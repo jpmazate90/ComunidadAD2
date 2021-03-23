@@ -6,6 +6,7 @@
 package com.comunidad.ad2.comunidad.controller;
 
 import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
+import com.comunidad.ad2.comunidad.AuxObject.NumeroCarnet;
 import com.comunidad.ad2.comunidad.encriptacion.Hash;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.service.UserService;
@@ -39,8 +40,9 @@ public class UserController {
 
     //@ComponentScan("com.comunidad.ad2.comunidad.service")
     private UserService userService;
-    
+
     private TokenController tokenController;
+
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/creation/users")//Al no estar bajo /api/users no se necesita autenticacion
     public ResponseEntity<?> create(@RequestBody User user) {
@@ -57,21 +59,20 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.userAuthentication(user.getRegistroAcademico(), user.getPassword()));
 
     }
-    
+
     @CrossOrigin(origins = "http://localhost:4200")
-     @PostMapping("/api/users/findbytoken")
+    @PostMapping("/api/users/findbytoken")
     public ResponseEntity<?> findUserByToken(@RequestBody User token) {//Recibe un user, donde se incluira el registro academico y el usuario
         //Este user trae el registroAcademico y la contrasenia
-         
-         System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
-         System.out.println("Token:"+token.getToken());
+
         System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
-        
-        
+        System.out.println("Token:" + token.getToken());
+        System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
+
         Optional<User> user = userService.findByTokenOwnUser(token.getToken());
-        if(user.isPresent()){
+        if (user.isPresent()) {
             return ResponseEntity.ok(user);
-            
+
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body("NO EXISTE EL TOKEN DE AUTENTICACION");
 
@@ -85,7 +86,7 @@ public class UserController {
         System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.adminCreation(user.getRegistroAcademico()));
     }
-    
+
     @PostMapping("/api/users/changePassword")
     public ResponseEntity<?> changePassword(@RequestBody User user) {//Recibe un user, donde se incluira el registro academico y el usuario
         //Este user trae el registroAcademico y el estado
@@ -105,24 +106,30 @@ public class UserController {
         return ResponseEntity.ok(oUser);
     }
 
+    @PostMapping("/api/users/byFiltering")
+    public ResponseEntity<?> getByFiltering(@RequestBody User user) {
+        return ResponseEntity.ok(this.userService.getByFiltering(user));
+    }
+
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/accounts")
     public ResponseEntity<?> all() {
         return ResponseEntity.ok(this.userService.findAll());
     }
 
+       @Autowired
     public UserController(@Autowired UserService userService, @Autowired TokenController tokenController) {
         this.userService = userService;
         this.tokenController = tokenController;
     }
-    
+
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/update/user")
     public ResponseEntity<?> actualizarDatosUser(@RequestBody User user) {
         if (userService.findById(user.getRegistroAcademico()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(userService.actualizarDatosUser(user));
         } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("NO EXISTE NINGUN USUARIO CON LOS DATOS: "+user);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("NO EXISTE NINGUN USUARIO CON LOS DATOS: " + user);
         }
     }
     
@@ -132,6 +139,14 @@ public class UserController {
             return ResponseEntity.ok(this.userService.findAll());
         }
         return ResponseEntity.ok(this.userService.getUsersBySearch(searchObject.getStringParam().trim()));
+    }
+    
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/api/users/filtrarUsuarios")
+    public ResponseEntity<?> filtrarUsuarios(@RequestBody NumeroCarnet carnet) {
+        
+        System.out.println("****************Entre aqui: "+carnet.getNumeroCarnet());
+        return ResponseEntity.ok(userService.filtrarUsuarios(carnet.getNumeroCarnet()));
     }
     
     @PostMapping("/api/users/find/byId")

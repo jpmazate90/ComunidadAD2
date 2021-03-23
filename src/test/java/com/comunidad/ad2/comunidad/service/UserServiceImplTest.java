@@ -5,7 +5,9 @@
  */
 package com.comunidad.ad2.comunidad.service;
 
+import com.comunidad.ad2.comunidad.AuxObject.CreacionUsuarioParaPruebas;
 import com.comunidad.ad2.comunidad.encriptacion.Hash;
+import com.comunidad.ad2.comunidad.entity.ComunityAssign;
 import com.comunidad.ad2.comunidad.entity.Department;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.UserRepository;
@@ -15,13 +17,18 @@ import com.comunidad.ad2.comunidad.service.enums.GeneroUsuario;
 import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
 import java.sql.Timestamp;
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Spliterators;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 //import static org.junit.Assert.assertEquals;
 
 
@@ -35,6 +42,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.internal.util.StringUtil;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.authority.AuthorityUtils;
 
 /**
  *
@@ -104,6 +112,18 @@ public class UserServiceImplTest {
         //assert
         assertEquals(EN_ESPERA, usuario.getEstado());
     }
+    @Test
+    public void testAsignarEstadoWhenRoleIsSUPER() {
+         // arreange
+        User usuario = crearUsuario(RolUsuario.SUPER);
+        
+        // act
+        userService.asignarEstado(usuario);
+        
+        //assert
+        assertEquals(EN_ESPERA, usuario.getEstado());
+    }
+    
     
     private User crearUsuario(RolUsuario a){
         User user = new User("201029301","aaa", "aaa", new Timestamp(400000000), GeneroUsuario.N, "aa", "aa@a.com", a, "xela", EstadoUsuario.ACTIVO);
@@ -122,6 +142,37 @@ public class UserServiceImplTest {
         //assert
         assertEquals(resultado.get().getRegistroAcademico(), usuario.getRegistroAcademico());
     }
+    
+    @Test
+    public void testFindAll() {
+        // arreange
+        User usuario = crearUsuario(RolUsuario.COMUNIDAD);
+        List<User> lista = obtenerUserList();
+        when(userRepository.findAll()).thenReturn(lista);
+        // act
+        Iterable<User> resultado = userService.findAll();
+        
+        //assert
+        assertEquals(tamanio(resultado),lista.size());
+    }
+    
+    private int tamanio(Iterable<User> a){
+        int contador = 0;
+        for(User as : a){
+            contador++;
+        }
+        return contador;
+    }
+    
+    private List<User> obtenerUserList (){
+        List<User> a = new ArrayList<User>();
+        for (int i = 0; i < 2; i++) {
+            a.add(CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER));
+        }
+        return a;
+        
+    }
+
     
     @Test
     public void testLoginWhenUserIsPresent() {
@@ -239,6 +290,46 @@ public class UserServiceImplTest {
         Assertions.assertEquals(listaUsuarios.size(), resultList.size());
     }
     
-    
+    public void testfindByToken(){
+        // arrange
+        UserServiceImpl spy = Mockito.spy(userService);
+        User user = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
+        Mockito.when(userRepository.findByToken(ArgumentMatchers.any())).thenReturn(Optional.of(user));
+        org.springframework.security.core.userdetails.User expect = new org.springframework.security.core.userdetails.User(user.getRegistroAcademico(), user.getPassword(), true, true, true, true,
+                    AuthorityUtils.createAuthorityList("USER"));
+        //act
+        Optional<org.springframework.security.core.userdetails.User> result = this.userService.findByToken("1");
+        
+        
+        //assert
+        Assertions.assertEquals(expect.getUsername(),result.get().getUsername());
+    }
+    @Test
+    public void testfindByTokenWhenNotExists(){
+        // arrange
+        UserServiceImpl spy = Mockito.spy(userService);
+        User user = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
+        Mockito.when(userRepository.findByToken(ArgumentMatchers.any())).thenReturn(Optional.empty());
+        Optional<org.springframework.security.core.userdetails.User> expect = Optional.empty();
+        //act
+        Optional<org.springframework.security.core.userdetails.User> result = this.userService.findByToken("1");
+        
+        
+        //assert
+        Assertions.assertEquals(expect.isEmpty(),result.isEmpty());
+    }
+
+    @Test
+    public void testUserAuthentication(){
+        // arrange
+        
+        User user = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
+        Mockito.when(userRepository.userAuthentication(ArgumentMatchers.any(),ArgumentMatchers.any())).thenReturn(Optional.of(user));
+        //act
+        User result = this.userService.userAuthentication("1","1");
+
+        //assert
+        Assertions.assertEquals(user.getRegistroAcademico(),result.getRegistroAcademico());
+    }
 
 }
