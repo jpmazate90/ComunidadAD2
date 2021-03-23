@@ -124,3 +124,4 @@ public class ComunityAssignImpl implements ComunityAssignService {
 
 }
 //
+//
