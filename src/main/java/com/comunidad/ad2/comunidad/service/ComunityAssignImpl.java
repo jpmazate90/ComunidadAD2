@@ -120,6 +120,11 @@ public class ComunityAssignImpl implements ComunityAssignService {
 
     }
 
+    @Override
+    public Iterable<ComunityAssign> findActiveMembersOfComunity(int idComunidad,String carnet){
+        return this.comunityAssignRepository.findActiveMembersOfComunity(idComunidad, carnet);
+    }
+
 
 
 }
