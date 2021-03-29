@@ -34,4 +34,6 @@ public interface ComunityAssignService {
 
 
     public Optional<ComunityAssign> findByIdComunityMiembro(int idComunidad,String registroAcademico);
+
+     public Iterable<ComunityAssign> findUserComunitys(String registroAcademicoDeUsuario);
 }

@@ -116,7 +116,11 @@ public class ComunityAssignController {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.comunityAssignService.save(comunityAssign));
     }
     
-    
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/api/users/findUserComunitys")
+    public ResponseEntity<?> findUserComunitys(@RequestBody User user){
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.comunityAssignService.findUserComunitys(user.getRegistroAcademico()));
+    }
     
 
 }

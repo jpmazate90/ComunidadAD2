@@ -120,8 +120,15 @@ public class ComunityAssignImpl implements ComunityAssignService {
 
     }
 
+    @Override
+    public Iterable<ComunityAssign> findUserComunitys(String registroAcademicoDeUsuario) {
+        Iterable<ComunityAssign> comunidades=this.comunityAssignRepository.findUserComunitys(registroAcademicoDeUsuario);
+        for (ComunityAssign comunidad : comunidades) {
+            agregarFotoAComunidad(comunidad);
+        }
+        return comunidades;
+    }
+
 
 
 }
-//
-//
