@@ -151,7 +151,7 @@ public class ComunityAssignImplTest {
     @Test
     public void testGetFechaActual() {
         //Arrange
-        System.out.println("getFechaActual");
+        System.out.println("getFechaActuallll");
         ComunityAssignImpl instance = this.comunityAssignImpl;
         //Act
         Timestamp expResult = new Timestamp(System.currentTimeMillis());
@@ -177,7 +177,7 @@ public class ComunityAssignImplTest {
         //byte[] expResult = recuperadorDeImagenesDeDisco.recuperarBytesDeImagen(foto);
         byte[] result = instance.agregarFotoAComunidad(comunityAssign).getComunity().getDatosFoto();
         //Assert
-        System.out.println("DATOS FOTO:"+this.comunityAssign.getComunity().getDatosFoto());
+        System.out.println("DATOS FOTO:" + this.comunityAssign.getComunity().getDatosFoto());
         assertNotNull(this.comunityAssign.getComunity().getDatosFoto());
 
     }
@@ -216,5 +216,26 @@ public class ComunityAssignImplTest {
         assertNotEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
     }
-
+    
+    /**
+     * Test para validar los miembros de una comunidad
+     */
+    @Test
+    public void testFindActiveMembersOfComunity() {
+        //Arrange
+        System.out.println("testFindActiveMembersOfComunity");
+        ComunityAssignImpl instance = Mockito.spy(this.comunityAssignImpl);
+        ArrayList<ComunityAssign> listaDeComunidades = new ArrayList<>();
+        listaDeComunidades.add(comunityAssign);
+        Iterable<ComunityAssign> comunityAssignList = listaDeComunidades;
+        Mockito.when(comunityAssignRepository.findActiveMembersOfComunity(ID_COMUNIDAD, REGISTRO_ACADEMICO)).thenReturn(comunityAssignList);
+        //Act
+        String expResult = REGISTRO_ACADEMICO;
+        Iterable<ComunityAssign> resultIterable = instance.findActiveMembersOfComunity(ID_COMUNIDAD, REGISTRO_ACADEMICO);
+        ArrayList<ComunityAssign> resultList =(ArrayList<ComunityAssign>)resultIterable;
+        String result = resultList.get(0).getUser().getRegistroAcademico();
+        //Assert
+        System.out.println("Exp result:"+expResult+ " Result:"+result);
+        assertEquals(expResult, result);
+    }
 }

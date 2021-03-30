@@ -156,7 +156,35 @@ public class ComunityAssignControllerTest {
 
         assertEquals(expResult.getStatusCode(), result.getStatusCode());
     }
-
+    
+    /**
+     * Test para buscar miembros activos de una comunidad
+     */
+    @Test
+    public void testfindActiveMembersOfComunity(){
+    //Arrange
+    ComunityAssignFilters filters = new ComunityAssignFilters("12345678",0);
+    ArrayList<ComunityAssign> comunityList = new ArrayList<>();
+    comunityList.add(crearComunityAsignJJ());
+    Iterable<ComunityAssign> comunityAssignIterable=comunityList;
+    when(this.comunityAssignService.findActiveMembersOfComunity(0, "12345678")).thenReturn(comunityAssignIterable);
+    //Act
+     ResponseEntity expResult = ResponseEntity.status(HttpStatus.ACCEPTED).body(comunityAssignIterable);
+     ResponseEntity result = this.comunityAssignController.findActiveMembersOfComunity(filters);
+    //Assert
+     assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testRemoveUserFromComunity(){
+        ComunityAssign comunityAssign = createComunityAssign();
+        ComunityAssignService spyService = Mockito.spy(comunityAssignService);
+        when(spyService.save(comunityAssign)).thenReturn(comunityAssign);
+        ResponseEntity expResult = ResponseEntity.status(HttpStatus.CREATED).body(comunityAssign);
+        ResponseEntity result = this.comunityAssignController.removeUserFromComunity(comunityAssign);
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+    }
+    
     private ComunityAssign createComunityAssign() {
         return new ComunityAssign(TipoComunityAssign.MIEMBRO, EstadoComunityAssign.ESPERA, new Timestamp(new Date().getTime()), new Timestamp(new Date().getTime()));
     }
