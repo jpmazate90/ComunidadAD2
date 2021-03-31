@@ -217,4 +217,21 @@ public class ComunityAssignImplTest {
         // TODO review the generated test code and remove the default call to fail.
     }
 
+    @Test
+    public void testFindUserComunitys(){
+        //Arrange
+        System.out.println("FindUserComunitys");
+        ArrayList<ComunityAssign> comunityAssignList = new ArrayList<>();
+        comunityAssignList.add(comunityAssign);
+        Iterable<ComunityAssign> comunityAssignIterable=comunityAssignList;
+        Mockito.when(comunityAssignRepository.findUserComunitys(REGISTRO_ACADEMICO)).thenReturn(comunityAssignIterable);
+        //Act
+        String expResult = comunityAssignList.get(0).getUser().getRegistroAcademico();
+        Iterable<ComunityAssign>resultIterable = comunityAssignImpl.findUserComunitys(REGISTRO_ACADEMICO);
+        ArrayList<ComunityAssign> resultList =(ArrayList<ComunityAssign>)resultIterable;
+        String result=resultList.get(0).getUser().getRegistroAcademico();
+        //Assert
+        assertEquals(expResult, result);
+        //Asset
+    }
 }

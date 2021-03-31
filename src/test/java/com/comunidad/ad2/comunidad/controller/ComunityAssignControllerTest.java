@@ -156,6 +156,24 @@ public class ComunityAssignControllerTest {
 
         assertEquals(expResult.getStatusCode(), result.getStatusCode());
     }
+    
+    /**
+     * Test para verificar que se buscan todos los usuarios de la comunidad
+     */
+    @Test
+    public void testFindUserComunitys() {
+        //Arrange
+        User user = new User("12345678");
+        ArrayList<ComunityAssign> comunityList = new ArrayList<>();
+        comunityList.add(crearComunityAsignJJ());
+        Iterable<ComunityAssign> comunityAssignIterable = comunityList;
+        when(this.comunityAssignService.findUserComunitys("12345678")).thenReturn(comunityAssignIterable);
+        //Act
+        ResponseEntity expResult = ResponseEntity.status(HttpStatus.ACCEPTED).body(comunityAssignIterable);
+        ResponseEntity result = this.comunityAssignController.findUserComunitys(user);
+        //Assert
+        assertEquals(expResult, result);
+    }
 
     private ComunityAssign createComunityAssign() {
         return new ComunityAssign(TipoComunityAssign.MIEMBRO, EstadoComunityAssign.ESPERA, new Timestamp(new Date().getTime()), new Timestamp(new Date().getTime()));
