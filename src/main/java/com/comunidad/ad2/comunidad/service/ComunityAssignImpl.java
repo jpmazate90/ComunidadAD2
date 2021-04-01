@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -107,10 +108,10 @@ public class ComunityAssignImpl implements ComunityAssignService {
         }
         return comunityAssign;
     }
-    
+
     @Override
     public Iterable<ComunityAssign> findRequestInEspera(Integer idComunidad, String registroAcademico) {
-        return this.comunityAssignRepository.findUserRequest(idComunidad,registroAcademico+"");
+        return this.comunityAssignRepository.findUserRequest(idComunidad, registroAcademico + "");
     }
 
     @Override
@@ -120,7 +121,15 @@ public class ComunityAssignImpl implements ComunityAssignService {
 
     }
 
+    @Override
+    @Transactional
+    public boolean deleteAllAssignsByComunity(String idComunidad) {
 
+        this.comunityAssignRepository.deleteComunityAssignsByIdComunity(Integer.parseInt(idComunidad));
+        return true;
+    }
+    
+    
 
 }
 //

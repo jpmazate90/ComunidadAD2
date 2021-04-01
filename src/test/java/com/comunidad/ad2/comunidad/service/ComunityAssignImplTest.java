@@ -29,6 +29,8 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import org.mockito.internal.stubbing.answers.DoesNothing;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -215,6 +217,25 @@ public class ComunityAssignImplTest {
         //Arrange
         assertNotEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
+    }
+    
+    @Test
+    public void testDeleteAllAssignsByComunity() {
+        //Arrange
+        Comunity comunidad = crearComunidad();
+        //ComunityAssignRepository spy = Mockito.spy(comunityAssignRepository);
+        doNothing().when(this.comunityAssignRepository).deleteComunityAssignsByIdComunity(comunidad.getId());
+        //Act
+        boolean expResult = true;
+        boolean result = this.comunityAssignImpl.deleteAllAssignsByComunity(comunidad.getId()+"");
+        //Arrange
+        assertEquals(expResult, result);
+        verify(this.comunityAssignRepository).deleteComunityAssignsByIdComunity(comunidad.getId());
+        // TODO review the generated test code and remove the default call to fail.
+    }
+    
+    private Comunity crearComunidad() {
+        return new Comunity(4);
     }
 
 }

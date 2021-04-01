@@ -19,6 +19,8 @@ public interface ComunityService {
     
     //    public User save(User user); 
     public Comunity save(Comunity comunity);
+    
+    public Optional<Comunity> findById(String id);
        
 //    public Iterable<Comunity> findByRegistroAcademico(String user);
     
@@ -27,4 +29,7 @@ public interface ComunityService {
     public Iterable<Comunity> getCommunitiesBySearch(String searchText);
         
     public Comunity guardarImagen(MultipartFile file) throws IOException;
+    
+    public boolean deleteById(String idComunidad);
+    
 }

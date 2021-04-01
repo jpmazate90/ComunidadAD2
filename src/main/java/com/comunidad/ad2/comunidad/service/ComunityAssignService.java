@@ -15,6 +15,8 @@ import java.util.Optional;
  */
 public interface ComunityAssignService {
 
+    public boolean deleteAllAssignsByComunity(String idComunidad);
+    
     public ComunityAssign save(ComunityAssign comunityAssign);
 
     public Iterable<ComunityAssign> findComunityTypeAdminitrationByRegistroAcademico(String registroAcademico);
