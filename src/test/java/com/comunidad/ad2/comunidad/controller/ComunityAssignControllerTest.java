@@ -173,6 +173,17 @@ public class ComunityAssignControllerTest {
     }
     
     @Test
+    public void testDeleteUserFromComunityWhenComunityIsEmpty(){
+        Comunity comunidad = crearComunidad();
+        ComunityAssignFilters com = new ComunityAssignFilters("10",comunidad.getId());
+        //Optional<Comunity> comunidadAsignada = Optional.of(crearComunidad());
+        when(this.comunityAssignService.findByIdComunityMiembro(comunidad.getId() ,com.getRegistroAcademico())).thenReturn(Optional.empty());
+        ResponseEntity expResult = ResponseEntity.status(HttpStatus.CONFLICT).body(new MensajeRetorno("NO SE ENCONTRO LA COMUNIDAD"));
+        ResponseEntity result = this.comunityAssignController.deleteUserFromComunity(com);
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+    }
+    
+    @Test
     public void testDeleteComunityWhenComunityExists(){
         Comunity comunidad = crearComunidad();
         ComunityAssignFilters com = new ComunityAssignFilters("10",comunidad.getId());
@@ -188,6 +199,28 @@ public class ComunityAssignControllerTest {
         ResponseEntity expResult = ResponseEntity.status(HttpStatus.ACCEPTED).body(new MensajeRetorno("SE ELIMINO CORRECTAMENTE LO RELACIONADO A LA COMUNIDAD CON ID: "+com.getIdComunidad()));
         
         ResponseEntity result = this.comunityAssignController.deleteComunity(com);
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+        
+        
+    }
+    
+     @Test
+    public void testdeleteUserFromComunityWhenComunityExists(){
+        ComunityAssignFilters com = new ComunityAssignFilters("10",10);
+        ComunityAssign example = crearComunityAsignJJ();
+        example.getComunity().setId(com.getIdComunidad());
+        example.getUser().setRegistroAcademico(com.getRegistroAcademico());
+        
+        
+        Optional<ComunityAssign> comunidadAsignada = Optional.of(example);
+//        ComunityAssignService spyComunityAssign = Mockito.spy(comunityAssignService);
+        
+        //
+        when(this.comunityAssignService.findByIdComunityMiembro(com.getIdComunidad(),com.getRegistroAcademico())).thenReturn(comunidadAsignada);
+        when(this.comunityAssignService.deleteSpecificComunityAssignMember(com.getIdComunidad()+"",com.getRegistroAcademico())).thenReturn(true);        
+        ResponseEntity expResult = ResponseEntity.status(HttpStatus.ACCEPTED).body(new MensajeRetorno("SE ELIMINO CORRECTAMENTE LO RELACIONADO A LA COMUNIDAD CON ID: "+com.getIdComunidad()));
+        
+        ResponseEntity result = this.comunityAssignController.deleteUserFromComunity(com);
         assertEquals(expResult.getStatusCode(), result.getStatusCode());
         
         

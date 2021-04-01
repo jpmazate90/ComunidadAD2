@@ -17,6 +17,8 @@ public interface ComunityAssignService {
 
     public boolean deleteAllAssignsByComunity(String idComunidad);
     
+    public boolean deleteSpecificComunityAssignMember(String idComunidad, String registroAcademico);
+    
     public ComunityAssign save(ComunityAssign comunityAssign);
 
     public Iterable<ComunityAssign> findComunityTypeAdminitrationByRegistroAcademico(String registroAcademico);

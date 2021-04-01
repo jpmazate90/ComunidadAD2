@@ -53,6 +53,10 @@ public interface ComunityAssignRepository extends JpaRepository<ComunityAssign, 
     @Query(value ="DELETE from comunity_assign where comunity_id_comunity=?1" , nativeQuery = true)
     public void deleteComunityAssignsByIdComunity(int idComunidad);
     
+    @Modifying
+    @Query(value ="DELETE from comunity_assign where comunity_id_comunity=?1 and user_registro_academico=?2 and tipo_assign!='ADMINISTRADOR' and estado_solicitud!='DENEGADO'" , nativeQuery = true)
+    public void deleteSpecificComunityAssignMember(int idComunidad, String registroAcademico);
+    
 
     
 

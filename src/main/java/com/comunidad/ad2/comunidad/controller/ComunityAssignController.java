@@ -135,6 +135,19 @@ public class ComunityAssignController {
         
     }
     
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/api/comunity/deleteUserFromComunity")
+    public ResponseEntity<?> deleteUserFromComunity(@RequestBody ComunityAssignFilters filters) {
+        Optional<ComunityAssign> result = this.comunityAssignService.findByIdComunityMiembro(filters.getIdComunidad(),filters.getRegistroAcademico());
+        if(result.isEmpty()){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MensajeRetorno("NO SE ENCONTRO AL USUARIO: "+filters.getRegistroAcademico()+", EN LA COMUNIDAD CON ID:"+filters.getIdComunidad()));
+        }else{
+            this.comunityAssignService.deleteSpecificComunityAssignMember(filters.getIdComunidad()+"",filters.getRegistroAcademico());
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new MensajeRetorno("SE ELIMINO CORRECTAMENTE AL USUARIO CON REGISTRO ACADEMICO: "+filters.getRegistroAcademico()+", DE LA COMUNIDAD CON ID: "+filters.getIdComunidad()));
+        }
+        
+    }
+    
     
     
 

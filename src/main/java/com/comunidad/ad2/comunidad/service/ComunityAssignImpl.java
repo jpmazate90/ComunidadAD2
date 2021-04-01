@@ -128,6 +128,16 @@ public class ComunityAssignImpl implements ComunityAssignService {
         this.comunityAssignRepository.deleteComunityAssignsByIdComunity(Integer.parseInt(idComunidad));
         return true;
     }
+
+    @Override
+    @Transactional /*
+                    Es importantisimo tener esta etiqueta de transactional cuando lo que se quiere es eliminar con la query 
+                    que se manda a ejecutar con el repository
+                    */
+    public boolean deleteSpecificComunityAssignMember(String idComunidad, String registroAcademico) {
+        this.comunityAssignRepository.deleteSpecificComunityAssignMember(Integer.parseInt(idComunidad),registroAcademico);
+        return true;
+    }
     
     
 
