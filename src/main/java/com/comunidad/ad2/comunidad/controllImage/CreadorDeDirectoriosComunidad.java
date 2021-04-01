@@ -29,7 +29,9 @@ public class CreadorDeDirectoriosComunidad implements CreadorDeDirectoriosInterf
         String pathParaGuardarImagen;
         File directorio;
         pathParaGuardarImagen = DIRECOTRIO_POR_DEFECTO + DIRECTORIO_DE_TODAS_LAS_IMAGENES + IMAGNES_DE_COMUNIDADES;
+        System.out.println("Path Imagen::: " + pathParaGuardarImagen);
         directorio = new File(pathParaGuardarImagen);
+        System.out.println("Directorio: " + directorio);
         return directorio.mkdir();
 
     }
