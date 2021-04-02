@@ -122,6 +122,11 @@ public class ComunityAssignController {
     }
     
     @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/api/users/findUserComunitys")
+    public ResponseEntity<?> findUserComunitys(@RequestBody User user){
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.comunityAssignService.findUserComunitys(user.getRegistroAcademico()));
+    }
+
     @PostMapping("/api/comunity/deleteComunity")
     public ResponseEntity<?> deleteComunity(@RequestBody ComunityAssignFilters filters) {
         Optional<Comunity> result = this.comunity.findById(filters.getIdComunidad()+"");
@@ -148,7 +153,6 @@ public class ComunityAssignController {
         
     }
     
-    
-    
+        
 
 }

@@ -121,6 +121,21 @@ public class ComunityAssignImpl implements ComunityAssignService {
 
     }
 
+    /**
+     * Busca las comunidades donde el usuario con registroAcademico indicado es miembro
+     * @param registroAcademicoDeUsuario
+     * @return 
+     */
+    @Override
+    public Iterable<ComunityAssign> findUserComunitys(String registroAcademicoDeUsuario) {
+        Iterable<ComunityAssign> comunidades=this.comunityAssignRepository.findUserComunitys(registroAcademicoDeUsuario);
+        for (ComunityAssign comunidad : comunidades) {
+            agregarFotoAComunidad(comunidad);
+        }
+        return comunidades;
+    }
+
+
     @Override
     @Transactional
     public boolean deleteAllAssignsByComunity(String idComunidad) {
@@ -142,5 +157,4 @@ public class ComunityAssignImpl implements ComunityAssignService {
     
 
 }
-//
-//
+
