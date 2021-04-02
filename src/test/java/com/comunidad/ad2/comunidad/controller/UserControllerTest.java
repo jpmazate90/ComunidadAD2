@@ -6,6 +6,7 @@
 package com.comunidad.ad2.comunidad.controller;
 
 import com.comunidad.ad2.comunidad.AuxObject.CreacionUsuarioParaPruebas;
+import com.comunidad.ad2.comunidad.AuxObject.NumeroCarnet;
 import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.service.UserServiceImpl;
@@ -237,5 +238,33 @@ public class UserControllerTest {
         ResponseEntity result = this.userController.getByFiltering(usr);
         assertEquals(expResult.getStatusCode(), result.getStatusCode());
     }
+    
+    @Test
+    public void testFiltrarUsuario() {
+        User usr = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
+        ResponseEntity expResult = ResponseEntity.ok(this.userService.getByFiltering(usr));
+        ResponseEntity result = this.userController.filtrarUsuarios(new NumeroCarnet(usr.getRegistroAcademico()));
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+    }
+    
+    @Test
+    public void testFindUserByIdWhenisEmpty() {
+        User usr = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
+        ResponseEntity expResult = ResponseEntity.status(HttpStatus.CONFLICT).body("NO EXISTE EL TOKEN DE AUTENTICACION");
+        when(this.userService.findById(usr.getRegistroAcademico())).thenReturn(Optional.empty());
+        ResponseEntity result = this.userController.findUserById(usr);
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+    }
+    
+    @Test
+    public void testFindUserByIdWhenExists() {
+        User usr = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
+        ResponseEntity expResult = ResponseEntity.ok(usr);
+        when(this.userService.findById(usr.getRegistroAcademico())).thenReturn(Optional.of(usr));
+        ResponseEntity result = this.userController.findUserById(usr);
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+    }
+
+
 
 }
