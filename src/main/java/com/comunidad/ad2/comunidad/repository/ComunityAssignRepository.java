@@ -49,6 +49,14 @@ public interface ComunityAssignRepository extends JpaRepository<ComunityAssign, 
     @Query("SELECT comunity from ComunityAssign comunity where comunity.comunity.id=?1 AND comunity.user.registroAcademico LIKE %?2% AND comunity.estado='ESPERA' AND comunity.tipo='MIEMBRO'")
     public Iterable<ComunityAssign> findUserRequest(int idComunidad, String carnet);
 
+    /**
+     * Devuelve todos los miembros activos de una comunidad
+     * @param idComunidad
+     * @param carnet
+     * @return 
+     */
+    @Query("SELECT comunity from ComunityAssign comunity where comunity.comunity.id=?1 AND comunity.user.registroAcademico LIKE %?2% AND comunity.estado='ACTIVO' AND comunity.tipo='MIEMBRO'")
+    public Iterable<ComunityAssign> findActiveMembersOfComunity(int idComunidad,String carnet);
     
     /**
      *Permite buscar las comunidades a las que un usuario ha sido aceptado 
@@ -66,8 +74,6 @@ public interface ComunityAssignRepository extends JpaRepository<ComunityAssign, 
     @Modifying
     @Query(value ="DELETE from comunity_assign where comunity_id_comunity=?1 and user_registro_academico=?2 and tipo_assign!='ADMINISTRADOR' and estado_solicitud!='DENEGADO'" , nativeQuery = true)
     public void deleteSpecificComunityAssignMember(int idComunidad, String registroAcademico);
-    
-
     
 
     
