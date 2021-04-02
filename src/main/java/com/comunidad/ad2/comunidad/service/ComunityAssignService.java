@@ -15,6 +15,10 @@ import java.util.Optional;
  */
 public interface ComunityAssignService {
 
+    public boolean deleteAllAssignsByComunity(String idComunidad);
+    
+    public boolean deleteSpecificComunityAssignMember(String idComunidad, String registroAcademico);
+    
     public ComunityAssign save(ComunityAssign comunityAssign);
 
     public Iterable<ComunityAssign> findComunityTypeAdminitrationByRegistroAcademico(String registroAcademico);
@@ -37,4 +41,5 @@ public interface ComunityAssignService {
 
     public Iterable<ComunityAssign> findActiveMembersOfComunity(int idComunidad, String carnet);
 
+     public Iterable<ComunityAssign> findUserComunitys(String registroAcademicoDeUsuario);
 }

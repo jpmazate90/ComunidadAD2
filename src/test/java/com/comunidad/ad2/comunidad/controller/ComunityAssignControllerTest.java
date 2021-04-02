@@ -6,6 +6,7 @@
 package com.comunidad.ad2.comunidad.controller;
 
 import com.comunidad.ad2.comunidad.AuxObject.ComunityAssignFilters;
+import com.comunidad.ad2.comunidad.AuxObject.MensajeRetorno;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.ComunityAssign;
 import com.comunidad.ad2.comunidad.entity.ComunityAssignKey;
@@ -14,6 +15,7 @@ import com.comunidad.ad2.comunidad.repository.ComunityAssignRepository;
 import com.comunidad.ad2.comunidad.repository.ComunityRepository;
 import com.comunidad.ad2.comunidad.repository.UserRepository;
 import com.comunidad.ad2.comunidad.service.ComunityAssignService;
+import com.comunidad.ad2.comunidad.service.ComunityImpl;
 import com.comunidad.ad2.comunidad.service.UserServiceImpl;
 import com.comunidad.ad2.comunidad.service.enums.EstadoComunityAssign;
 import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
@@ -60,6 +62,8 @@ public class ComunityAssignControllerTest {
 
     @Mock
     private ComunityAssignService comunityAssignService;  // es el mock
+    @Mock
+    private ComunityImpl comunity;  // es el mock
 
     @InjectMocks
     private ComunityAssignController comunityAssignController; // es la implementacion
@@ -184,7 +188,89 @@ public class ComunityAssignControllerTest {
         ResponseEntity result = this.comunityAssignController.removeUserFromComunity(comunityAssign);
         assertEquals(expResult.getStatusCode(), result.getStatusCode());
     }
+    /*
+     * Test para verificar que se buscan todos los usuarios de la comunidad
+     */
+    @Test
+    public void testFindUserComunitys() {
+        //Arrange
+        User user = new User("12345678");
+        ArrayList<ComunityAssign> comunityList = new ArrayList<>();
+        comunityList.add(crearComunityAsignJJ());
+        Iterable<ComunityAssign> comunityAssignIterable = comunityList;
+        when(this.comunityAssignService.findUserComunitys("12345678")).thenReturn(comunityAssignIterable);
+        //Act
+        ResponseEntity expResult = ResponseEntity.status(HttpStatus.ACCEPTED).body(comunityAssignIterable);
+        ResponseEntity result = this.comunityAssignController.findUserComunitys(user);
+        //Assert
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testDeleteComunityWhenComunityIsEmpty(){
+        Comunity comunidad = crearComunidad();
+        ComunityAssignFilters com = new ComunityAssignFilters("10",comunidad.getId());
+        //Optional<Comunity> comunidadAsignada = Optional.of(crearComunidad());
+        when(this.comunity.findById(comunidad.getId()+"")).thenReturn(Optional.empty());
+        ResponseEntity expResult = ResponseEntity.status(HttpStatus.CONFLICT).body(new MensajeRetorno("NO SE ENCONTRO LA COMUNIDAD"));
+        ResponseEntity result = this.comunityAssignController.deleteComunity(com);
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+    }
     
+    @Test
+    public void testDeleteUserFromComunityWhenComunityIsEmpty(){
+        Comunity comunidad = crearComunidad();
+        ComunityAssignFilters com = new ComunityAssignFilters("10",comunidad.getId());
+        //Optional<Comunity> comunidadAsignada = Optional.of(crearComunidad());
+        when(this.comunityAssignService.findByIdComunityMiembro(comunidad.getId() ,com.getRegistroAcademico())).thenReturn(Optional.empty());
+        ResponseEntity expResult = ResponseEntity.status(HttpStatus.CONFLICT).body(new MensajeRetorno("NO SE ENCONTRO LA COMUNIDAD"));
+        ResponseEntity result = this.comunityAssignController.deleteUserFromComunity(com);
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+    }
+    
+    @Test
+    public void testDeleteComunityWhenComunityExists(){
+        Comunity comunidad = crearComunidad();
+        ComunityAssignFilters com = new ComunityAssignFilters("10",comunidad.getId());
+        Optional<Comunity> comunidadAsignada = Optional.of(crearComunidad());
+        //
+        ComunityAssignService spyComunityAssign = Mockito.spy(comunityAssignService);
+        ComunityImpl spyService = Mockito.spy(comunity);
+        //
+        when(this.comunity.findById(comunidad.getId()+"")).thenReturn(comunidadAsignada);
+        when(spyComunityAssign.deleteAllAssignsByComunity(comunidad.getId()+"")).thenReturn(true);
+        when(spyService.deleteById(comunidad.getId()+"")).thenReturn(true);
+        
+        ResponseEntity expResult = ResponseEntity.status(HttpStatus.ACCEPTED).body(new MensajeRetorno("SE ELIMINO CORRECTAMENTE LO RELACIONADO A LA COMUNIDAD CON ID: "+com.getIdComunidad()));
+        
+        ResponseEntity result = this.comunityAssignController.deleteComunity(com);
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+        
+        
+    }
+    
+     @Test
+    public void testdeleteUserFromComunityWhenComunityExists(){
+        ComunityAssignFilters com = new ComunityAssignFilters("10",10);
+        ComunityAssign example = crearComunityAsignJJ();
+        example.getComunity().setId(com.getIdComunidad());
+        example.getUser().setRegistroAcademico(com.getRegistroAcademico());
+        
+        
+        Optional<ComunityAssign> comunidadAsignada = Optional.of(example);
+//        ComunityAssignService spyComunityAssign = Mockito.spy(comunityAssignService);
+        
+        //
+        when(this.comunityAssignService.findByIdComunityMiembro(com.getIdComunidad(),com.getRegistroAcademico())).thenReturn(comunidadAsignada);
+        when(this.comunityAssignService.deleteSpecificComunityAssignMember(com.getIdComunidad()+"",com.getRegistroAcademico())).thenReturn(true);        
+        ResponseEntity expResult = ResponseEntity.status(HttpStatus.ACCEPTED).body(new MensajeRetorno("SE ELIMINO CORRECTAMENTE LO RELACIONADO A LA COMUNIDAD CON ID: "+com.getIdComunidad()));
+        
+        ResponseEntity result = this.comunityAssignController.deleteUserFromComunity(com);
+        assertEquals(expResult.getStatusCode(), result.getStatusCode());
+        
+        
+    }
+
     private ComunityAssign createComunityAssign() {
         return new ComunityAssign(TipoComunityAssign.MIEMBRO, EstadoComunityAssign.ESPERA, new Timestamp(new Date().getTime()), new Timestamp(new Date().getTime()));
     }
@@ -211,5 +297,8 @@ public class ComunityAssignControllerTest {
     private ComunityAssign crearComunityAsignJJ() {
         return new ComunityAssign(new ComunityAssignKey("1", 1), new User("1"), new Comunity(1), TipoComunityAssign.ADMINISTRADOR, new Timestamp(new Date().getTime()), EstadoComunityAssign.ACTIVO, new Timestamp(new Date().getTime()));
     }
+    
+    
+    
 
 }

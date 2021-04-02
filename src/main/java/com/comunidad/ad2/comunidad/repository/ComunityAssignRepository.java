@@ -11,8 +11,10 @@ import com.comunidad.ad2.comunidad.entity.ComunityAssignKey;
 import com.comunidad.ad2.comunidad.entity.User;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -55,7 +57,26 @@ public interface ComunityAssignRepository extends JpaRepository<ComunityAssign, 
      */
     @Query("SELECT comunity from ComunityAssign comunity where comunity.comunity.id=?1 AND comunity.user.registroAcademico LIKE %?2% AND comunity.estado='ACTIVO' AND comunity.tipo='MIEMBRO'")
     public Iterable<ComunityAssign> findActiveMembersOfComunity(int idComunidad,String carnet);
+    
+    /**
+     *Permite buscar las comunidades a las que un usuario ha sido aceptado 
+     * @param registroAcademicoDeUsuario
+     * @return 
+     */
+    @Query("SELECT comunity from ComunityAssign comunity where comunity.user.registroAcademico=?1 AND comunity.tipo='MIEMBRO' AND comunity.estado='ACTIVO'")
+    public Iterable<ComunityAssign> findUserComunitys(String registroAcademicoDeUsuario);
 
+
+    @Modifying
+    @Query(value ="DELETE from comunity_assign where comunity_id_comunity=?1" , nativeQuery = true)
+    public void deleteComunityAssignsByIdComunity(int idComunidad);
+    
+    @Modifying
+    @Query(value ="DELETE from comunity_assign where comunity_id_comunity=?1 and user_registro_academico=?2 and tipo_assign!='ADMINISTRADOR' and estado_solicitud!='DENEGADO'" , nativeQuery = true)
+    public void deleteSpecificComunityAssignMember(int idComunidad, String registroAcademico);
+    
+
+    
 
 }
 /*

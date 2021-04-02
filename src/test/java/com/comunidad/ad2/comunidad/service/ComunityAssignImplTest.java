@@ -5,6 +5,7 @@
  */
 package com.comunidad.ad2.comunidad.service;
 
+import com.comunidad.ad2.comunidad.AuxObject.ComunityAssignFilters;
 import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.ComunityAssign;
@@ -29,6 +30,8 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import org.mockito.internal.stubbing.answers.DoesNothing;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -238,4 +241,58 @@ public class ComunityAssignImplTest {
         System.out.println("Exp result:"+expResult+ " Result:"+result);
         assertEquals(expResult, result);
     }
+
+
+    @Test
+    public void testFindUserComunitys(){
+        //Arrange
+        System.out.println("FindUserComunitys");
+        ArrayList<ComunityAssign> comunityAssignList = new ArrayList<>();
+        comunityAssignList.add(comunityAssign);
+        Iterable<ComunityAssign> comunityAssignIterable=comunityAssignList;
+        Mockito.when(comunityAssignRepository.findUserComunitys(REGISTRO_ACADEMICO)).thenReturn(comunityAssignIterable);
+        //Act
+        String expResult = comunityAssignList.get(0).getUser().getRegistroAcademico();
+        Iterable<ComunityAssign>resultIterable = comunityAssignImpl.findUserComunitys(REGISTRO_ACADEMICO);
+        ArrayList<ComunityAssign> resultList =(ArrayList<ComunityAssign>)resultIterable;
+        String result=resultList.get(0).getUser().getRegistroAcademico();
+        //Assert
+        assertEquals(expResult, result);
+        //Asset
+    }
+
+    public void testDeleteAllAssignsByComunity() {
+        //Arrange
+        Comunity comunidad = crearComunidad();
+        //ComunityAssignRepository spy = Mockito.spy(comunityAssignRepository);
+        doNothing().when(this.comunityAssignRepository).deleteComunityAssignsByIdComunity(comunidad.getId());
+        //Act
+        boolean expResult = true;
+        boolean result = this.comunityAssignImpl.deleteAllAssignsByComunity(comunidad.getId() + "");
+        //Arrange
+        assertEquals(expResult, result);
+        verify(this.comunityAssignRepository).deleteComunityAssignsByIdComunity(comunidad.getId());
+        // TODO review the generated test code and remove the default call to fail.
+    }
+
+    @Test
+    public void testDeleteSpecificComunityAssignMember() {
+        //Arrange
+        ComunityAssignFilters com = new ComunityAssignFilters("10", 10);
+
+        //ComunityAssignRepository spy = Mockito.spy(comunityAssignRepository);
+        doNothing().when(this.comunityAssignRepository).deleteSpecificComunityAssignMember(com.getIdComunidad(),com.getRegistroAcademico());
+        //Act
+        boolean expResult = true;
+        boolean result = this.comunityAssignImpl.deleteSpecificComunityAssignMember(com.getIdComunidad()+"", com.getRegistroAcademico());
+        //Arrange
+        assertEquals(expResult, result);
+        verify(this.comunityAssignRepository).deleteSpecificComunityAssignMember(com.getIdComunidad(),com.getRegistroAcademico());
+        // TODO review the generated test code and remove the default call to fail.
+    }
+
+    private Comunity crearComunidad() {
+        return new Comunity(4);
+    }
+
 }

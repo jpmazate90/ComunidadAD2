@@ -11,5 +11,5 @@ package com.comunidad.ad2.comunidad.service.enums;
  */
 public enum EstadoComunityAssign {
  
-    ESPERA,ACTIVO,DENEGADO
+    ESPERA,ACTIVO,DENEGADO,INACTIVO
 }
