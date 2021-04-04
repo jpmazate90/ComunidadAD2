@@ -49,7 +49,7 @@ public interface ComunityAssignRepository extends JpaRepository<ComunityAssign, 
     @Query("SELECT comunity from ComunityAssign comunity where comunity.comunity.id=?1 AND comunity.user.registroAcademico LIKE %?2% AND comunity.estado='ESPERA' AND comunity.tipo='MIEMBRO'")
     public Iterable<ComunityAssign> findUserRequest(int idComunidad, String carnet);
 
-    @Query("SELECT DISTINCT comunity.user from ComunityAssign comunity where comunity.comunity.id=?1")
+    @Query("SELECT DISTINCT comunity.user from ComunityAssign comunity where comunity.comunity.id=?1 AND (comunity.tipo = 'ADMINISTRADOR' OR comunity.estado = 'ACTIVO')")
     public Iterable<User> getAllUsersInCommunity(int idComunidad);
     /**
      * Devuelve todos los miembros activos de una comunidad
