@@ -5,13 +5,19 @@
  */
 package com.comunidad.ad2.comunidad.service;
 
+import com.comunidad.ad2.comunidad.controllImage.CreadorDeDirectoriosProfile;
+import com.comunidad.ad2.comunidad.controllImage.DibujadorDeImagenesEnDisco;
+import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
 import com.comunidad.ad2.comunidad.encriptacion.Hash;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.UserRepository;
 import java.util.List;
 import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
 import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.sql.Timestamp;
+import java.util.LinkedList;
 import java.util.Optional;
 import java.util.UUID;
 import org.apache.commons.lang3.StringUtils;
@@ -22,6 +28,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -34,15 +41,26 @@ public class UserServiceImpl implements UserService {
     public final String NOT_VALUE = " *";
 
     private UserRepository userRepository;
+    private CreadorDeDirectoriosProfile creadorDeDirectoriosProfile;
+    private DibujadorDeImagenesEnDisco dibujadorDeImagenes;
+    private RecuperadorDeImagenesDeDisco recuperadorDeImagenesDeDisco;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+        this.creadorDeDirectoriosProfile = new CreadorDeDirectoriosProfile();
+        this.dibujadorDeImagenes = new DibujadorDeImagenesEnDisco();
+        this.recuperadorDeImagenesDeDisco = new RecuperadorDeImagenesDeDisco();
     }
 
     @Override
     public Iterable<User> findAll() {
-        return userRepository.findAll();
+        List<User> users = new LinkedList<>();
+        users.addAll(this.userRepository.findAll());
+        for (User user : users) {
+            addUserProfileImage(user);
+        }
+        return users;
     }
 
      
@@ -132,12 +150,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findByTokenOwnUser(String token) {
         Optional<User> user = userRepository.findByOwnToken(token);
+        if(user.isPresent()){
+            addUserProfileImage(user.get());
+        }
         return user;
     }
 
     @Override
     public User actualizarDatosUser(User user) {
-        return userRepository.save(user);
+        User response = userRepository.save(user);
+        return addUserProfileImage(response);
     }
 
     @Override
@@ -158,7 +180,13 @@ public class UserServiceImpl implements UserService {
         if(user.getCorreoElectronico().isEmpty())
             user.setCorreoElectronico(NOT_VALUE);
         System.out.println(":::::::::::: Registro: " + user.getRegistroAcademico() + ", Nombre: " + user.getNombreCompleto() + "Correo: " + user.getCorreoElectronico());
-        return userRepository.getUsersByFiltering(user.getRegistroAcademico(), user.getNombreCompleto(), user.getCorreoElectronico());
+        List<User> users = new LinkedList<>();
+        users.addAll(this.userRepository.getUsersByFiltering(user.getRegistroAcademico(), user.getNombreCompleto(), user.getCorreoElectronico()));
+        for (User usr : users) {
+            addUserProfileImage(usr);
+        }
+        return users;
+//        return userRepository.getUsersByFiltering(user.getRegistroAcademico(), user.getNombreCompleto(), user.getCorreoElectronico());
     }
 
     @Override
@@ -166,8 +194,26 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUsersBySearch(searchText);
     }
 
-    
+    @Override
+    public User guardarImagen(MultipartFile file) throws IOException {
+        User usr = new User();
+        System.out.println("Resultado:::: " + this.creadorDeDirectoriosProfile.createDirectory()); 
+        Path pathImage = this.creadorDeDirectoriosProfile.getPathOfImage(file.getOriginalFilename());
+        System.out.println("PATH::: " + pathImage.toAbsolutePath());
+        this.dibujadorDeImagenes.dibujarImagen(file.getBytes(), pathImage);
+        usr.setFotoDePerfil(pathImage.toString());
+        return usr;
+    }
 
-    
+    public User addUserProfileImage(User usr){
+        String foto;
+        byte[] datosFoto;
+        if(usr.getFotoDePerfil() != null){
+            foto = usr.getFotoDePerfil();
+            datosFoto = this.recuperadorDeImagenesDeDisco.recuperarBytesDeImagen(foto);
+            usr.setDatosFoto(datosFoto);
+        }
+        return usr;
+    }
     
 }

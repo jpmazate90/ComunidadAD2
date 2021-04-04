@@ -16,6 +16,7 @@ public interface CreadorDeDirectoriosInterface {
 
     public static final String DIRECOTRIO_POR_DEFECTO = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
     public static final String DIRECTORIO_DE_TODAS_LAS_IMAGENES = "/imagenesDeComunidad";
+    public static final String USER_IMAGES_DIRECTORY = "/userImages";
 
     public boolean createDirectory();
     

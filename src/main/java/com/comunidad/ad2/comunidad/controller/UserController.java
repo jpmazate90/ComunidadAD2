@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -80,20 +81,11 @@ public class UserController {
 
     @PostMapping("/api/users/adminCreation")
     public ResponseEntity<?> adminCreation(@RequestBody User user) {//Recibe un user, donde se incluira el registro academico y el usuario
-        //Este user trae el registroAcademico y el estado
-        System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
-        System.out.println("user" + user.getRegistroAcademico());
-        System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.adminCreation(user.getRegistroAcademico()));
     }
 
     @PostMapping("/api/users/changePassword")
     public ResponseEntity<?> changePassword(@RequestBody User user) {//Recibe un user, donde se incluira el registro academico y el usuario
-        //Este user trae el registroAcademico y el estado
-        System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
-        System.out.println("Registro: " + user.getRegistroAcademico());
-        System.out.println("User pass: " + user.getPassword());
-        System.out.println("********************/*********************/*********************\n\n\n\n\n\n\n");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.changePasswordUser(user.getRegistroAcademico(), user.getPassword()));
     }
 
@@ -161,6 +153,19 @@ public class UserController {
             return ResponseEntity.ok(user);
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body("NO EXISTE EL TOKEN DE AUTENTICACION");
+
+    }
+    
+    @PostMapping("/api/users/upload/images/profile")
+    public ResponseEntity<?> uploadImage(@RequestBody MultipartFile file) {
+        try {
+            User usr = this.userService.guardarImagen(file);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(usr);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE RECIBIO LA IMAGEN");
+        }
+        // return ResponseEntity.ok(HttpStatus.ACCEPTED);//Si se manda un texto va a tirar error de HttpErrorResponse
 
     }
 
