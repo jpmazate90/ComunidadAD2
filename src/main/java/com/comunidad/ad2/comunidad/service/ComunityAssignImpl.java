@@ -8,6 +8,7 @@ package com.comunidad.ad2.comunidad.service;
 import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.ComunityAssign;
+import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.ComunityAssignRepository;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,6 +18,7 @@ import java.util.Date;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -107,10 +109,10 @@ public class ComunityAssignImpl implements ComunityAssignService {
         }
         return comunityAssign;
     }
-    
+
     @Override
     public Iterable<ComunityAssign> findRequestInEspera(Integer idComunidad, String registroAcademico) {
-        return this.comunityAssignRepository.findUserRequest(idComunidad,registroAcademico+"");
+        return this.comunityAssignRepository.findUserRequest(idComunidad, registroAcademico + "");
     }
 
     @Override
@@ -120,8 +122,49 @@ public class ComunityAssignImpl implements ComunityAssignService {
 
     }
 
+    @Override
+    public Iterable<User> getAllUsersInCommunity(int idComunidad) {
+        return this.comunityAssignRepository.getAllUsersInCommunity(idComunidad);
+    }
+    public Iterable<ComunityAssign> findActiveMembersOfComunity(int idComunidad,String carnet){
+        return this.comunityAssignRepository.findActiveMembersOfComunity(idComunidad, carnet);
+    }
 
+    /**
+     * Busca las comunidades donde el usuario con registroAcademico indicado es miembro
+     * @param registroAcademicoDeUsuario
+     * @return 
+     */
+    @Override
+    public Iterable<ComunityAssign> findUserComunitys(String registroAcademicoDeUsuario) {
+        Iterable<ComunityAssign> comunidades=this.comunityAssignRepository.findUserComunitys(registroAcademicoDeUsuario);
+        for (ComunityAssign comunidad : comunidades) {
+            agregarFotoAComunidad(comunidad);
+        }
+        return comunidades;
+    }
+
+
+
+    @Override
+    @Transactional
+    public boolean deleteAllAssignsByComunity(String idComunidad) {
+
+        this.comunityAssignRepository.deleteComunityAssignsByIdComunity(Integer.parseInt(idComunidad));
+        return true;
+    }
+
+    @Override
+    @Transactional /*
+                    Es importantisimo tener esta etiqueta de transactional cuando lo que se quiere es eliminar con la query 
+                    que se manda a ejecutar con el repository
+                    */
+    public boolean deleteSpecificComunityAssignMember(String idComunidad, String registroAcademico) {
+        this.comunityAssignRepository.deleteSpecificComunityAssignMember(Integer.parseInt(idComunidad),registroAcademico);
+        return true;
+    }
+    
+    
 
 }
-//
-//
+
