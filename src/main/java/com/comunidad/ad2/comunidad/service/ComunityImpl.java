@@ -63,4 +63,16 @@ public class ComunityImpl implements ComunityService {
         return this.comunityRepository.getCommunitiesBySearch(searchText);
     }
 
+    @Override
+    public Optional<Comunity> findById(String id) {
+        return this.comunityRepository.findById(Integer.parseInt(id));
+    }
+    
+    @Override
+    @Transactional
+    public boolean deleteById(String idComunidad) {
+        this.comunityRepository.delete(new Comunity(Integer.parseInt(idComunidad)));
+        return true;
+    }
+
 }
