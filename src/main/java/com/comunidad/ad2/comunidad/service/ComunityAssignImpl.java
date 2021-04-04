@@ -8,6 +8,7 @@ package com.comunidad.ad2.comunidad.service;
 import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.ComunityAssign;
+import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.ComunityAssignRepository;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -118,6 +119,11 @@ public class ComunityAssignImpl implements ComunityAssignService {
         comunityAssign.setFecha_decision(getFechaActual());
         return this.comunityAssignRepository.save(comunityAssign);
 
+    }
+
+    @Override
+    public Iterable<User> getAllUsersInCommunity(int idComunidad) {
+        return this.comunityAssignRepository.getAllUsersInCommunity(idComunidad);
     }
 
 
