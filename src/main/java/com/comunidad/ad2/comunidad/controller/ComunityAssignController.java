@@ -6,6 +6,7 @@
 package com.comunidad.ad2.comunidad.controller;
 
 import com.comunidad.ad2.comunidad.AuxObject.ComunityAssignFilters;
+import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.AuxObject.MensajeRetorno;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.ComunityAssign;
@@ -122,6 +123,11 @@ public class ComunityAssignController {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.comunityAssignService.save(comunityAssign));
     }
 
+    @PostMapping("/api/comunity/users")//Al no estar bajo /api/users no se necesita autenticacion
+    public ResponseEntity<?> getAllUsersInCommunity(@RequestBody OrdinaryObject params) throws IOException {
+        Iterable<User> usersFind = this.comunityAssignService.getAllUsersInCommunity(params.getNumberParam());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(usersFind);
+    }
     /**
      * Busca los miembros Activos de una comunidad
      * @param filters
@@ -180,7 +186,4 @@ public class ComunityAssignController {
         }
         
     }
-    
-        
-
 }
