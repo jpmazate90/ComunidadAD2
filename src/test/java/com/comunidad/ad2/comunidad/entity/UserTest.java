@@ -35,6 +35,7 @@ public class UserTest {
     public static final EstadoUsuario ESTADO_USUARIO = EstadoUsuario.ACTIVO;
     public static final String TOKEN = "MI_TOKEN";
     public static final Visibilidad VISIBILIDAD = Visibilidad.PUBLICO;
+    
     private User user;
 
     public UserTest() {
@@ -454,7 +455,14 @@ public class UserTest {
         System.out.println("toString");
         User instance = this.user;
         //Arrange
-        String expResult = "User{" + "registroAcademico=" + REGISTRO_ACADEMICO + ", nombreCompleto=" + NOMBRE_COMPLETO + ", password=" + PASSWORD + ", fechaDeNacimiento=" + FECHA_DE_NACIMIENTO + ", genero=" + GENERO_USUARIO + ", fotoDePerfil=" + FOTO_DE_PERFIL + ", correoElectronico=" + CORREO_ELECTRONICO + ", rolUsuario=" + ROL_USUARIO + ", ciudad=" + CIUDAD + ", estado=" + ESTADO_USUARIO + ", token=" + TOKEN + ", privacidad=" + VISIBILIDAD + '}';
+        String expResult = "User{" + "registroAcademico=" + instance.getRegistroAcademico() 
+                + ", nombreCompleto=" + instance.getNombreCompleto() + ", password=" 
+                + instance.getPassword() + ", fechaDeNacimiento=" + instance.getFechaDeNacimiento() 
+                + ", genero=" + instance.getGenero() + ", fotoDePerfil=" + instance.getFotoDePerfil() 
+                + ", correoElectronico=" + instance.getCorreoElectronico() + ", rolUsuario=" 
+                + instance.getRolUsuario() + ", ciudad=" + instance.getCiudad() + ", estado=" 
+                + instance.getEstado() + ", token=" + instance.getToken() + ", privacidad=" 
+                + instance.getPrivacidad() + "datosFoto=" + instance.getDatosFoto() + '}';
         String result = instance.toString();
         //Assert
         assertEquals(expResult, result);

@@ -17,6 +17,7 @@ import com.comunidad.ad2.comunidad.service.enums.TipoComunityAssign;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
@@ -65,6 +66,18 @@ public class ComunityAssignImplTest {
         this.comunity = new Comunity(ID_COMUNIDAD);
         this.comunityAssign = new ComunityAssign(comunityAssignKey, user, comunity, TIPO, FECHA_DECISION, ESTADO, FECHA_CREACION);
 
+    }
+    
+    private User createUser(String id){
+        return new User(id);
+    }
+    
+    private List<User> getUsersList(int sizeList){
+        List<User> result = new LinkedList<>();
+        for (int i = 0; i < sizeList; i++) {
+            result.add(createUser(Integer.toString(i)));
+        }
+        return result;
     }
 
     /**
@@ -293,6 +306,19 @@ public class ComunityAssignImplTest {
 
     private Comunity crearComunidad() {
         return new Comunity(4);
+    }
+    
+    @Test
+    public void testGetAllUsersInCommunity(){
+        //Arrange
+        List<User> expResult = getUsersList(3);
+        int idComunidad = 10;
+        ComunityAssignImpl spy = Mockito.spy(this.comunityAssignImpl);
+        //Act
+        Mockito.when(spy.getAllUsersInCommunity(idComunidad)).thenReturn(expResult);
+        List<User> result = (List<User>) spy.getAllUsersInCommunity(idComunidad);
+        //Assert
+        assertEquals(expResult.size(), result.size());
     }
 
 }
