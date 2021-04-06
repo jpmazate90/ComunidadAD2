@@ -6,6 +6,7 @@
 package com.comunidad.ad2.comunidad.service;
 
 import com.comunidad.ad2.comunidad.AuxObject.CreacionUsuarioParaPruebas;
+import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
 import com.comunidad.ad2.comunidad.encriptacion.Hash;
 import com.comunidad.ad2.comunidad.entity.ComunityAssign;
 import com.comunidad.ad2.comunidad.entity.Department;
@@ -15,6 +16,10 @@ import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
 import static com.comunidad.ad2.comunidad.service.enums.EstadoUsuario.EN_ESPERA;
 import com.comunidad.ad2.comunidad.service.enums.GeneroUsuario;
 import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.ArrayList;
@@ -42,6 +47,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.internal.util.StringUtil;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.authority.AuthorityUtils;
 
 /**
@@ -56,8 +62,11 @@ public class UserServiceImplTest {
 
     @InjectMocks
     private UserServiceImpl userService; // es la implementacion
+    
+    private RecuperadorDeImagenesDeDisco recuperadorDeImagenesDeDisco;
 
     public UserServiceImplTest() {
+        this.recuperadorDeImagenesDeDisco = new RecuperadorDeImagenesDeDisco();
     }
     
     private User createUser(String id){
@@ -359,6 +368,25 @@ public class UserServiceImplTest {
         
         //assert
         Assertions.assertEquals(listaUsuarios.size(), resultList.size());
+    }
+    
+    @Test
+    public void testGuardarImagen() throws IOException{
+        //Arrange
+        String fotoDePerfil = "foto.jpg";
+        User usr = new User();
+        usr.setFotoDePerfil(fotoDePerfil);
+        UserServiceImpl spy = Mockito.spy(userService);
+        String absolutePath = "src/test/java/com/comunidad/ad2/comunidad/controllImage/image.png";
+        byte[] bytesImg = this.recuperadorDeImagenesDeDisco.recuperarBytesDeImagen(absolutePath);
+        Path rutaImagen = Paths.get(absolutePath);
+        MockMultipartFile file = new MockMultipartFile("data", bytesImg);
+        //Act
+        Mockito.when(spy.guardarImagen(file)).thenReturn(usr);
+        User expResult = usr;
+        User result = spy.guardarImagen(file);
+        //Assert
+        Assertions.assertEquals(expResult,result);
     }
 
 }

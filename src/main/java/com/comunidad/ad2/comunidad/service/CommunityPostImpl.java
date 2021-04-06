@@ -61,11 +61,9 @@ public class CommunityPostImpl implements CommunityPostService {
         if (comunityPost.getPhoto() != null) {
             String foto;
             byte[] datosFoto;
-            if (comunityPost.getComunity().getFoto() != null) {
-                foto = comunityPost.getPhoto();
-                datosFoto = this.recuperadorDeImagenesDeDisco.recuperarBytesDeImagen(foto);
-                comunityPost.setDatosFoto(datosFoto);
-            }
+            foto = comunityPost.getPhoto();
+            datosFoto = this.recuperadorDeImagenesDeDisco.recuperarBytesDeImagen(foto);
+            comunityPost.setDatosFoto(datosFoto);
             return comunityPost;
         } else {
             return comunityPost;

@@ -38,6 +38,12 @@ public class ComunityAssignTest {
         this.comunity= new Comunity(ID_COMUNIDAD);
         this.comunityAssign = new ComunityAssign(comunityAssignKey, user, comunity, TIPO, FECHA_DECISION, ESTADO, FECHA_CREACION);
     }
+    
+    @Test
+    public void testSimpleTest(){
+        ComunityAssign ca = new ComunityAssign();
+        assertEquals(ca, ca);
+    }
 
 
     /**
