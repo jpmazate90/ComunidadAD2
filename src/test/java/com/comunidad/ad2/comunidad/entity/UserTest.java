@@ -445,7 +445,7 @@ public class UserTest {
         assertEquals(expResult, result);
     }
 
-    /**
+   /**
      * Test of toString method, of class User.
      */
     @Test
@@ -454,7 +454,13 @@ public class UserTest {
         System.out.println("toString");
         User instance = this.user;
         //Arrange
-        String expResult = "User{" + "registroAcademico=" + REGISTRO_ACADEMICO + ", nombreCompleto=" + NOMBRE_COMPLETO + ", password=" + PASSWORD + ", fechaDeNacimiento=" + FECHA_DE_NACIMIENTO + ", genero=" + GENERO_USUARIO + ", fotoDePerfil=" + FOTO_DE_PERFIL + ", correoElectronico=" + CORREO_ELECTRONICO + ", rolUsuario=" + ROL_USUARIO + ", ciudad=" + CIUDAD + ", estado=" + ESTADO_USUARIO + ", token=" + TOKEN + ", privacidad=" + VISIBILIDAD + '}';
+        String expResult = "User{" + "registroAcademico=" + REGISTRO_ACADEMICO + ", nombreCompleto="
+                + NOMBRE_COMPLETO + ", password=" + PASSWORD + ", fechaDeNacimiento="
+                + FECHA_DE_NACIMIENTO + ", genero=" + GENERO_USUARIO + ", fotoDePerfil="
+                + FOTO_DE_PERFIL + ", correoElectronico=" + CORREO_ELECTRONICO
+                + ", rolUsuario=" + ROL_USUARIO + ", ciudad=" + CIUDAD
+                + ", estado=" + ESTADO_USUARIO + ", token=" + TOKEN + ", privacidad="
+                + "PUBLICO" + "datosFoto=" + "null" + '}';
         String result = instance.toString();
         //Assert
         assertEquals(expResult, result);
