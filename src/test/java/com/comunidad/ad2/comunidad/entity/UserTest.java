@@ -446,7 +446,7 @@ public class UserTest {
         assertEquals(expResult, result);
     }
 
-    /**
+   /**
      * Test of toString method, of class User.
      */
     @Test
