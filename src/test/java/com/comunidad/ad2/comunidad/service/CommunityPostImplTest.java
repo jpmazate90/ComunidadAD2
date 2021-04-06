@@ -44,7 +44,7 @@ public class CommunityPostImplTest {
         return new CommunityPost();
     }
     
-    private List<CommunityPost> getUsersList(int sizeList){
+    private List<CommunityPost> getPostList(int sizeList){
         List<CommunityPost> result = new LinkedList<>();
         for (int i = 0; i < sizeList; i++) {
             result.add(createCommunityPost());
@@ -88,7 +88,7 @@ public class CommunityPostImplTest {
     public void testGetAllCommunityPostByIdComunity(){
         //Arrange
         int idCommunity = 10;
-        List<CommunityPost> expListPost = getUsersList(3);
+        List<CommunityPost> expListPost = getPostList(3);
         CommunityPostImpl spy = Mockito.spy(this.communityPostImpl);
         //Act
         Mockito.when(spy.getAllCommunityPostByIdComunity(idCommunity)).thenReturn(expListPost);
