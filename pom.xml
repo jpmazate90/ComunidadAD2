@@ -105,7 +105,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>jacoco-check</id>
+                                        <id>jacoco-check</id>
                         <goals>
                             <goal>check</goal>
                         </goals>
@@ -115,13 +115,19 @@
                                     <element>PACKAGE</element>
                                     <limits>
                                         <limit>
-                                            <counter>LINE</counter>
+                                        <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.9</minimum>
+                                         <minimum>0.85</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
                             </rules>
+                            <excludes>
+                                <exclude>com/comunidad/ad2/comunidad/security/**/*</exclude>
+                                <exclude>com/comunidad/ad2/comunidad/*</exclude>
+<!--                                <exclude>com/comunidad/ad2/comunidad/ComunidadApplication.class</exclude>
+                                <exclude>com/comunidad/ad2/comunidad/ServletInitializer.class</exclude>-->
+                            </excludes>
                         </configuration>
                     </execution>
                 </executions>
