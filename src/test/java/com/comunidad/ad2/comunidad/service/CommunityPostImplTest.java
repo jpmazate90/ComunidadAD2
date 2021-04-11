@@ -20,6 +20,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.mock.web.MockMultipartFile;
 
 /**
@@ -27,12 +29,14 @@ import org.springframework.mock.web.MockMultipartFile;
  * @author fabricio
  */
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class CommunityPostImplTest {
 
     @Mock
     private CommunityPostRepository communityPostRepository;  // es el mock
     
-    
+    @Mock
+    private ValorationPostService valorationPostService;
     
     @InjectMocks
     private CommunityPostImpl communityPostImpl;
@@ -87,7 +91,7 @@ public class CommunityPostImplTest {
         Assertions.assertEquals(expResult,result);
     }
     
- /*  @Test
+   @Test
     public void testGetAllCommunityPostByIdComunity(){
         //Arrange
         OrdinaryObject ordinaryObject = new OrdinaryObject();
@@ -100,7 +104,7 @@ public class CommunityPostImplTest {
         //List<CommunityPost> result = (List <CommunityPost>) spy.getAllCommunityPostByIdComunity(ordinaryObject);
         //Assert
         assertEquals(expListPost, expListPost);
-    }*/
+    }
     
     
     @Test

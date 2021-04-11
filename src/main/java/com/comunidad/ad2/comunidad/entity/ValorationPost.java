@@ -82,6 +82,14 @@ public class ValorationPost {
         this.valoration = valoration;
     }
 
+    @Override
+    public String toString() {
+        return "ValorationPost{" + "id=" + id 
+                + ", communityPost=" + communityPost 
+                + ", user=" + user 
+                + ", valoration=" + valoration + '}';
+    }
+
  
     
 }

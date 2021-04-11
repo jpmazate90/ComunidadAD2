@@ -1,6 +1,7 @@
 package com.comunidad.ad2.comunidad.entity;
 
 import com.comunidad.ad2.comunidad.service.enums.CommunityPostState;
+import com.comunidad.ad2.comunidad.service.enums.ValorationType;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,12 +48,14 @@ public class CommunityPostTest {
         this.communityPost.setCreatedAt(CREATED_AT);
         this.communityPost.setModifiedAt(MODIFIED_AT);
         this.communityPost.setDatosFoto(DATOS_FOTO);
+        this.communityPost.setValoration(ValorationType.DOWN);
         CommunityPost instance = this.communityPost;
         //Arrange
         String expResult = "CommunityPost{" + "id=" + instance.getId() + ", comunity=" + instance.getComunity() + ", user="
                 + instance.getUser() + ", title=" + instance.getTitle() + ", message=" + instance.getMessage() + ", photo="
                 + instance.getPhoto() + ", state=" + instance.getState() + ", rated=" + instance.getRated() + ", createdAt="
-                + instance.getCreatedAt() + ", modifiedAt=" + instance.getModifiedAt() + ", datosFoto=" + instance.getDatosFoto() + '}';
+                + instance.getCreatedAt() + ", modifiedAt=" + instance.getModifiedAt() + ", datosFoto=" 
+                + instance.getDatosFoto() + "valoration="+ communityPost.getValoration()+'}';
         String result = instance.toString();
         //Assert
         assertEquals(expResult, result);

@@ -188,7 +188,8 @@ public class CommunityPost implements Serializable {
         return "CommunityPost{" + "id=" + id + ", comunity=" + comunity + ", user="
                 + user + ", title=" + title + ", message=" + message + ", photo="
                 + photo + ", state=" + state + ", rated=" + rated + ", createdAt="
-                + createdAt + ", modifiedAt=" + modifiedAt + ", datosFoto=" + datosFoto + '}';
+                + createdAt + ", modifiedAt=" + modifiedAt + ", datosFoto=" 
+                + datosFoto + "valoration="+valoration+ '}';
     }
 
 }
