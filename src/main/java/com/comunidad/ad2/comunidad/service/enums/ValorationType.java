@@ -11,5 +11,5 @@ package com.comunidad.ad2.comunidad.service.enums;
  */
 public enum ValorationType {
     
-    LIKE,DISLIKE
+    UP,DOWN,NONE
 }

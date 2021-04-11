@@ -55,35 +55,5 @@ public class ComunityServiceImplTest {
         return new Comunity(curso, nombreComunidad, "");
     }
     
- 
-//    /**
-//     * Test of findById method, of class ComunityImpl.
-//     */
-//    @Test
-//    public void testFindById() {
-//        System.out.println("findById");
-//        Integer idComunidad = null;
-//        ComunityImpl instance = null;
-//        Optional<Comunity> expResult = null;
-//        Optional<Comunity> result = instance.findById(idComunidad);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of guardarImagen method, of class ComunityImpl.
-//     */
-//    @Test
-//    public void testGuardarImagen() throws Exception {
-//        System.out.println("guardarImagen");
-//        MultipartFile file = null;
-//        ComunityImpl instance = null;
-//        Comunity expResult = null;
-//        Comunity result = instance.guardarImagen(file);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
 
 }

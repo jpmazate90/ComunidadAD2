@@ -6,6 +6,7 @@
 package com.comunidad.ad2.comunidad.entity;
 
 import com.comunidad.ad2.comunidad.service.enums.EstadoComunityAssign;
+import com.comunidad.ad2.comunidad.service.enums.ValorationType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -27,11 +28,11 @@ public class ValorationPost {
     public ValorationPost() {
     }
 
-    public ValorationPost(Integer id, CommunityPost communityPost, User user, EstadoComunityAssign estado) {
+    public ValorationPost(Integer id, CommunityPost communityPost, User user, ValorationType valoration) {
         this.id = id;
         this.communityPost = communityPost;
         this.user = user;
-        this.estado = estado;
+        this.valoration = valoration;
     }
     
     @Id
@@ -47,7 +48,7 @@ public class ValorationPost {
     
     @Column(name = "valoration_type", nullable = true)
     @Enumerated(EnumType.STRING)
-    private EstadoComunityAssign estado;
+    private ValorationType valoration;
 
     public Integer getId() {
         return id;
@@ -73,13 +74,14 @@ public class ValorationPost {
         this.user = user;
     }
 
-    public EstadoComunityAssign getEstado() {
-        return estado;
+    public ValorationType getValoration() {
+        return valoration;
     }
 
-    public void setEstado(EstadoComunityAssign estado) {
-        this.estado = estado;
+    public void setValoration(ValorationType valoration) {
+        this.valoration = valoration;
     }
-   
+
+ 
     
 }
