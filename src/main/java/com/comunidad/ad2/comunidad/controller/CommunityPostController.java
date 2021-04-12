@@ -38,7 +38,7 @@ public class CommunityPostController {
     public ResponseEntity<?> create(@RequestBody CommunityPost comunityPost) {
         CommunityPost postFind = this.communityPostService.save(comunityPost);
         if(postFind != null){
-            return ResponseEntity.status(HttpStatus.CREATED).body(this.communityPostService.save(comunityPost));
+            return ResponseEntity.status(HttpStatus.CREATED).body(postFind);
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE PUDO CREAR EL POST");
     }

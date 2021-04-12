@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,10 +16,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -78,6 +82,10 @@ public class CommunityPost implements Serializable {
     @UpdateTimestamp
     @Column(name = "modified_at", insertable = false)
     private LocalDateTime modifiedAt;
+    
+    @JsonInclude
+    @Transient
+    private List<CommentPost> commentPost;
     
     @JsonInclude
     @Transient
@@ -169,6 +177,14 @@ public class CommunityPost implements Serializable {
 
     public void setDatosFoto(byte[] datosFoto) {
         this.datosFoto = datosFoto;
+    }
+
+    public List<CommentPost> getCommentPost() {
+        return commentPost;
+    }
+
+    public void setCommentPost(List<CommentPost> commentPost) {
+        this.commentPost = commentPost;
     }
 
     @Override
