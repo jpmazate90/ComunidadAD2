@@ -63,12 +63,14 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
-     
-
     @Override
     @Transactional(readOnly = true)
     public Optional<User> findById(String registroAcademico) {
-        return userRepository.findById(registroAcademico);
+        Optional<User> user = userRepository.findById(registroAcademico);
+        if(user.isPresent()){
+            addUserProfileImage(user.get());
+        }
+        return user;
     }
 
     @Override
