@@ -1,5 +1,6 @@
 package com.comunidad.ad2.comunidad.service;
 
+import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.controllImage.CreadorDeDirectoriosCommunityPost;
 import com.comunidad.ad2.comunidad.controllImage.DibujadorDeImagenesEnDisco;
 import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
@@ -24,13 +25,17 @@ public class CommunityPostImpl implements CommunityPostService {
     private CreadorDeDirectoriosCommunityPost creadorDeDirectoriosCommunityPost;
     private DibujadorDeImagenesEnDisco dibujadorDeImagenes;
     private RecuperadorDeImagenesDeDisco recuperadorDeImagenesDeDisco;
+    private CommentPostServiceImpl commenPostServiceImpl;
+    private ValorationPostService valorationPostService;
 
     @Autowired
-    public CommunityPostImpl(CommunityPostRepository communityPostRepository) {
+    public CommunityPostImpl(CommunityPostRepository communityPostRepository, CommentPostServiceImpl commenPostServiceImpl, ValorationPostService valorationPostService) {
         this.CommunityPostRepository = communityPostRepository;
         this.creadorDeDirectoriosCommunityPost = new CreadorDeDirectoriosCommunityPost();
         this.dibujadorDeImagenes = new DibujadorDeImagenesEnDisco();
         this.recuperadorDeImagenesDeDisco = new RecuperadorDeImagenesDeDisco();
+        this.commenPostServiceImpl = commenPostServiceImpl;
+        this.valorationPostService = valorationPostService;
     }
 
     @Override
@@ -38,12 +43,15 @@ public class CommunityPostImpl implements CommunityPostService {
         return this.CommunityPostRepository.save(communityPost);
     }
 
+    //Agregar el like o dislike del usuario
     @Override
-    public Iterable<CommunityPost> getAllCommunityPostByIdComunity(int idComunidad) {
-        List<CommunityPost> result = new LinkedList<>(this.CommunityPostRepository.getAllCommunityPostByIdComunity(idComunidad));
+    public Iterable<CommunityPost> getAllCommunityPostByIdComunity(OrdinaryObject ordinaryObject) {
+        List<CommunityPost> result = new LinkedList<>(this.CommunityPostRepository.getAllCommunityPostByIdComunity(ordinaryObject.getNumberParam()));
         for (CommunityPost post : result) {
             agregarFotoAComunidad(post);
         }
+        this.commenPostServiceImpl.addCommentsToPost(result);
+        this.valorationPostService.addValoration(result, ordinaryObject.getStringParam());
         return result;
     }
 

@@ -38,7 +38,7 @@ public class CommunityPostController {
     public ResponseEntity<?> create(@RequestBody CommunityPost comunityPost) {
         CommunityPost postFind = this.communityPostService.save(comunityPost);
         if(postFind != null){
-            return ResponseEntity.status(HttpStatus.CREATED).body(this.communityPostService.save(comunityPost));
+            return ResponseEntity.status(HttpStatus.CREATED).body(postFind);
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE PUDO CREAR EL POST");
     }
@@ -51,7 +51,7 @@ public class CommunityPostController {
      */
     @PostMapping("/api/community/post/get/allByCommunity")//Al no estar bajo /api/users no se necesita autenticacion
     public ResponseEntity<?> getAllCommunityPostByIdComunity(@RequestBody OrdinaryObject params) throws IOException {
-        Iterable<CommunityPost> communityPost = this.communityPostService.getAllCommunityPostByIdComunity(params.getNumberParam());
+        Iterable<CommunityPost> communityPost = this.communityPostService.getAllCommunityPostByIdComunity(params);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(communityPost);
     }
     

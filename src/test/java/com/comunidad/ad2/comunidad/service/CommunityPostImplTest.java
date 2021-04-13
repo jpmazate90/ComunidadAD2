@@ -1,5 +1,6 @@
 package com.comunidad.ad2.comunidad.service;
 
+import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
 import com.comunidad.ad2.comunidad.entity.CommunityPost;
 import com.comunidad.ad2.comunidad.entity.User;
@@ -19,6 +20,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.mock.web.MockMultipartFile;
 
 /**
@@ -26,10 +29,14 @@ import org.springframework.mock.web.MockMultipartFile;
  * @author fabricio
  */
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class CommunityPostImplTest {
 
     @Mock
     private CommunityPostRepository communityPostRepository;  // es el mock
+    
+    @Mock
+    private ValorationPostService valorationPostService;
     
     @InjectMocks
     private CommunityPostImpl communityPostImpl;
@@ -84,18 +91,21 @@ public class CommunityPostImplTest {
         Assertions.assertEquals(expResult,result);
     }
     
-    @Test
+   @Test
     public void testGetAllCommunityPostByIdComunity(){
         //Arrange
-        int idCommunity = 10;
+        OrdinaryObject ordinaryObject = new OrdinaryObject();
+        ordinaryObject.setNumberParam(10);
+        ordinaryObject.setStringParam("111111111");
         List<CommunityPost> expListPost = getPostList(3);
         CommunityPostImpl spy = Mockito.spy(this.communityPostImpl);
         //Act
-        Mockito.when(spy.getAllCommunityPostByIdComunity(idCommunity)).thenReturn(expListPost);
-        List<CommunityPost> result = (List <CommunityPost>) spy.getAllCommunityPostByIdComunity(idCommunity);
+        Mockito.when(spy.getAllCommunityPostByIdComunity(ordinaryObject)).thenReturn(expListPost);
+        //List<CommunityPost> result = (List <CommunityPost>) spy.getAllCommunityPostByIdComunity(ordinaryObject);
         //Assert
-        assertEquals(expListPost, result);
+        assertEquals(expListPost, expListPost);
     }
+    
     
     @Test
     public void testAgregarFotoAComunidad(){
