@@ -66,7 +66,8 @@ public interface ComunityAssignRepository extends JpaRepository<ComunityAssign, 
      * @param registroAcademicoDeUsuario
      * @return 
      */
-    @Query("SELECT comunity from ComunityAssign comunity where comunity.user.registroAcademico=?1 AND comunity.tipo='MIEMBRO' AND comunity.estado='ACTIVO'")
+    @Query("SELECT comunity from ComunityAssign comunity where comunity.user.registroAcademico=?1 "
+            + "AND ((comunity.tipo='MIEMBRO' AND comunity.estado='ACTIVO') OR comunity.tipo='ADMINISTRADOR') ")
     public Iterable<ComunityAssign> findUserComunitys(String registroAcademicoDeUsuario);
 
     @Modifying
