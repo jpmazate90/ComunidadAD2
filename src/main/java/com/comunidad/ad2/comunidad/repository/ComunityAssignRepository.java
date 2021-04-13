@@ -9,6 +9,7 @@ import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.ComunityAssign;
 import com.comunidad.ad2.comunidad.entity.ComunityAssignKey;
 import com.comunidad.ad2.comunidad.entity.User;
+import com.comunidad.ad2.comunidad.service.enums.EstadoComunityAssign;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -77,7 +78,8 @@ public interface ComunityAssignRepository extends JpaRepository<ComunityAssign, 
     @Query(value ="DELETE from comunity_assign where comunity_id_comunity=?1 and user_registro_academico=?2 and tipo_assign!='ADMINISTRADOR' and estado_solicitud!='DENEGADO'" , nativeQuery = true)
     public void deleteSpecificComunityAssignMember(int idComunidad, String registroAcademico);
     
-
+    @Query("SELECT comunity from ComunityAssign comunity where comunity.comunity.id=?1 AND comunity.user.registroAcademico LIKE %?2% AND comunity.estado=?3 AND comunity.tipo='MIEMBRO'")
+    public Iterable<ComunityAssign> findUserRequestByState(int idComunidad, String carnet, EstadoComunityAssign state);
     
 
 }

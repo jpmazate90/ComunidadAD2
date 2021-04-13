@@ -45,4 +45,6 @@ public interface ComunityAssignService {
     public Iterable<User> getAllUsersInCommunity(int idComunidad);
     
      public Iterable<ComunityAssign> findUserComunitys(String registroAcademicoDeUsuario);
+     
+     public Iterable<ComunityAssign> findUsersRequestByState(Integer idComunidad, String registroAcademico, String requestState);
 }

@@ -10,6 +10,7 @@ import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.ComunityAssign;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.ComunityAssignRepository;
+import com.comunidad.ad2.comunidad.service.enums.EstadoComunityAssign;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -164,7 +165,10 @@ public class ComunityAssignImpl implements ComunityAssignService {
         return true;
     }
     
-    
+    @Override 
+    public Iterable<ComunityAssign> findUsersRequestByState(Integer idComunidad, String registroAcademico, String requestState){
+        return this.comunityAssignRepository.findUserRequestByState(idComunidad, registroAcademico, EstadoComunityAssign.valueOf(requestState));
+    }
 
 }
 
