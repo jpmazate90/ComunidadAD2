@@ -109,7 +109,7 @@ public class UserController {
         return ResponseEntity.ok(this.userService.findAll());
     }
 
-       @Autowired
+    @Autowired
     public UserController(@Autowired UserService userService, @Autowired TokenController tokenController) {
         this.userService = userService;
         this.tokenController = tokenController;
@@ -124,38 +124,36 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("NO EXISTE NINGUN USUARIO CON LOS DATOS: " + user);
         }
     }
-    
+
     @PostMapping("/api/users/search")
     public ResponseEntity<?> getUsersBySearch(@RequestBody OrdinaryObject searchObject) {
-        if(searchObject.getStringParam().trim().isEmpty()){
-            return ResponseEntity.ok(this.userService.findAll());
-        }
+        
         return ResponseEntity.ok(this.userService.getUsersBySearch(searchObject.getStringParam().trim()));
     }
-    
+
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/filtrarUsuarios")
     public ResponseEntity<?> filtrarUsuarios(@RequestBody NumeroCarnet carnet) {
-        
-        System.out.println("****************Entre aqui: "+carnet.getNumeroCarnet());
+
+        System.out.println("****************Entre aqui: " + carnet.getNumeroCarnet());
         return ResponseEntity.ok(userService.filtrarUsuarios(carnet.getNumeroCarnet()));
     }
-    
+
     @PostMapping("/api/users/find/byId")
     public ResponseEntity<?> findUserById(@RequestBody User usr) {//Recibe un user, donde se incluira el registro academico y el usuario
         //Este user trae el registroAcademico y la contrasenia
 
         System.out.println("Entrando>>>>>");
-         System.out.println("User::::"+usr.getRegistroAcademico());
-        
+        System.out.println("User::::" + usr.getRegistroAcademico());
+
         Optional<User> user = userService.findById(usr.getRegistroAcademico());
-        if(user.isPresent()){
+        if (user.isPresent()) {
             return ResponseEntity.ok(user);
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body("NO EXISTE EL TOKEN DE AUTENTICACION");
 
     }
-    
+
     @PostMapping("/api/users/upload/images/profile")
     public ResponseEntity<?> uploadImage(@RequestBody MultipartFile file) {
         try {
@@ -165,8 +163,6 @@ public class UserController {
             ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE RECIBIO LA IMAGEN");
         }
-        // return ResponseEntity.ok(HttpStatus.ACCEPTED);//Si se manda un texto va a tirar error de HttpErrorResponse
-
     }
 
 }
