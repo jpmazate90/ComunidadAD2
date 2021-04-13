@@ -25,14 +25,16 @@ public class CommunityPostImpl implements CommunityPostService {
     private CreadorDeDirectoriosCommunityPost creadorDeDirectoriosCommunityPost;
     private DibujadorDeImagenesEnDisco dibujadorDeImagenes;
     private RecuperadorDeImagenesDeDisco recuperadorDeImagenesDeDisco;
+    private CommentPostServiceImpl commenPostServiceImpl;
     private ValorationPostService valorationPostService;
-    
+
     @Autowired
-    public CommunityPostImpl(CommunityPostRepository communityPostRepository,ValorationPostService valorationPostService) {
+    public CommunityPostImpl(CommunityPostRepository communityPostRepository, CommentPostServiceImpl commenPostServiceImpl, ValorationPostService valorationPostService) {
         this.CommunityPostRepository = communityPostRepository;
         this.creadorDeDirectoriosCommunityPost = new CreadorDeDirectoriosCommunityPost();
         this.dibujadorDeImagenes = new DibujadorDeImagenesEnDisco();
         this.recuperadorDeImagenesDeDisco = new RecuperadorDeImagenesDeDisco();
+        this.commenPostServiceImpl = commenPostServiceImpl;
         this.valorationPostService = valorationPostService;
     }
 
@@ -48,6 +50,7 @@ public class CommunityPostImpl implements CommunityPostService {
         for (CommunityPost post : result) {
             agregarFotoAComunidad(post);
         }
+        this.commenPostServiceImpl.addCommentsToPost(result);
         this.valorationPostService.addValoration(result, ordinaryObject.getStringParam());
         return result;
     }

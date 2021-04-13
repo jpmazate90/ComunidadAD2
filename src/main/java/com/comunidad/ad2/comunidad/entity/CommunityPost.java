@@ -5,6 +5,7 @@ import com.comunidad.ad2.comunidad.service.enums.ValorationType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,9 +13,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -74,6 +77,10 @@ public class CommunityPost implements Serializable {
     @UpdateTimestamp
     @Column(name = "modified_at", insertable = false)
     private LocalDateTime modifiedAt;
+    
+    @JsonInclude
+    @Transient
+    private List<CommentPost> commentPost;
     
     @JsonInclude
     @Transient
@@ -172,6 +179,15 @@ public class CommunityPost implements Serializable {
         this.datosFoto = datosFoto;
     }
 
+    public List<CommentPost> getCommentPost() {
+        return commentPost;
+    }
+
+    public void setCommentPost(List<CommentPost> commentPost) {
+        this.commentPost = commentPost;
+    }
+
+
     public ValorationType getValoration() {
         return valoration;
     }
@@ -179,9 +195,6 @@ public class CommunityPost implements Serializable {
     public void setValoration(ValorationType valoration) {
         this.valoration = valoration;
     }
-
-
- 
     
     @Override
     public String toString() {
