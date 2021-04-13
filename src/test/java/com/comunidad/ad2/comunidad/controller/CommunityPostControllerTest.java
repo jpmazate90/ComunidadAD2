@@ -72,13 +72,15 @@ public class CommunityPostControllerTest {
     public void testGetAllCommunityPostByIdComunity() throws IOException{
         //Arrange
         int numParam = 10;
+        String stringParam="111111111";
         OrdinaryObject input = new OrdinaryObject();
         input.setNumberParam(numParam);
+        input.setStringParam(stringParam);
         List<CommunityPost> expListPost = getPostList(3);
         CommunityPostController instance = Mockito.spy(this.communityPostController);
-        Mockito.when(this.communityPostService.getAllCommunityPostByIdComunity(numParam)).thenReturn(expListPost);
+        Mockito.when(this.communityPostService.getAllCommunityPostByIdComunity(input)).thenReturn(expListPost);
         //Act
-        ResponseEntity expResult = ResponseEntity.status(HttpStatus.ACCEPTED).body(this.communityPostService.getAllCommunityPostByIdComunity(numParam));
+        ResponseEntity expResult = ResponseEntity.status(HttpStatus.ACCEPTED).body(this.communityPostService.getAllCommunityPostByIdComunity(input));
         ResponseEntity result = instance.getAllCommunityPostByIdComunity(input);
         //Assert
         assertEquals(expResult, result);

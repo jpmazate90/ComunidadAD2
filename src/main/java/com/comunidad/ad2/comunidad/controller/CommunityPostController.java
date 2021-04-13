@@ -51,7 +51,7 @@ public class CommunityPostController {
      */
     @PostMapping("/api/community/post/get/allByCommunity")//Al no estar bajo /api/users no se necesita autenticacion
     public ResponseEntity<?> getAllCommunityPostByIdComunity(@RequestBody OrdinaryObject params) throws IOException {
-        Iterable<CommunityPost> communityPost = this.communityPostService.getAllCommunityPostByIdComunity(params.getNumberParam());
+        Iterable<CommunityPost> communityPost = this.communityPostService.getAllCommunityPostByIdComunity(params);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(communityPost);
     }
     

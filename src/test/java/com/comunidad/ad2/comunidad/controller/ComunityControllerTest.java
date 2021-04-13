@@ -33,7 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author jesfrin
  */
-@ExtendWith(MockitoExtension.class)
+    @ExtendWith(MockitoExtension.class)
 public class ComunityControllerTest {
 
     private Comunity comunidad;

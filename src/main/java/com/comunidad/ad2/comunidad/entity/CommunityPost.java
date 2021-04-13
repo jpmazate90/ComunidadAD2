@@ -1,25 +1,20 @@
 package com.comunidad.ad2.comunidad.entity;
 
 import com.comunidad.ad2.comunidad.service.enums.CommunityPostState;
+import com.comunidad.ad2.comunidad.service.enums.ValorationType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import net.minidev.json.annotate.JsonIgnore;
@@ -90,6 +85,11 @@ public class CommunityPost implements Serializable {
     @JsonInclude
     @Transient
     private byte[] datosFoto;
+    
+    //Valoracion del usuario logueado para el post
+    @JsonInclude
+    @Transient
+    private ValorationType valoration;//Sera la valoracion del usuario actual, el que recupera los post en la sesion
 
     public Integer getId() {
         return id;
@@ -187,12 +187,22 @@ public class CommunityPost implements Serializable {
         this.commentPost = commentPost;
     }
 
+
+    public ValorationType getValoration() {
+        return valoration;
+    }
+
+    public void setValoration(ValorationType valoration) {
+        this.valoration = valoration;
+    }
+    
     @Override
     public String toString() {
         return "CommunityPost{" + "id=" + id + ", comunity=" + comunity + ", user="
                 + user + ", title=" + title + ", message=" + message + ", photo="
                 + photo + ", state=" + state + ", rated=" + rated + ", createdAt="
-                + createdAt + ", modifiedAt=" + modifiedAt + ", datosFoto=" + datosFoto + '}';
+                + createdAt + ", modifiedAt=" + modifiedAt + ", datosFoto=" 
+                + datosFoto + "valoration="+valoration+ '}';
     }
 
 }
