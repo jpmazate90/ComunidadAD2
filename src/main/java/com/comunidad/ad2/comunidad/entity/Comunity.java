@@ -5,10 +5,13 @@
  */
 package com.comunidad.ad2.comunidad.entity;
 
+import com.comunidad.ad2.comunidad.service.enums.Visibilidad;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,6 +42,15 @@ public class Comunity implements Serializable {
         this.descripcion = descripcion;
         this.foto = foto;
     }
+    
+    public Comunity(int id, Course course, String nombre, String descripcion, String foto,Visibilidad privacidad) {
+        this.id = id;
+        this.course = course;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.foto = foto;
+        this.privacidad = privacidad;
+    }
 
     public Comunity(int id) {
         this.id = id;
@@ -65,6 +77,10 @@ public class Comunity implements Serializable {
     @JsonInclude
     @Transient
     private byte[] datosFoto;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "privacidad", length = 20, columnDefinition = "varchar(20) default 'PUBLICO'")
+    private Visibilidad privacidad;
 
     public int getId() {
         return id;
@@ -116,6 +132,16 @@ public class Comunity implements Serializable {
     public void setDatosFoto(byte[] datosFoto) {
         this.datosFoto = datosFoto;
     }
+
+    public Visibilidad getPrivacidad() {
+        return privacidad;
+    }
+
+    public void setPrivacidad(Visibilidad privacidad) {
+        this.privacidad = privacidad;
+    }
+    
+    
 
     @Override
     public String toString() {
