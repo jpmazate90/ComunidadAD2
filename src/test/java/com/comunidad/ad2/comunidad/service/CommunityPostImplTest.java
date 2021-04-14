@@ -38,6 +38,9 @@ public class CommunityPostImplTest {
     @Mock
     private ValorationPostService valorationPostService;
     
+    @Mock
+    private CommentPostService commentPostService;
+    
     @InjectMocks
     private CommunityPostImpl communityPostImpl;
     
@@ -91,20 +94,20 @@ public class CommunityPostImplTest {
         Assertions.assertEquals(expResult,result);
     }
     
-//   @Test
-//    public void testGetAllCommunityPostByIdComunity(){
-//        //Arrange
-//        OrdinaryObject ordinaryObject = new OrdinaryObject();
-//        ordinaryObject.setNumberParam(10);
-//        ordinaryObject.setStringParam("111111111");
-//        List<CommunityPost> expListPost = getPostList(3);
-//        CommunityPostImpl spy = Mockito.spy(this.communityPostImpl);
-//        //Act
-//        Mockito.when(spy.getAllCommunityPostByIdComunity(ordinaryObject)).thenReturn(expListPost);
-//        //List<CommunityPost> result = (List <CommunityPost>) spy.getAllCommunityPostByIdComunity(ordinaryObject);
-//        //Assert
-//        assertEquals(expListPost, expListPost);
-//    }
+   @Test
+    public void testGetAllCommunityPostByIdComunity(){
+        //Arrange
+        OrdinaryObject ordinaryObject = new OrdinaryObject();
+        ordinaryObject.setNumberParam(10);
+        ordinaryObject.setStringParam("111111111");
+        List<CommunityPost> expListPost = getPostList(3);
+        CommunityPostImpl spy = Mockito.spy(this.communityPostImpl);
+        //Act
+        Mockito.when(this.communityPostRepository.getAllCommunityPostByIdComunity(10)).thenReturn(expListPost);
+        List<CommunityPost> result = (List <CommunityPost>) spy.getAllCommunityPostByIdComunity(ordinaryObject);
+        //Assert
+        assertEquals(expListPost, result);
+    }
     
     
     @Test

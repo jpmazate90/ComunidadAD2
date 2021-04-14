@@ -6,7 +6,7 @@
 package com.comunidad.ad2.comunidad.controller;
 
 import com.comunidad.ad2.comunidad.entity.CommentPost;
-import com.comunidad.ad2.comunidad.entity.CommunityPost;
+import com.comunidad.ad2.comunidad.service.CommentPostService;
 import com.comunidad.ad2.comunidad.service.CommentPostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,16 +24,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CommentPostController {
 
-    private CommentPostServiceImpl commentPostServiceImpl;
+    private CommentPostService commentPostService;
 
     @Autowired
-    public CommentPostController(CommentPostServiceImpl commentPostServiceImpl) {
-        this.commentPostServiceImpl = commentPostServiceImpl;
+    public CommentPostController(CommentPostService commentPostService) {
+        this.commentPostService = commentPostService;
     }
 
     @PostMapping("/api/community/post/commentCreate")//Al no estar bajo /api/users no se necesita autenticacion
     public ResponseEntity<?> create(@RequestBody CommentPost commentPost) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.commentPostServiceImpl.save(commentPost));
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.commentPostService.save(commentPost));
     }
 
 }
