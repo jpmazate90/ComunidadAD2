@@ -45,7 +45,10 @@ public interface UserRepository extends JpaRepository<User, String>{
     Optional<User> findByOwnToken(String token);
     
     
-    @Query(value = "CALL get_users_by_search(?1);", nativeQuery = true)
+//    @Query(value = "CALL get_users_by_search(?1);", nativeQuery = true)
+    @Query("SELECT u From User u WHERE (u.registroAcademico LIKE %?1% OR "
+            + "u.nombreCompleto LIKE %?1% OR u.correoElectronico LIKE %?1%) AND "
+            + "u.privacidad = 'PUBLICO'")
     List<User> getUsersBySearch(String searchText);
      
    

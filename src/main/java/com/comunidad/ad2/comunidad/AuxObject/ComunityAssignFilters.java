@@ -15,11 +15,16 @@ public class ComunityAssignFilters {
     //aqui se podrian agregar mas filtros de ser necesarios
     private String registroAcademico;
     private Integer idComunidad;
-
-    
+    private String stateAssign;
     
     public ComunityAssignFilters(String registroAcademico, Integer idComunidad) {
         this.registroAcademico = registroAcademico;
+        this.idComunidad = idComunidad;
+    }
+
+    public ComunityAssignFilters(String registroAcademico, String stateAssign, Integer idComunidad) {
+        this.registroAcademico = registroAcademico;
+        this.stateAssign = stateAssign;
         this.idComunidad = idComunidad;
     }
 
@@ -30,8 +35,6 @@ public class ComunityAssignFilters {
     public void setIdComunidad(Integer idComunidad) {
         this.idComunidad = idComunidad;
     }
-
-
     
     
     public ComunityAssignFilters(String registroAcademico) {
@@ -48,15 +51,18 @@ public class ComunityAssignFilters {
     public void setRegistroAcademico(String registroAcademico) {
         this.registroAcademico = registroAcademico;
     }
-    
-    
-    
+
+    public String getStateAssign() {
+        return stateAssign;
+    }
+
+    public void setStateAssign(String stateAssign) {
+        this.stateAssign = stateAssign;
+    }
 
     @Override
     public String toString() {
-        return "ComunityAssignFilters{" + "registroAcademico=" + registroAcademico + '}';
+        return "ComunityAssignFilters{" + "registroAcademico=" + registroAcademico + ", stateAssign=" + stateAssign + ", idComunidad=" + idComunidad + '}';
     }
-    
-    
     
 }

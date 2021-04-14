@@ -186,4 +186,11 @@ public class ComunityAssignController {
         }
         
     }
+    
+    @PostMapping("/api/comunity/assigns/find/byStateAndComunity")
+    public ResponseEntity<?> findComunityAsignsByStateAndIdComunity(@RequestBody ComunityAssignFilters filters) throws IOException {
+        Iterable<ComunityAssign> comunityFind = this.comunityAssignService.findUsersRequestByState(
+                filters.getIdComunidad(), filters.getRegistroAcademico(), filters.getStateAssign());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunityFind);
+    }
 }
