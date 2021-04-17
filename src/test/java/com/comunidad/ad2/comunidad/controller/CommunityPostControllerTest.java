@@ -68,6 +68,20 @@ public class CommunityPostControllerTest {
         assertEquals(expResult, result);
     }
     
+        @Test
+    public void testCreateError(){
+        //Arrange
+        CommunityPost post = this.communityPost;
+        CommunityPostController instance = Mockito.spy(this.communityPostController);
+        //Act
+        Mockito.when(this.communityPostService.save(post)).thenReturn(null);
+        ResponseEntity expResult = ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE PUDO CREAR EL POST");;
+        ResponseEntity result = instance.create(post);
+        //Assert
+        assertEquals(expResult, result);
+    }
+    
+    
     @Test
     public void testGetAllCommunityPostByIdComunity() throws IOException{
         //Arrange
