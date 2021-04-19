@@ -7,7 +7,6 @@ package com.comunidad.ad2.comunidad.controller;
 
 import com.comunidad.ad2.comunidad.AuxObject.TokenCreated;
 import com.comunidad.ad2.comunidad.entity.User;
-import com.comunidad.ad2.comunidad.repository.UserRepository;
 import com.comunidad.ad2.comunidad.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -32,7 +30,7 @@ public class TokenController {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/token")
-    public ResponseEntity<?> getToken(@RequestBody User user){//Metodo al que se llama cuando se inicia sesion y actualiza el token en la base de datos si encuentra al usuario
+    public ResponseEntity<Object> getToken(@RequestBody User user){//Metodo al que se llama cuando se inicia sesion y actualiza el token en la base de datos si encuentra al usuario
        String token= userService.login(user.getRegistroAcademico(),user.getPassword());
        if(StringUtils.isEmpty(token)){
            return ResponseEntity.status(HttpStatus.CONFLICT).body("ERROR, USUARIO O CONTRASENA INVALIDO");

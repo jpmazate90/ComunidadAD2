@@ -23,9 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import static org.mockito.Mockito.when;
-import org.mockito.internal.util.StringUtil;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +33,7 @@ import org.springframework.http.ResponseEntity;
  * @author jpmazate
  */
 @ExtendWith(MockitoExtension.class)
-public class TokenControllerTest {
+class TokenControllerTest {
     
     @Mock
     private UserServiceImpl userService;
@@ -67,7 +65,7 @@ public class TokenControllerTest {
      * Test of getToken method, of class TokenController.
      */
     @Test
-    public void testGetToken() {
+    void testGetToken() {
         
         User user = crearUsuario(RolUsuario.SUPER);
         when(userService.login(ArgumentMatchers.any(),ArgumentMatchers.any())).thenReturn("1111111111");
@@ -77,7 +75,7 @@ public class TokenControllerTest {
     }
     
     @Test
-    public void testGetTokenNotExists() {
+    void testGetTokenNotExists() {
         User user = crearUsuario(RolUsuario.SUPER);
         when(userService.login(ArgumentMatchers.any(),ArgumentMatchers.any())).thenReturn(StringUtils.EMPTY);
         ResponseEntity expResult = ResponseEntity.status(HttpStatus.CONFLICT).body(new TokenCreated("1111111111"));

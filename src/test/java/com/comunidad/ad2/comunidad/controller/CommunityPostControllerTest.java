@@ -25,15 +25,15 @@ import org.springframework.mock.web.MockMultipartFile;
  * @author fabricio
  */
 @ExtendWith(MockitoExtension.class)
-public class CommunityPostControllerTest {
-    
+class CommunityPostControllerTest {
+
     private CommunityPost communityPost;
     private Comunity comunity;
     private User user;
 
     @Mock
     private CommunityPostService communityPostService;
-    
+
     @InjectMocks
     private CommunityPostController communityPostController;
 
@@ -42,21 +42,21 @@ public class CommunityPostControllerTest {
         this.user = new User("201023214");
         this.communityPost = new CommunityPost(comunity, user, "title", "message", "photo");
     }
-    
-    private CommunityPost createCommunityPost(){
+
+    private CommunityPost createCommunityPost() {
         return new CommunityPost();
     }
-    
-    private List<CommunityPost> getPostList(int sizeList){
+
+    private List<CommunityPost> getPostList(int sizeList) {
         List<CommunityPost> result = new LinkedList<>();
         for (int i = 0; i < sizeList; i++) {
             result.add(createCommunityPost());
         }
         return result;
     }
-    
+
     @Test
-    public void testCreate(){
+    void testCreate() {
         //Arrange
         CommunityPost post = this.communityPost;
         CommunityPostController instance = Mockito.spy(this.communityPostController);
@@ -67,9 +67,9 @@ public class CommunityPostControllerTest {
         //Assert
         assertEquals(expResult, result);
     }
-    
-        @Test
-    public void testCreateError(){
+
+    @Test
+    void testCreateError() {
         //Arrange
         CommunityPost post = this.communityPost;
         CommunityPostController instance = Mockito.spy(this.communityPostController);
@@ -80,13 +80,12 @@ public class CommunityPostControllerTest {
         //Assert
         assertEquals(expResult, result);
     }
-    
-    
+
     @Test
-    public void testGetAllCommunityPostByIdComunity() throws IOException{
+    void testGetAllCommunityPostByIdComunity() throws IOException {
         //Arrange
         int numParam = 10;
-        String stringParam="111111111";
+        String stringParam = "111111111";
         OrdinaryObject input = new OrdinaryObject();
         input.setNumberParam(numParam);
         input.setStringParam(stringParam);
@@ -99,9 +98,9 @@ public class CommunityPostControllerTest {
         //Assert
         assertEquals(expResult, result);
     }
-    
+
     @Test
-    public void testUploadPostImage() throws IOException{
+    void testUploadPostImage() throws IOException {
         //Arrange
         String photo = "src/test/java/com/comunidad/ad2/comunidad/controllImage/image.png";
         CommunityPost post = this.communityPost;
@@ -117,9 +116,9 @@ public class CommunityPostControllerTest {
         //Assert
         assertEquals(expResult, result);
     }
-    
+
     @Test
-    public void testUploadPostImageError() throws IOException{
+    void testUploadPostImageError() throws IOException {
         //Arrange
         String photo = "src/test/java/com/comunidad/ad2/comunidad/controllImage/image.png";
         CommunityPost post = this.communityPost;
@@ -135,5 +134,5 @@ public class CommunityPostControllerTest {
         //Assert
         assertEquals(expResult, result);
     }
-    
+
 }

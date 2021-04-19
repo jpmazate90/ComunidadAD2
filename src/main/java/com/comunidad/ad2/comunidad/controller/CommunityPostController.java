@@ -4,7 +4,6 @@ import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.entity.CommunityPost;
 import com.comunidad.ad2.comunidad.service.CommunityPostService;
 import java.io.IOException;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +34,7 @@ public class CommunityPostController {
      * @return 
      */
     @PostMapping("/api/community/post/create")//Al no estar bajo /api/users no se necesita autenticacion
-    public ResponseEntity<?> create(@RequestBody CommunityPost comunityPost) {
+    public ResponseEntity<Object> create(@RequestBody CommunityPost comunityPost) {
         CommunityPost postFind = this.communityPostService.save(comunityPost);
         if(postFind != null){
             return ResponseEntity.status(HttpStatus.CREATED).body(postFind);
@@ -50,13 +49,13 @@ public class CommunityPostController {
      * @throws IOException 
      */
     @PostMapping("/api/community/post/get/allByCommunity")//Al no estar bajo /api/users no se necesita autenticacion
-    public ResponseEntity<?> getAllCommunityPostByIdComunity(@RequestBody OrdinaryObject params) throws IOException {
+    public ResponseEntity<Iterable<CommunityPost>> getAllCommunityPostByIdComunity(@RequestBody OrdinaryObject params) {
         Iterable<CommunityPost> communityPost = this.communityPostService.getAllCommunityPostByIdComunity(params);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(communityPost);
     }
     
     @PostMapping("/api/community/post/upload/images")
-    public ResponseEntity<?> uploadPostImage(@RequestBody MultipartFile file) {
+    public ResponseEntity<Object> uploadPostImage(@RequestBody MultipartFile file) {
         try {
             CommunityPost post = this.communityPostService.savePostImage(file);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(post);//Si se crea la entidad Imagen, devolver el objeto de tipo imagen

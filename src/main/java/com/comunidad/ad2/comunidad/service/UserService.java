@@ -31,9 +31,9 @@ public interface UserService {
     
     
     
-    public int adminCreation(String registroAcademico);
+    public Integer adminCreation(String registroAcademico);
     
-    public int changePasswordUser(String registroAcademico, String password);
+    public Integer changePasswordUser(String registroAcademico, String password);
 
     public User userAuthentication(String registroAcademico,String password);
 
