@@ -22,8 +22,6 @@ import java.util.Optional;
 import java.util.UUID;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
@@ -37,8 +35,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final int SEIS_HORAS = 21600000;
-    public final String NOT_VALUE = " *";
+    private static final int SEIS_HORAS = 21600000;
+    public static final String NOT_VALUE = " *";
 
     private UserRepository userRepository;
     private CreadorDeDirectoriosProfile creadorDeDirectoriosProfile;
@@ -67,7 +65,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public Optional<User> findById(String registroAcademico) {
         Optional<User> user = userRepository.findById(registroAcademico);
-        if(user.isPresent()){
+        if (user.isPresent()) {
             addUserProfileImage(user.get());
         }
         return user;
@@ -82,15 +80,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user); // mock
     }
 
-
-    
-
     @Override
     @Modifying
     public Integer adminCreation(String registroAcademico) {
         return userRepository.adminCreation(registroAcademico); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     @Modifying
     public Integer changePasswordUser(String registroAcademico, String password) {
@@ -117,22 +112,17 @@ public class UserServiceImpl implements UserService {
     }
 
     public Timestamp formatearFecha(User user) {
-        Timestamp time = new Timestamp(user.getFechaDeNacimiento().getTime() + SEIS_HORAS);
-        return time;
+        return new Timestamp(user.getFechaDeNacimiento().getTime() + SEIS_HORAS);
     }
 
     @Override
     public String hashearContrasena(User user) {
-        String contrasena = Hash.md5(user.getPassword());
-        return contrasena;
-
+        return Hash.md5(user.getPassword());
     }
 
     @Override
     public void asignarEstado(User user) {
-        if (user.getRolUsuario() == RolUsuario.COMUNIDAD) {
-            user.setEstado(EstadoUsuario.EN_ESPERA);
-        } else if (user.getRolUsuario() == RolUsuario.SUPER) {
+        if (user.getRolUsuario() == RolUsuario.COMUNIDAD || user.getRolUsuario() == RolUsuario.SUPER) {
             user.setEstado(EstadoUsuario.EN_ESPERA);
         }
     }
@@ -152,7 +142,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findByTokenOwnUser(String token) {
         Optional<User> user = userRepository.findByOwnToken(token);
-        if(user.isPresent()){
+        if (user.isPresent()) {
             addUserProfileImage(user.get());
         }
         return user;
@@ -166,7 +156,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Iterable<User> filtrarUsuarios(String carnet) {
-//    return null;
         return userRepository.filtrarUsuarios(carnet);
     }
 
@@ -175,20 +164,21 @@ public class UserServiceImpl implements UserService {
         user.setRegistroAcademico(user.getRegistroAcademico().trim());
         user.setNombreCompleto(user.getNombreCompleto().trim());
         user.setCorreoElectronico(user.getCorreoElectronico().trim());
-        if(user.getRegistroAcademico().isEmpty())
+        if (user.getRegistroAcademico().isEmpty()) {
             user.setRegistroAcademico(NOT_VALUE);
-        if(user.getNombreCompleto().isEmpty())
+        }
+        if (user.getNombreCompleto().isEmpty()) {
             user.setNombreCompleto(NOT_VALUE);
-        if(user.getCorreoElectronico().isEmpty())
+        }
+        if (user.getCorreoElectronico().isEmpty()) {
             user.setCorreoElectronico(NOT_VALUE);
-        System.out.println(":::::::::::: Registro: " + user.getRegistroAcademico() + ", Nombre: " + user.getNombreCompleto() + "Correo: " + user.getCorreoElectronico());
+        }
         List<User> users = new LinkedList<>();
         users.addAll(this.userRepository.getUsersByFiltering(user.getRegistroAcademico(), user.getNombreCompleto(), user.getCorreoElectronico()));
         for (User usr : users) {
             addUserProfileImage(usr);
         }
         return users;
-//        return userRepository.getUsersByFiltering(user.getRegistroAcademico(), user.getNombreCompleto(), user.getCorreoElectronico());
     }
 
     @Override
@@ -199,23 +189,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public User guardarImagen(MultipartFile file) throws IOException {
         User usr = new User();
-        System.out.println("Resultado:::: " + this.creadorDeDirectoriosProfile.createDirectory()); 
         Path pathImage = this.creadorDeDirectoriosProfile.getPathOfImage(file.getOriginalFilename());
-        System.out.println("PATH::: " + pathImage.toAbsolutePath());
         this.dibujadorDeImagenes.dibujarImagen(file.getBytes(), pathImage);
         usr.setFotoDePerfil(pathImage.toString());
         return usr;
     }
 
-    public User addUserProfileImage(User usr){
+    public User addUserProfileImage(User usr) {
         String foto;
         byte[] datosFoto;
-        if(usr.getFotoDePerfil() != null){
+        if (usr.getFotoDePerfil() != null) {
             foto = usr.getFotoDePerfil();
             datosFoto = this.recuperadorDeImagenesDeDisco.recuperarBytesDeImagen(foto);
             usr.setDatosFoto(datosFoto);
         }
         return usr;
     }
-    
+
 }

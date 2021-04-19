@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class CommunityPostImpl implements CommunityPostService {
 
-    private CommunityPostRepository CommunityPostRepository;
+    private CommunityPostRepository communityPostRepository;
     private CreadorDeDirectoriosCommunityPost creadorDeDirectoriosCommunityPost;
     private DibujadorDeImagenesEnDisco dibujadorDeImagenes;
     private RecuperadorDeImagenesDeDisco recuperadorDeImagenesDeDisco;
@@ -30,7 +30,7 @@ public class CommunityPostImpl implements CommunityPostService {
 
     @Autowired
     public CommunityPostImpl(CommunityPostRepository communityPostRepository, CommentPostService commenPostService, ValorationPostService valorationPostService) {
-        this.CommunityPostRepository = communityPostRepository;
+        this.communityPostRepository = communityPostRepository;
         this.creadorDeDirectoriosCommunityPost = new CreadorDeDirectoriosCommunityPost();
         this.dibujadorDeImagenes = new DibujadorDeImagenesEnDisco();
         this.recuperadorDeImagenesDeDisco = new RecuperadorDeImagenesDeDisco();
@@ -40,13 +40,13 @@ public class CommunityPostImpl implements CommunityPostService {
 
     @Override
     public CommunityPost save(CommunityPost communityPost) {
-        return this.CommunityPostRepository.save(communityPost);
+        return this.communityPostRepository.save(communityPost);
     }
 
     //Agregar el like o dislike del usuario
     @Override
     public Iterable<CommunityPost> getAllCommunityPostByIdComunity(OrdinaryObject ordinaryObject) {
-        List<CommunityPost> result = new LinkedList<>(this.CommunityPostRepository.getAllCommunityPostByIdComunity(ordinaryObject.getNumberParam()));
+        List<CommunityPost> result = new LinkedList<>(this.communityPostRepository.getAllCommunityPostByIdComunity(ordinaryObject.getNumberParam()));
         for (CommunityPost post : result) {
             agregarFotoAComunidad(post);
         }

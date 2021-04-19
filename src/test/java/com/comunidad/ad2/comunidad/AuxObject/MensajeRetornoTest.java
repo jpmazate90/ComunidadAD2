@@ -5,11 +5,6 @@
  */
 package com.comunidad.ad2.comunidad.AuxObject;
 
-import static com.comunidad.ad2.comunidad.AuxObject.NumeroCarnetTest.NUMERO_DE_CARNET;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author jpmazate
  */
-public class MensajeRetornoTest {
+class MensajeRetornoTest {
     
     public static final String MENSAJE="HOLA";
     public MensajeRetorno mensajeRetorno;
@@ -31,7 +26,7 @@ public class MensajeRetornoTest {
      * Test of getMensaje method, of class MensajeRetorno.
      */
     @Test
-    public void testGetMensaje() {
+    void testGetMensaje() {
        //Arrange
         MensajeRetorno instance = this.mensajeRetorno;
         //Act
@@ -45,7 +40,7 @@ public class MensajeRetornoTest {
      * Test of setMensaje method, of class MensajeRetorno.
      */
     @Test
-    public void testSetMensaje() {
+    void testSetMensaje() {
         //Arrange
         MensajeRetorno instance = new MensajeRetorno(MENSAJE);
         String nuevoMensaje ="PRUEBA";

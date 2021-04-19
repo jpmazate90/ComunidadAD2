@@ -12,13 +12,13 @@ import org.junit.jupiter.api.Test;
  *
  * @author fabricio
  */
-public class OrdinaryObjectTest {
+class OrdinaryObjectTest {
 
     public OrdinaryObjectTest() {
     }
     
     @Test
-    public void testGetNumberParam() {
+    void testGetNumberParam() {
         OrdinaryObject instance = instance();
         int numberParam = 1;
         int result = instance.getNumberParam();
@@ -29,7 +29,7 @@ public class OrdinaryObjectTest {
      * Test of getIdComunidad method, of class ComunityAssignFilters.
      */
     @Test
-    public void testGetStringParam() {
+    void testGetStringParam() {
         OrdinaryObject instance = instance();
         String stringParam = "stringParam";
         String result = instance.getStringParam();
@@ -37,7 +37,7 @@ public class OrdinaryObjectTest {
     }
     
     @Test
-    public void testGetDecimalParam() {
+    void testGetDecimalParam() {
         OrdinaryObject instance = instance();
         double decimalParam = 1.5;
         double result = instance.getDecimalParam();
@@ -45,7 +45,7 @@ public class OrdinaryObjectTest {
     }
     
     @Test
-    public void testGetTimeParam() {
+    void testGetTimeParam() {
         OrdinaryObject instance = instance();
         String timeParam = "timeParam";
         String result = instance.getTimeParam();
@@ -53,7 +53,7 @@ public class OrdinaryObjectTest {
     }
     
     @Test
-    public void testSetNumberParam() {
+    void testSetNumberParam() {
         OrdinaryObject instance = instance();
         int numberParam = 1;
         instance.setNumberParam(numberParam);
@@ -61,7 +61,7 @@ public class OrdinaryObjectTest {
     }
     
     @Test
-    public void testSetStringParam() {
+    void testSetStringParam() {
         OrdinaryObject instance = instance();
         String stringParam = "stringParam";
         instance.setStringParam(stringParam);
@@ -69,7 +69,7 @@ public class OrdinaryObjectTest {
     }
 
     @Test
-    public void testSetDecimalParam() {
+    void testSetDecimalParam() {
         OrdinaryObject instance = instance();
         double decimalParam = 1.5;
         instance.setDecimalParam(decimalParam);
@@ -77,7 +77,7 @@ public class OrdinaryObjectTest {
     }
     
     @Test
-    public void testSetTimeParam() {
+    void testSetTimeParam() {
         OrdinaryObject instance = instance();
         String timeParam = "timeParam";
         instance.setTimeParam(timeParam);
@@ -85,7 +85,7 @@ public class OrdinaryObjectTest {
     }
     
     @Test
-    public void testOrdinaryObject(){
+    void testOrdinaryObject(){
         OrdinaryObject ordinaryObject = new OrdinaryObject();
         assertEquals(ordinaryObject, ordinaryObject);
     }

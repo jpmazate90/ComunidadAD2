@@ -5,7 +5,6 @@
  */
 package com.comunidad.ad2.comunidad.service;
 
-import com.comunidad.ad2.comunidad.ComunidadApplication;
 import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.Course;
@@ -22,19 +21,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author jesfrin
  */
 @ExtendWith(MockitoExtension.class)
-public class ComunityImplTest {
+class ComunityImplTest {
 
     public static final String NOMBRE_COMUNIDAD = "Comunidad AD2";
 
@@ -51,7 +47,7 @@ public class ComunityImplTest {
     }
 
     @Test
-    public void testSave() {
+    void testSave() {
         //Arrange
         Comunity comunity = crearComunidad(NOMBRE_COMUNIDAD);
         ComunityImpl spy = Mockito.spy(this.comunityImpl);
@@ -61,8 +57,6 @@ public class ComunityImplTest {
         Comunity resultado = spy.save(comunity);
         //assert
         Assertions.assertEquals(NOMBRE_COMUNIDAD, resultado.getNombre());
-        //Assertions.assertEquals(NOMBRE_COMUNIDAD,"d");
-
     }
 
 
@@ -70,7 +64,7 @@ public class ComunityImplTest {
      * Test of guardarImagen method, of class ComunityImpl.
      */
     @Test
-    public void testGuardarImagen() throws Exception {
+    void testGuardarImagen() throws Exception {
         //Arrange
         System.out.println("guardarImagen");
         Comunity comunity = new Comunity();
@@ -101,7 +95,7 @@ public class ComunityImplTest {
     }
     
     @Test
-    public void testGetCommunitiesBySearch(){
+    void testGetCommunitiesBySearch(){
         List<Comunity> listaCommunities = getCommunitiesList(3);
         String param = NOMBRE_COMUNIDAD;
         //arrange
@@ -114,7 +108,7 @@ public class ComunityImplTest {
     }
     
     @Test
-    public void testFindAll(){
+    void testFindAll(){
         List<Comunity> listaCommunities = getCommunitiesList(3);
         //arrange
         ComunityImpl spy = Mockito.spy(comunityImpl);
@@ -126,7 +120,7 @@ public class ComunityImplTest {
     }
     
     @Test
-    public void testDeleteById(){
+    void testDeleteById(){
         //Arrange
         //Comunity comunidad = crearComunidad();
         //ComunityAssignRepository spy = Mockito.spy(comunityAssignRepository);
@@ -142,7 +136,7 @@ public class ComunityImplTest {
     }
     
      @Test
-    public void testFindById(){
+    void testFindById(){
         //Arrange
         Comunity comunidad = crearComunidad();
         //ComunityAssignRepository spy = Mockito.spy(comunityAssignRepository);

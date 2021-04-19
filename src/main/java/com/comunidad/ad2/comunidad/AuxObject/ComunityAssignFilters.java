@@ -5,8 +5,6 @@
  */
 package com.comunidad.ad2.comunidad.AuxObject;
 
-import java.sql.Timestamp;
-
 /**
  *
  * @author jpmazate

@@ -5,10 +5,6 @@
  */
 package com.comunidad.ad2.comunidad.AuxObject;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author jesfrin
  */
-public class NumeroCarnetTest {
+class NumeroCarnetTest {
     
     public static final String NUMERO_DE_CARNET="12345678";
     public NumeroCarnet numeroCarnet;
@@ -30,13 +26,13 @@ public class NumeroCarnetTest {
      * Test of getNumeroCarnet method, of class NumeroCarnet.
      */
     @Test
-    public void testGetNumeroCarnet() {
+    void testGetNumeroCarnet() {
         //Arrange
         System.out.println("getNumeroCarnet");
         NumeroCarnet instance = this.numeroCarnet;
         //Act
         String expResult = NUMERO_DE_CARNET;
-        String result = instance.getNumeroCarnet();
+        String result = instance.getNumeroDeCarnet();
         //Assert
         assertEquals(expResult, result);
 
@@ -46,15 +42,15 @@ public class NumeroCarnetTest {
      * Test of setNumeroCarnet method, of class NumeroCarnet.
      */
     @Test
-    public void testSetNumeroCarnet() {
+    void testSetNumeroCarnet() {
         //Arrange
         System.out.println("setNumeroCarnet");
         NumeroCarnet instance = new NumeroCarnet();
         String nuevoCarnet ="8521478";
         //Act
-        instance.setNumeroCarnet(nuevoCarnet);
+        instance.setNumeroDeCarnet(nuevoCarnet);
         String expResult = nuevoCarnet;
-        String result = instance.getNumeroCarnet();
+        String result = instance.getNumeroDeCarnet();
         //Assert
         assertEquals(expResult, result);
     }

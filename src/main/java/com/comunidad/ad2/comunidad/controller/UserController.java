@@ -118,7 +118,7 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/filtrarUsuarios")
     public ResponseEntity<Iterable<User>> filtrarUsuarios(@RequestBody NumeroCarnet carnet) {
-        return ResponseEntity.ok(userService.filtrarUsuarios(carnet.getNumeroCarnet()));
+        return ResponseEntity.ok(userService.filtrarUsuarios(carnet.getNumeroDeCarnet()));
     }
 
     @PostMapping("/api/users/find/byId")

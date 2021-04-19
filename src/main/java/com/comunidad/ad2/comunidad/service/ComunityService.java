@@ -6,7 +6,6 @@
 package com.comunidad.ad2.comunidad.service;
 
 import com.comunidad.ad2.comunidad.entity.Comunity;
-import com.comunidad.ad2.comunidad.entity.User;
 import java.io.IOException;
 import java.util.Optional;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,13 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface ComunityService {
     
-    //    public User save(User user); 
     public Comunity save(Comunity comunity);
     
     public Optional<Comunity> findById(String id);
-       
-//    public Iterable<Comunity> findByRegistroAcademico(String user);
-    
+           
     public Iterable<Comunity> findAll();
     
     public Iterable<Comunity> getCommunitiesBySearch(String searchText);

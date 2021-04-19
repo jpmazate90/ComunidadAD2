@@ -5,9 +5,7 @@
  */
 package com.comunidad.ad2.comunidad.service;
 
-import com.comunidad.ad2.comunidad.entity.Course;
 import com.comunidad.ad2.comunidad.entity.Department;
-import com.comunidad.ad2.comunidad.repository.CourseRepository;
 import com.comunidad.ad2.comunidad.repository.DepartmentRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DepartmentServiceImpl implements DepartmentService{
+    
     private DepartmentRepository departmentRepository;
     
     @Autowired
@@ -35,6 +34,5 @@ public class DepartmentServiceImpl implements DepartmentService{
     public Iterable<Department> findAll() {
         return this.departmentRepository.findAll();
     }
-
-    
+ 
 }
