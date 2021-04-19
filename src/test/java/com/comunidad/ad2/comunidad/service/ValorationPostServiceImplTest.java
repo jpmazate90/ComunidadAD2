@@ -33,8 +33,8 @@ public class ValorationPostServiceImplTest {
     private static final int ID_COMUNITY_POST = 5;
     private static final String REGISTRO_ACADEMICO = "123456789";
 
-    private static CommunityPost communityPost;
-    private static User user;
+    private  CommunityPost communityPost;
+    private  User user;
     private ValorationPost valorationPost;
 
     @Mock

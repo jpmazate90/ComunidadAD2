@@ -105,7 +105,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                                        <id>jacoco-check</id>
+                        <id>jacoco-check</id>
                         <goals>
                             <goal>check</goal>
                         </goals>
@@ -115,9 +115,9 @@
                                     <element>PACKAGE</element>
                                     <limits>
                                         <limit>
-                                        <counter>INSTRUCTION</counter>
+                                            <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                         <minimum>0.80</minimum>
+                                            <minimum>0.80</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -125,7 +125,7 @@
                             <excludes>
                                 <exclude>com/comunidad/ad2/comunidad/security/**/*</exclude>
                                 <exclude>com/comunidad/ad2/comunidad/*</exclude>
-<!--                                <exclude>com/comunidad/ad2/comunidad/ComunidadApplication.class</exclude>
+                                <!--                                <exclude>com/comunidad/ad2/comunidad/ComunidadApplication.class</exclude>
                                 <exclude>com/comunidad/ad2/comunidad/ServletInitializer.class</exclude>-->
                             </excludes>
                         </configuration>
@@ -140,6 +140,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.4.0.905</version>
             </plugin>
         </plugins>
     </build>
