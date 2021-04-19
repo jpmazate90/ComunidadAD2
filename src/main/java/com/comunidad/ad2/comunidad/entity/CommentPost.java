@@ -123,7 +123,12 @@ public class CommentPost {
 
     @Override
     public String toString() {
-        return "CommentPost{" + "id=" + id + ", descripcion=" + descripcion + ", createdAt=" + createdAt + ", stateComment=" + stateComment + ", comunityPost=" + comunityPost + ", user=" + user + '}';
+        return "CommentPost{" + "id=" + id 
+                + ", descripcion=" + descripcion 
+                + ", createdAt=" + createdAt
+                + ", stateComment=" + stateComment
+                + ", comunityPost=" + comunityPost 
+                + ", user=" + user + '}';
     }
 
    

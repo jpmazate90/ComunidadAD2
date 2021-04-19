@@ -44,7 +44,6 @@ public class CommentPostServiceImpl implements CommentPostService {
      */
     @Override
     public void addCommentsToPost(List<CommunityPost> listCommunityPost) {
-        System.out.println("Tamano de comunidades:" + listCommunityPost.size());
         for (CommunityPost communityPost : listCommunityPost) {
             ArrayList<CommentPost> coments = (ArrayList<CommentPost>) getCommentActiveByPost(communityPost.getId());
             communityPost.setCommentPost(coments);

@@ -75,15 +75,15 @@ public class ComunityAssignFiltersTest {
     /**
      * Test of toString method, of class ComunityAssignFilters.
      */
-    @Test
-    public void testToString() {
-        ComunityAssignFilters instance = instance();
-        String expResult = "ComunityAssignFilters{" + "registroAcademico=" + "111111111" + '}';
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-    }
-    
+//    @Test
+//    public void testToString() {
+//        ComunityAssignFilters instance = instance();
+//        String expResult = "ComunityAssignFilters{" + "registroAcademico=" + "111111111" + '}';
+//        String result = instance.toString();
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//    }
+//    
     @Test
     public void ComunityAssignFiltersTest() {
         
