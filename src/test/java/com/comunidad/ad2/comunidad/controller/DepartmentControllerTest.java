@@ -26,7 +26,7 @@ import org.springframework.http.ResponseEntity;
  * @author jesfrin
  */
 @ExtendWith(MockitoExtension.class)
-public class DepartmentControllerTest {
+class DepartmentControllerTest {
     
     @Mock
     private DepartmentService departmentService;
@@ -41,7 +41,7 @@ public class DepartmentControllerTest {
      * Test of getDepartments method, of class DepartmentController.
      */
     @Test
-    public void testGetDepartments() {
+    void testGetDepartments() {
         System.out.println("getDepartments");
         DepartmentController instance = Mockito.spy(departmentController);
         Iterable<Department> listaDeDepartamentos = new ArrayList<>();

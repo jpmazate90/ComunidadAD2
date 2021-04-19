@@ -87,13 +87,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Modifying
-    public int adminCreation(String registroAcademico) {
+    public Integer adminCreation(String registroAcademico) {
         return userRepository.adminCreation(registroAcademico); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
     @Modifying
-    public int changePasswordUser(String registroAcademico, String password) {
+    public Integer changePasswordUser(String registroAcademico, String password) {
         return userRepository.changePasswordUser(registroAcademico, Hash.md5(password)); //To change body of generated methods, choose Tools | Templates.
     }
 

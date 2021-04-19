@@ -8,7 +8,6 @@ package com.comunidad.ad2.comunidad.controller;
 import com.comunidad.ad2.comunidad.entity.ValorationPost;
 import com.comunidad.ad2.comunidad.service.ValorationPostService;
 import com.comunidad.ad2.comunidad.service.enums.ValorationType;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

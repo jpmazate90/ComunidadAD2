@@ -11,12 +11,8 @@ import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.ComunityAssign;
 import com.comunidad.ad2.comunidad.entity.ComunityAssignKey;
 import com.comunidad.ad2.comunidad.entity.User;
-import com.comunidad.ad2.comunidad.repository.ComunityAssignRepository;
-import com.comunidad.ad2.comunidad.repository.ComunityRepository;
-import com.comunidad.ad2.comunidad.repository.UserRepository;
 import com.comunidad.ad2.comunidad.service.ComunityAssignService;
 import com.comunidad.ad2.comunidad.service.ComunityImpl;
-import com.comunidad.ad2.comunidad.service.UserServiceImpl;
 import com.comunidad.ad2.comunidad.service.enums.EstadoComunityAssign;
 import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
 import com.comunidad.ad2.comunidad.service.enums.GeneroUsuario;
@@ -26,17 +22,11 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Spliterators;
-import static java.util.Spliterators.iterator;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,7 +34,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
@@ -58,7 +47,7 @@ import org.springframework.http.ResponseEntity;
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-public class ComunityAssignControllerTest {
+class ComunityAssignControllerTest {
 
     @Mock
     private ComunityAssignService comunityAssignService;  // es el mock
@@ -72,7 +61,7 @@ public class ComunityAssignControllerTest {
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         ComunityAssign comunityAssign = createComunityAssign();
         ComunityAssignService spyService = Mockito.spy(comunityAssignService);
         when(spyService.save(comunityAssign)).thenReturn(comunityAssign);
@@ -86,7 +75,7 @@ public class ComunityAssignControllerTest {
      * ComunityAssignController.
      */
     @Test
-    public void testfindComunityTypeAdminitrationByRegistroAcademico() throws IOException {
+    void testfindComunityTypeAdminitrationByRegistroAcademico() throws IOException {
         User user = crearUsuario(RolUsuario.SUPER);
         ComunityAssignService spyService = Mockito.spy(comunityAssignService);
         Iterable<ComunityAssign> comunidadesAsignadas = obtenerComunitysAsignsList();
@@ -103,7 +92,7 @@ public class ComunityAssignControllerTest {
      * Test of findComunityById method, of class ComunityAssignController.
      */
     @Test
-    public void testfindComunityOwnerByIdComunity() throws Exception {
+    void testfindComunityOwnerByIdComunity() throws Exception {
         Comunity com = crearComunidad();
         ComunityAssignController instance = this.comunityAssignController;
         ComunityAssignService spyService = Mockito.spy(comunityAssignService);
@@ -120,7 +109,7 @@ public class ComunityAssignControllerTest {
      * ComunityAssignController.
      */
     @Test
-    public void testFindComunityAsignsByIdComunity() throws Exception {
+    void testFindComunityAsignsByIdComunity() throws Exception {
         User user = crearUsuario(RolUsuario.SUPER);
         ComunityAssignService spyService = Mockito.spy(comunityAssignService);
         Iterable<ComunityAssign> comunidadesAsignadas = obtenerComunitysAsignsList();
@@ -137,7 +126,7 @@ public class ComunityAssignControllerTest {
      * ComunityAssignController.
      */
     @Test
-    public void testUpdateStateComunityRequest() {
+    void testUpdateStateComunityRequest() {
         Comunity com = crearComunidad();
         ComunityAssignController instance = this.comunityAssignController;
         ComunityAssignService spyService = Mockito.spy(comunityAssignService);
@@ -149,7 +138,7 @@ public class ComunityAssignControllerTest {
     }
 
     @Test
-    public void testFindMemberComunityById() {
+    void testFindMemberComunityById() {
         Comunity com = crearComunidad();
         //ComunityAssignController instance = this.comunityAssignController;
         //ComunityAssignService spyService = Mockito.spy(comunityAssignService);
@@ -165,7 +154,7 @@ public class ComunityAssignControllerTest {
      * Test para buscar miembros activos de una comunidad
      */
     @Test
-    public void testfindActiveMembersOfComunity(){
+    void testfindActiveMembersOfComunity(){
     //Arrange
     ComunityAssignFilters filters = new ComunityAssignFilters("12345678",0);
     ArrayList<ComunityAssign> comunityList = new ArrayList<>();
@@ -180,7 +169,7 @@ public class ComunityAssignControllerTest {
     }
     
     @Test
-    public void testRemoveUserFromComunity(){
+    void testRemoveUserFromComunity(){
         ComunityAssign comunityAssign = createComunityAssign();
         ComunityAssignService spyService = Mockito.spy(comunityAssignService);
         when(spyService.save(comunityAssign)).thenReturn(comunityAssign);
@@ -192,7 +181,7 @@ public class ComunityAssignControllerTest {
      * Test para verificar que se buscan todos los usuarios de la comunidad
      */
     @Test
-    public void testFindUserComunitys() {
+    void testFindUserComunitys() {
         //Arrange
         User user = new User("12345678");
         ArrayList<ComunityAssign> comunityList = new ArrayList<>();
@@ -207,7 +196,7 @@ public class ComunityAssignControllerTest {
     }
 
     @Test
-    public void testDeleteComunityWhenComunityIsEmpty(){
+    void testDeleteComunityWhenComunityIsEmpty(){
         Comunity comunidad = crearComunidad();
         ComunityAssignFilters com = new ComunityAssignFilters("10",comunidad.getId());
         //Optional<Comunity> comunidadAsignada = Optional.of(crearComunidad());
@@ -218,7 +207,7 @@ public class ComunityAssignControllerTest {
     }
     
     @Test
-    public void testDeleteUserFromComunityWhenComunityIsEmpty(){
+    void testDeleteUserFromComunityWhenComunityIsEmpty(){
         Comunity comunidad = crearComunidad();
         ComunityAssignFilters com = new ComunityAssignFilters("10",comunidad.getId());
         //Optional<Comunity> comunidadAsignada = Optional.of(crearComunidad());
@@ -229,7 +218,7 @@ public class ComunityAssignControllerTest {
     }
     
     @Test
-    public void testDeleteComunityWhenComunityExists(){
+    void testDeleteComunityWhenComunityExists(){
         Comunity comunidad = crearComunidad();
         ComunityAssignFilters com = new ComunityAssignFilters("10",comunidad.getId());
         Optional<Comunity> comunidadAsignada = Optional.of(crearComunidad());
@@ -250,7 +239,7 @@ public class ComunityAssignControllerTest {
     }
     
      @Test
-    public void testdeleteUserFromComunityWhenComunityExists(){
+    void testdeleteUserFromComunityWhenComunityExists(){
         ComunityAssignFilters com = new ComunityAssignFilters("10",10);
         ComunityAssign example = crearComunityAsignJJ();
         example.getComunity().setId(com.getIdComunidad());
