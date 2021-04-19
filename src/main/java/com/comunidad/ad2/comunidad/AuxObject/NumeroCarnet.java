@@ -10,26 +10,22 @@ package com.comunidad.ad2.comunidad.AuxObject;
  * @author jpmazate
  */
 public class NumeroCarnet {
-    String numeroCarnet;
+    
+    private String numeroDeCarnet;
 
-    public NumeroCarnet(String numeroCarnet) {
-        this.numeroCarnet = numeroCarnet;
+    public NumeroCarnet(String numeroDeCarnet) {
+        this.numeroDeCarnet = numeroDeCarnet;
     }
 
     public NumeroCarnet() {
     }
 
-    
-    
-    
-    public String getNumeroCarnet() {
-        return numeroCarnet;
+    public String getNumeroDeCarnet() {
+        return numeroDeCarnet;
     }
 
-    public void setNumeroCarnet(String numeroCarnet) {
-        this.numeroCarnet = numeroCarnet;
+    public void setNumeroDeCarnet(String numeroDeCarnet) {
+        this.numeroDeCarnet = numeroDeCarnet;
     }
-    
-    
-    
+  
 }

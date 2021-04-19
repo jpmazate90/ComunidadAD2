@@ -5,10 +5,6 @@
  */
 package com.comunidad.ad2.comunidad.AuxObject;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author jpmazate
  */
-public class ComunityAssignFiltersTest {
+class ComunityAssignFiltersTest {
     
     public ComunityAssignFiltersTest() {
     }
@@ -26,19 +22,18 @@ public class ComunityAssignFiltersTest {
      * Test of getIdComunidad method, of class ComunityAssignFilters.
      */
     @Test
-    public void testGetIdComunidad() {
+    void testGetIdComunidad() {
         ComunityAssignFilters instance = instance();
         Integer expResult = 4;
         Integer result = instance.getIdComunidad();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
      * Test of setIdComunidad method, of class ComunityAssignFilters.
      */
     @Test
-    public void testSetIdComunidad() {
+    void testSetIdComunidad() {
         Integer idComunidad = 4;
         ComunityAssignFilters instance = new ComunityAssignFilters();
         
@@ -51,7 +46,7 @@ public class ComunityAssignFiltersTest {
      * Test of getRegistroAcademico method, of class ComunityAssignFilters.
      */
     @Test
-    public void testGetRegistroAcademico() {
+    void testGetRegistroAcademico() {
         System.out.println("getRegistroAcademico");
         ComunityAssignFilters instance = instance();
         String expResult = "111111111";
@@ -63,30 +58,15 @@ public class ComunityAssignFiltersTest {
      * Test of setRegistroAcademico method, of class ComunityAssignFilters.
      */
     @Test
-    public void testSetRegistroAcademico() {
+    void testSetRegistroAcademico() {
         String registroAcademico = "111111111";
         ComunityAssignFilters instance = new ComunityAssignFilters();
-        
         instance.setRegistroAcademico(registroAcademico);
-        // TODO review the generated test code and remove the default call to fail.
         assertEquals(registroAcademico, instance.getRegistroAcademico());
     }
 
-    /**
-     * Test of toString method, of class ComunityAssignFilters.
-     */
-//    @Test
-//    public void testToString() {
-//        ComunityAssignFilters instance = instance();
-//        String expResult = "ComunityAssignFilters{" + "registroAcademico=" + "111111111" + '}';
-//        String result = instance.toString();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//    }
-//    
     @Test
-    public void ComunityAssignFiltersTest() {
-        
+    void ComunityAssignFiltersTest() {
         ComunityAssignFilters a = new ComunityAssignFilters("1");
         String registroAcademico ="1";
         assertEquals(registroAcademico, a.getRegistroAcademico());

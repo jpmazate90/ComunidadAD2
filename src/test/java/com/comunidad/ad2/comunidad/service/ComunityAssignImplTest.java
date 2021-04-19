@@ -16,14 +16,9 @@ import com.comunidad.ad2.comunidad.service.enums.EstadoComunityAssign;
 import com.comunidad.ad2.comunidad.service.enums.TipoComunityAssign;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +28,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
-import org.mockito.internal.stubbing.answers.DoesNothing;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
@@ -41,7 +35,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * @author jesfrin
  */
 @ExtendWith(MockitoExtension.class)
-public class ComunityAssignImplTest {
+class ComunityAssignImplTest {
 
     private ComunityAssignKey comunityAssignKey;
     private User user;
@@ -84,17 +78,15 @@ public class ComunityAssignImplTest {
      * Test of save method, of class ComunityAssignImpl.
      */
     @Test
-    public void testSave() {
+    void testSave() {
         //Arrange
         System.out.println("save");
         ComunityAssign comunityAssign = this.comunityAssign;
         ComunityAssignImpl spy = Mockito.spy(comunityAssignImpl);
         Mockito.when(comunityAssignRepository.save(ArgumentMatchers.any())).thenReturn(comunityAssign);
         //Act
-
         ComunityAssign expResult = comunityAssign;
         ComunityAssign result = spy.save(comunityAssign);
-
         //Assert
         assertEquals(expResult, result);
 
@@ -105,7 +97,7 @@ public class ComunityAssignImplTest {
      * ComunityAssignImpl.
      */
     @Test
-    public void testFindComunityTypeAdminitrationByRegistroAcademico() {
+    void testFindComunityTypeAdminitrationByRegistroAcademico() {
         //Arrange
         System.out.println("findComunityTypeAdminitrationByRegistroAcademico");
         String registroAcademico = "12345678";
@@ -118,10 +110,8 @@ public class ComunityAssignImplTest {
         //Act
         Iterable<ComunityAssign> expResult = comunityAssignList;
         Iterable<ComunityAssign> result = instance.findComunityTypeAdminitrationByRegistroAcademico(registroAcademico);
-
         //Arrange
         assertEquals(expResult, result);
-
     }
 
     /**
@@ -129,25 +119,23 @@ public class ComunityAssignImplTest {
      * ComunityAssignImpl.
      */
     @Test
-    public void testFindComunityOwnerByIdComunity() {
+    void testFindComunityOwnerByIdComunity() {
         System.out.println("findComunityOwnerByIdComunity");
         ComunityAssignImpl instance = Mockito.spy(comunityAssignImpl);
         Optional<ComunityAssign> com = Optional.of(this.comunityAssign);
         Mockito.when(comunityAssignRepository.findComunityOwnerByIdComunity(ID_COMUNIDAD)).thenReturn(com);
-
         //Arrange
         Optional<ComunityAssign> expResult = com;
         Optional<ComunityAssign> result = instance.findComunityOwnerByIdComunity(ID_COMUNIDAD);
         //Assert
         assertEquals(expResult.get(), result.get());
-
     }
 
     /**
      * Test of findByIdComunityMiembro method, of class ComunityAssignImpl.
      */
     @Test
-    public void testFindByIdComunityMiembro() {
+    void testFindByIdComunityMiembro() {
         //Arrange
         System.out.println("findByIdComunityMiembro");
         ComunityAssignImpl instance = Mockito.spy(this.comunityAssignImpl);
@@ -158,14 +146,13 @@ public class ComunityAssignImplTest {
         Optional<ComunityAssign> result = instance.findByIdComunityMiembro(ID_COMUNIDAD, REGISTRO_ACADEMICO);
         //Assert
         assertEquals(expResult, result);
-
     }
 
     /**
      * Test of getFechaActual method, of class ComunityAssignImpl.
      */
     @Test
-    public void testGetFechaActual() {
+    void testGetFechaActual() {
         //Arrange
         System.out.println("getFechaActuallll");
         ComunityAssignImpl instance = this.comunityAssignImpl;
@@ -174,35 +161,31 @@ public class ComunityAssignImplTest {
         Timestamp result = instance.getFechaActual();
         //Assert
         assertEquals(expResult, result);
-
     }
 
     /**
      * Test of agregarFotoAComunidad method, of class ComunityAssignImpl.
      */
     @Test
-    public void testAgregarFotoAComunidad() {
+    void testAgregarFotoAComunidad() {
         //Arrange
         System.out.println("agregarFotoAComunidad");
         ComunityAssignImpl instance = Mockito.spy(comunityAssignImpl);
         RecuperadorDeImagenesDeDisco recuperadorDeImagenesDeDisco = new RecuperadorDeImagenesDeDisco();
         String foto = "src/test/java/com/comunidad/ad2/comunidad/controllImage/image.png";
         this.comunityAssign.getComunity().setFoto(foto);
-
         //Act
-        //byte[] expResult = recuperadorDeImagenesDeDisco.recuperarBytesDeImagen(foto);
-        byte[] result = instance.agregarFotoAComunidad(comunityAssign).getComunity().getDatosFoto();
+        instance.agregarFotoAComunidad(comunityAssign).getComunity().getDatosFoto();
         //Assert
         System.out.println("DATOS FOTO:" + this.comunityAssign.getComunity().getDatosFoto());
         assertNotNull(this.comunityAssign.getComunity().getDatosFoto());
-
     }
 
     /**
      * Test of findRequestInEspera method, of class ComunityAssignImpl.
      */
     @Test
-    public void testFindRequestInEspera() {
+    void testFindRequestInEspera() {
         //Arrange
         System.out.println("findRequestInEspera");
         ComunityAssignImpl instance = Mockito.spy(this.comunityAssignImpl);
@@ -213,14 +196,13 @@ public class ComunityAssignImplTest {
         Iterable<ComunityAssign> result = instance.findRequestInEspera(ID_COMUNIDAD, REGISTRO_ACADEMICO);
         //Assert
         assertEquals(expResult, result);
-
     }
 
     /**
      * Test of updateStateComunityRequest method, of class ComunityAssignImpl.
      */
     @Test
-    public void testUpdateStateComunityRequest() {
+    void testUpdateStateComunityRequest() {
         //Arrange
         System.out.println("updateStateComunityRequest");
         ComunityAssignImpl instance = Mockito.spy(this.comunityAssignImpl);
@@ -237,7 +219,7 @@ public class ComunityAssignImplTest {
      * Test para validar los miembros de una comunidad
      */
     @Test
-    public void testFindActiveMembersOfComunity() {
+    void testFindActiveMembersOfComunity() {
         //Arrange
         System.out.println("testFindActiveMembersOfComunity");
         ComunityAssignImpl instance = Mockito.spy(this.comunityAssignImpl);
@@ -257,7 +239,7 @@ public class ComunityAssignImplTest {
 
 
     @Test
-    public void testFindUserComunitys(){
+    void testFindUserComunitys(){
         //Arrange
         System.out.println("FindUserComunitys");
         ArrayList<ComunityAssign> comunityAssignList = new ArrayList<>();
@@ -289,11 +271,9 @@ public class ComunityAssignImplTest {
     }
 
     @Test
-    public void testDeleteSpecificComunityAssignMember() {
+    void testDeleteSpecificComunityAssignMember() {
         //Arrange
         ComunityAssignFilters com = new ComunityAssignFilters("10", 10);
-
-        //ComunityAssignRepository spy = Mockito.spy(comunityAssignRepository);
         doNothing().when(this.comunityAssignRepository).deleteSpecificComunityAssignMember(com.getIdComunidad(),com.getRegistroAcademico());
         //Act
         boolean expResult = true;
@@ -301,7 +281,6 @@ public class ComunityAssignImplTest {
         //Arrange
         assertEquals(expResult, result);
         verify(this.comunityAssignRepository).deleteSpecificComunityAssignMember(com.getIdComunidad(),com.getRegistroAcademico());
-        // TODO review the generated test code and remove the default call to fail.
     }
 
     private Comunity crearComunidad() {
@@ -309,7 +288,7 @@ public class ComunityAssignImplTest {
     }
     
     @Test
-    public void testGetAllUsersInCommunity(){
+    void testGetAllUsersInCommunity(){
         //Arrange
         List<User> expResult = getUsersList(3);
         int idComunidad = 10;

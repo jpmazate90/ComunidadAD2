@@ -5,10 +5,6 @@
  */
 package com.comunidad.ad2.comunidad.AuxObject;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author jpmazate
  */
-public class TokenCreatedTest {
+class TokenCreatedTest {
     
     public TokenCreatedTest() {
     }
@@ -27,7 +23,7 @@ public class TokenCreatedTest {
      * Test of getToken method, of class TokenCreated.
      */
     @Test
-    public void testGetToken() {
+    void testGetToken() {
         TokenCreated instance = instance();
         String expResult = "111111111";
         String result = instance.getToken();
@@ -40,7 +36,7 @@ public class TokenCreatedTest {
      * Test of setToken method, of class TokenCreated.
      */
     @Test
-    public void testSetToken() {
+    void testSetToken() {
         
         String token = "111111111";
         TokenCreated instance = instance();

@@ -26,7 +26,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * @author jesfrin
  */
 @ExtendWith(MockitoExtension.class)
-public class CommentPostServiceImplTest {
+class CommentPostServiceImplTest {
 
     private static final int ID = 1;
     private static final String DESCRIPCION = "DESCRIPCION";
@@ -55,7 +55,7 @@ public class CommentPostServiceImplTest {
      * Test of save method, of class CommentPostServiceImpl.
      */
     @Test
-    public void testSave() {
+    void testSave() {
         System.out.println("save");
         CommentPost commentPost = this.commentPost;
         CommentPostServiceImpl spy = Mockito.spy(this.commentPostServiceImpl);
@@ -63,15 +63,13 @@ public class CommentPostServiceImplTest {
         CommentPost expResult = this.commentPost;
         CommentPost result = spy.save(commentPost);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-
     }
 
     /**
      * Test of getCommentActiveByPost method, of class CommentPostServiceImpl.
      */
     @Test
-    public void testGetCommentActiveByPost() {
+    void testGetCommentActiveByPost() {
         System.out.println("getCommentActiveByPost");
         int idCommunityPost = ID_COMM_POST;
         CommentPostServiceImpl spy = Mockito.spy(this.commentPostServiceImpl);
@@ -87,7 +85,7 @@ public class CommentPostServiceImplTest {
      * Test of addCommentsToPost method, of class CommentPostServiceImpl.
      */
     @Test
-    public void testAddCommentsToPost() {
+    void testAddCommentsToPost() {
         System.out.println("addCommentsToPost");
         CommentPostServiceImpl spy = Mockito.spy(this.commentPostServiceImpl);
         List<CommunityPost> listCommunityPost = new ArrayList<>();
@@ -96,11 +94,9 @@ public class CommentPostServiceImplTest {
         listCommentPost.add(commentPost);
         Mockito.when(spy.getCommentActiveByPost(ID_COMM_POST)).thenReturn(listCommentPost);
         spy.addCommentsToPost(listCommunityPost);
-
         List<CommentPost> expResult = listCommentPost;
         List<CommentPost> result = listCommunityPost.get(0).getCommentPost();
         assertEquals(expResult, result);
-
     }
 
 }

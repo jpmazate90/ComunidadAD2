@@ -5,12 +5,8 @@
  */
 package com.comunidad.ad2.comunidad.service;
 
-import com.comunidad.ad2.comunidad.AuxObject.CreacionUsuarioParaPruebas;
 import com.comunidad.ad2.comunidad.entity.Department;
-import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.DepartmentRepository;
-import com.comunidad.ad2.comunidad.repository.UserRepository;
-import com.comunidad.ad2.comunidad.service.enums.RolUsuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +28,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * @author jpmazate
  */
 @ExtendWith(MockitoExtension.class)
-public class DepartmentServiceImplTest {
+class DepartmentServiceImplTest {
     
     @Mock
     private DepartmentRepository departmentRepository;  // es el mock
@@ -43,27 +39,11 @@ public class DepartmentServiceImplTest {
     public DepartmentServiceImplTest() {
     }
     
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
-    }
-
     /**
      * Test of findById method, of class DepartmentServiceImpl.
      */
     @Test
-    public void testFindById() {
+    void testFindById() {
         
         Integer idDepartamento = 1;
         Department expect = crearDepartamento();
@@ -79,7 +59,7 @@ public class DepartmentServiceImplTest {
      * Test of findAll method, of class DepartmentServiceImpl.
      */
     @Test
-    public void testFindAll() {
+    void testFindAll() {
        
         List<Department> list = obtenerDepartmentsList();
         when(departmentRepository.findAll()).thenReturn(list);
@@ -99,8 +79,6 @@ public class DepartmentServiceImplTest {
             a.add(crearDepartamento());
         }
         return a;
-        
     }
-
     
 }

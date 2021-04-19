@@ -8,7 +8,6 @@ package com.comunidad.ad2.comunidad.service;
 import com.comunidad.ad2.comunidad.controllImage.CreadorDeDirectoriosComunidad;
 import com.comunidad.ad2.comunidad.controllImage.DibujadorDeImagenesEnDisco;
 import com.comunidad.ad2.comunidad.entity.Comunity;
-import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.ComunityRepository;
 import java.io.IOException;
 import java.nio.file.Path;

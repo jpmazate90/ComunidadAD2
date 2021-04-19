@@ -26,7 +26,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * @author jesfrin
  */
 @ExtendWith(MockitoExtension.class)
-public class ValorationPostServiceImplTest {
+class ValorationPostServiceImplTest {
 
     private static final int ID = 1;
     private static final ValorationType VALORATION_TYPE = ValorationType.UP;
@@ -55,10 +55,9 @@ public class ValorationPostServiceImplTest {
      * Test of save method, of class ValorationPostServiceImpl.
      */
     @Test
-    public void testSave() {
+    void testSave() {
         System.out.println("save");
         ValorationPostServiceImpl spy = Mockito.spy(this.valorationPostServiceImpl);
-
         Mockito.when(valorationPostRepository.save(this.valorationPost)).thenReturn(this.valorationPost);
         ValorationPost expResult = this.valorationPost;
         ValorationPost result = spy.save(valorationPost);
@@ -70,7 +69,7 @@ public class ValorationPostServiceImplTest {
      * ValorationPostServiceImpl.
      */
     @Test
-    public void testGetValorationPostOfUser() {
+    void testGetValorationPostOfUser() {
         System.out.println("getValorationPostOfUser");
         ValorationPostServiceImpl spy = Mockito.spy(this.valorationPostServiceImpl);
         Optional<ValorationPost> val = Optional.of(this.valorationPost);
@@ -85,7 +84,7 @@ public class ValorationPostServiceImplTest {
      * Test of updateValorationPost method, of class ValorationPostServiceImpl.
      */
     @Test
-    public void testUpdateValorationPost() {
+    void testUpdateValorationPost() {
         System.out.println("updateValorationPost");
         ValorationPostServiceImpl spy = Mockito.spy(this.valorationPostServiceImpl);
         Mockito.when(valorationPostRepository.updateValorationPost(REGISTRO_ACADEMICO, ID_COMUNITY_POST,VALORATION_TYPE)).thenReturn(0);
@@ -98,7 +97,7 @@ public class ValorationPostServiceImplTest {
      * Test of addValoration method, of class ValorationPostServiceImpl.
      */
     @Test
-    public void testAddValoration() {
+    void testAddValoration() {
         System.out.println("addValoration");
         List<CommunityPost> listaComunityPost = new ArrayList<>();
         listaComunityPost.add(communityPost);
@@ -107,6 +106,5 @@ public class ValorationPostServiceImplTest {
         Iterable<CommunityPost> expResult = listaComunityPost;
         Iterable<CommunityPost> result = spy.addValoration(listaComunityPost, REGISTRO_ACADEMICO);
         assertEquals(expResult, result);
-
     }
 }

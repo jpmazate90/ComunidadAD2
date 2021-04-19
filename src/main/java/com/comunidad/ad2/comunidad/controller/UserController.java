@@ -135,8 +135,8 @@ public class UserController {
     @PostMapping("/api/users/filtrarUsuarios")
     public ResponseEntity<?> filtrarUsuarios(@RequestBody NumeroCarnet carnet) {
 
-        System.out.println("****************Entre aqui: " + carnet.getNumeroCarnet());
-        return ResponseEntity.ok(userService.filtrarUsuarios(carnet.getNumeroCarnet()));
+        System.out.println("****************Entre aqui: " + carnet.getNumeroDeCarnet());
+        return ResponseEntity.ok(userService.filtrarUsuarios(carnet.getNumeroDeCarnet()));
     }
 
     @PostMapping("/api/users/find/byId")

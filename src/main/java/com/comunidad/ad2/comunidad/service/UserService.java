@@ -6,13 +6,9 @@
 package com.comunidad.ad2.comunidad.service;
 
 import com.comunidad.ad2.comunidad.entity.User;
-import java.util.List;
-import com.comunidad.ad2.comunidad.service.enums.EstadoUsuario;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Optional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -23,13 +19,9 @@ public interface UserService {
     
     public Iterable<User> findAll();
     
-    
-    
     public Optional<User> findById(String registroAcademico);
     
     public User save(User user);
-    
-    
     
     public int adminCreation(String registroAcademico);
     

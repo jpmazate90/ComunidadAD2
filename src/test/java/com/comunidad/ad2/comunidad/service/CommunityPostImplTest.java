@@ -3,9 +3,7 @@ package com.comunidad.ad2.comunidad.service;
 import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
 import com.comunidad.ad2.comunidad.entity.CommunityPost;
-import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.CommunityPostRepository;
-import com.comunidad.ad2.comunidad.service.enums.CommunityPostState;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,7 +28,7 @@ import org.springframework.mock.web.MockMultipartFile;
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-public class CommunityPostImplTest {
+class CommunityPostImplTest {
 
     @Mock
     private CommunityPostRepository communityPostRepository;  // es el mock
@@ -63,7 +61,7 @@ public class CommunityPostImplTest {
     }
     
     @Test
-    public void testSave(){
+    void testSave(){
         //Arrange
         int rated = 0;
         CommunityPost post = createCommunityPost();
@@ -76,7 +74,7 @@ public class CommunityPostImplTest {
     }
     
     @Test
-    public void testSavePostImage() throws IOException{
+    void testSavePostImage() throws IOException{
         //Arrange
         String fotoDePerfil = "foto.jpg";
         CommunityPost post = new CommunityPost();
@@ -95,7 +93,7 @@ public class CommunityPostImplTest {
     }
     
    @Test
-    public void testGetAllCommunityPostByIdComunity(){
+    void testGetAllCommunityPostByIdComunity(){
         //Arrange
         OrdinaryObject ordinaryObject = new OrdinaryObject();
         ordinaryObject.setNumberParam(10);
@@ -111,7 +109,7 @@ public class CommunityPostImplTest {
     
     
     @Test
-    public void testAgregarFotoAComunidad(){
+    void testAgregarFotoAComunidad(){
         //Arrange
         byte[] datosFoto = "DatosFoto".getBytes();
         String photo = "foto.jpg";

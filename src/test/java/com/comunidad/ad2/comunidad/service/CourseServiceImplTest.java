@@ -23,27 +23,23 @@ import org.mockito.ArgumentMatchers;
  * @author jesfrin
  */
 @ExtendWith(MockitoExtension.class)
-public class CourseServiceImplTest {
+class CourseServiceImplTest {
     
     public static final String CODIGO_DE_CURSO="000";
-    //public static final List<Course> cursos= crearListaDeCursos();
-   // public static final Course curso = new Course(CODIGO_DE_CURSO);
     
     @Mock
     private CourseRepository courseRepository;
     
     @InjectMocks
-    private CourseImpl courseImpl;//Se crea un CourseIMpl y se le inyecta un CourseRepository
+    private CourseImpl courseImpl;
     
     public CourseServiceImplTest(){
         
     }
     
-    //Test para recuperar todos los cursos
     @Test
-    public void testFindAll(){
+    void testFindAll(){
         //arrange
-        
         CourseImpl spy = Mockito.spy(courseImpl);
         Mockito.when(courseRepository.findAll()).thenReturn(crearListaDeCursos());
         //act
@@ -51,12 +47,10 @@ public class CourseServiceImplTest {
         ArrayList<Course> resultado =(ArrayList<Course>)misCursos;
         //assert
         Assertions.assertEquals(CODIGO_DE_CURSO,(resultado.get(0).getCodigoDeCurso()));
-        //Assertions.assertEquals(CODIGO_DE_CURSO,"HOLA");
-
     }
     
     @Test
-    public void testFindById(){
+    void testFindById(){
         //arrange
         Mockito.when(courseRepository.findById(ArgumentMatchers.any())).thenReturn(Optional.of(new Course("1")));
         //act
@@ -73,9 +67,5 @@ public class CourseServiceImplTest {
          courses.add(new Course(CODIGO_DE_CURSO));
          return courses;
     }
-
-    
-    
-    
-    
+   
 }

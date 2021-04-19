@@ -6,14 +6,10 @@
 package com.comunidad.ad2.comunidad.service;
 
 import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
-import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.ComunityAssign;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.repository.ComunityAssignRepository;
 import com.comunidad.ad2.comunidad.service.enums.EstadoComunityAssign;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Optional;

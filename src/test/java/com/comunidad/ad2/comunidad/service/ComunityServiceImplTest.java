@@ -21,7 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * @author jesfrin
  */
 @ExtendWith(MockitoExtension.class)
-public class ComunityServiceImplTest {
+class ComunityServiceImplTest {
     
     public static final String NOMBRE_COMUNIDAD="Comunidad AD2";
     
@@ -36,7 +36,7 @@ public class ComunityServiceImplTest {
     }
     
     @Test
-    public void testSave(){
+    void testSave(){
         //Arrange
         Comunity comunity = crearComunidad(NOMBRE_COMUNIDAD);
         ComunityImpl spy = Mockito.spy(this.comunityImpl);
@@ -45,9 +45,7 @@ public class ComunityServiceImplTest {
         //act
         Comunity resultado = spy.save(comunity);
         //assert
-        Assertions.assertEquals(NOMBRE_COMUNIDAD,resultado.getNombre());
-        //Assertions.assertEquals(NOMBRE_COMUNIDAD,"d");
-        
+        Assertions.assertEquals(NOMBRE_COMUNIDAD,resultado.getNombre());        
     }
     
     public Comunity crearComunidad(String nombreComunidad){
