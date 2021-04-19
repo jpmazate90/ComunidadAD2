@@ -8,8 +8,6 @@ package com.comunidad.ad2.comunidad.controllImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

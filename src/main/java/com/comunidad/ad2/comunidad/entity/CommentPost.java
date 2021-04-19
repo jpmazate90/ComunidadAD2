@@ -6,6 +6,7 @@
 package com.comunidad.ad2.comunidad.entity;
 
 import com.comunidad.ad2.comunidad.service.enums.StateComment;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ import org.hibernate.annotations.CreationTimestamp;
  */
 @Entity
 @Table(name = "comment_post")
-public class CommentPost {
+public class CommentPost implements Serializable{
 
     public CommentPost() {
 
