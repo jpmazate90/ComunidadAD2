@@ -26,7 +26,7 @@ import org.springframework.http.ResponseEntity;
  * @author jesfrin
  */
 @ExtendWith(MockitoExtension.class)
-public class ValorationPostControllerTest {
+class ValorationPostControllerTest {
 
     private static final int ID = 1;
     private static final ValorationType VALORATION_TYPE = ValorationType.UP;
@@ -55,7 +55,7 @@ public class ValorationPostControllerTest {
      * Test of create method, of class ValorationPostController.
      */
     @Test
-    public void testCreate() {
+    void testCreate() {
         System.out.println("create");
         ValorationPostController spy = Mockito.spy(this.valorationPostController);
         Mockito.when(this.valorationPostService.save(valorationPost)).thenReturn(valorationPost);
@@ -68,7 +68,7 @@ public class ValorationPostControllerTest {
      * Test of updateValoration method, of class ValorationPostController.
      */
     @Test
-    public void testUpdateValoration() {
+    void testUpdateValoration() {
         System.out.println("updateValoration");
         ValorationPostController spy = Mockito.spy(this.valorationPostController);
         Mockito.when(this.valorationPostService.updateValorationPost(REGISTRO_ACADEMICO,ID_COMUNITY_POST,VALORATION_TYPE)).thenReturn(0);

@@ -7,15 +7,10 @@ package com.comunidad.ad2.comunidad.controller;
 
 import com.comunidad.ad2.comunidad.entity.CommentPost;
 import com.comunidad.ad2.comunidad.entity.CommunityPost;
-import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.service.CommentPostService;
 import com.comunidad.ad2.comunidad.service.enums.StateComment;
 import java.time.LocalDateTime;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +29,7 @@ import org.springframework.http.ResponseEntity;
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-public class CommentPostControllerTest {
+ class CommentPostControllerTest {
 
     private static final int ID = 1;
     private static final String DESCRIPCION = "DESCRIPCION";
@@ -63,7 +58,7 @@ public class CommentPostControllerTest {
      * Test of create method, of class CommentPostController.
      */
     @Test
-    public void testCreate() {
+    void testCreate() {
         System.out.println("Test create");
         CommentPostController instance = Mockito.spy(this.commentPostController);
         Mockito.when(this.commentPostService.save(this.commentPost)).thenReturn(this.commentPost);

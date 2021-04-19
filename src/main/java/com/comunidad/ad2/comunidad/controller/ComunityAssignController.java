@@ -14,15 +14,11 @@ import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.service.ComunityAssignService;
 import com.comunidad.ad2.comunidad.service.ComunityService;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,8 +48,7 @@ public class ComunityAssignController {
      */
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/assignComunity")//Al no estar bajo /api/users no se necesita autenticacion
-    public ResponseEntity<?> create(@RequestBody ComunityAssign comunityAssign) {
-        //comunityAssign.setEstado(null);
+    public ResponseEntity<ComunityAssign> create(@RequestBody ComunityAssign comunityAssign) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.comunityAssignService.save(comunityAssign));
     }
 
@@ -67,7 +62,7 @@ public class ComunityAssignController {
      */
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/findComunityByRegistroAcademico")//Al no estar bajo /api/users no se necesita autenticacion
-    public ResponseEntity<?> findComunityTypeAdminitrationByRegistroAcademico(@RequestBody User user) throws IOException {
+    public ResponseEntity<Iterable<ComunityAssign>> findComunityTypeAdminitrationByRegistroAcademico(@RequestBody User user)  {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.comunityAssignService.findComunityTypeAdminitrationByRegistroAcademico(user.getRegistroAcademico()));
     }
 
@@ -80,8 +75,8 @@ public class ComunityAssignController {
      */
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/findComunityById")//Al no estar bajo /api/users no se necesita autenticacion
-    public ResponseEntity<?> findComunityOwnerByIdComunity(@RequestBody Comunity com) throws IOException {
-        Optional<ComunityAssign> comunityFind = this.comunityAssignService.findComunityOwnerByIdComunity(Integer.valueOf(com.getId()));
+    public ResponseEntity<Object> findComunityOwnerByIdComunity(@RequestBody Comunity com)   {
+        Optional<ComunityAssign> comunityFind = this.comunityAssignService.findComunityOwnerByIdComunity(com.getId());
         if (comunityFind.isPresent()) {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunityFind.get());
         }
@@ -97,7 +92,7 @@ public class ComunityAssignController {
      */
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/findMemberComunityById")
-    public ResponseEntity<?> findMemberComunityById(@RequestBody ComunityAssign comRes) {
+    public ResponseEntity<Object> findMemberComunityById(@RequestBody ComunityAssign comRes) {
         Optional<ComunityAssign> comAsig = this.comunityAssignService.findByIdComunityMiembro(comRes.getComunity().getId(), comRes.getUser().getRegistroAcademico());
         if (comAsig.isPresent()) {
             ComunityAssign comSend = comAsig.get();
@@ -108,10 +103,7 @@ public class ComunityAssignController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/comunity/filtrarSolicitudesComunidades")
-    public ResponseEntity<?> findComunityAsignsByIdComunity(@RequestBody ComunityAssignFilters filters) throws IOException {
-        System.out.println("\n\n\n\n\n");
-        System.out.println(filters.toString());
-        System.out.println("\n\n\n\n\n");
+    public ResponseEntity<Iterable<ComunityAssign>> findComunityAsignsByIdComunity(@RequestBody ComunityAssignFilters filters)   {
         Iterable<ComunityAssign> comunityFind = this.comunityAssignService.findRequestInEspera(filters.getIdComunidad(), filters.getRegistroAcademico());
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunityFind);
@@ -119,12 +111,12 @@ public class ComunityAssignController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/updateStateComunityRequest")
-    public ResponseEntity<?> updateStateComunityRequest(@RequestBody ComunityAssign comunityAssign) {
+    public ResponseEntity<ComunityAssign> updateStateComunityRequest(@RequestBody ComunityAssign comunityAssign) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.comunityAssignService.save(comunityAssign));
     }
 
     @PostMapping("/api/comunity/users")//Al no estar bajo /api/users no se necesita autenticacion
-    public ResponseEntity<?> getAllUsersInCommunity(@RequestBody OrdinaryObject params) throws IOException {
+    public ResponseEntity<Iterable<User>> getAllUsersInCommunity(@RequestBody OrdinaryObject params)  {
         Iterable<User> usersFind = this.comunityAssignService.getAllUsersInCommunity(params.getNumberParam());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(usersFind);
     }
@@ -135,7 +127,7 @@ public class ComunityAssignController {
      */
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/filtrarMiembrosActivosDeComunidad")
-    public ResponseEntity<?> findActiveMembersOfComunity(@RequestBody ComunityAssignFilters filters){
+    public ResponseEntity<Iterable<ComunityAssign>> findActiveMembersOfComunity(@RequestBody ComunityAssignFilters filters){
         Iterable<ComunityAssign> comunityFind=this.comunityAssignService.findActiveMembersOfComunity(filters.getIdComunidad(), filters.getRegistroAcademico());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunityFind);
     }
@@ -148,7 +140,7 @@ public class ComunityAssignController {
      */
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/removeUserFromComunity")//Al no estar bajo /api/users no se necesita autenticacion
-    public ResponseEntity<?> removeUserFromComunity(@RequestBody ComunityAssign comunityAssign) {
+    public ResponseEntity<ComunityAssign> removeUserFromComunity(@RequestBody ComunityAssign comunityAssign) {
         comunityAssign.setEstado(null);
         return ResponseEntity.status(HttpStatus.CREATED).body(this.comunityAssignService.save(comunityAssign));
     }
@@ -157,12 +149,12 @@ public class ComunityAssignController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/findUserComunitys")
-    public ResponseEntity<?> findUserComunitys(@RequestBody User user){
+    public ResponseEntity<Iterable<ComunityAssign>> findUserComunitys(@RequestBody User user){
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.comunityAssignService.findUserComunitys(user.getRegistroAcademico()));
     }
 
     @PostMapping("/api/comunity/deleteComunity")
-    public ResponseEntity<?> deleteComunity(@RequestBody ComunityAssignFilters filters) {
+    public ResponseEntity<MensajeRetorno> deleteComunity(@RequestBody ComunityAssignFilters filters) {
         Optional<Comunity> result = this.comunity.findById(filters.getIdComunidad()+"");
         if(result.isEmpty()){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new MensajeRetorno("NO SE ENCONTRO LA COMUNIDAD"));
@@ -176,7 +168,7 @@ public class ComunityAssignController {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/comunity/deleteUserFromComunity")
-    public ResponseEntity<?> deleteUserFromComunity(@RequestBody ComunityAssignFilters filters) {
+    public ResponseEntity<MensajeRetorno> deleteUserFromComunity(@RequestBody ComunityAssignFilters filters) {
         Optional<ComunityAssign> result = this.comunityAssignService.findByIdComunityMiembro(filters.getIdComunidad(),filters.getRegistroAcademico());
         if(result.isEmpty()){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new MensajeRetorno("NO SE ENCONTRO AL USUARIO: "+filters.getRegistroAcademico()+", EN LA COMUNIDAD CON ID:"+filters.getIdComunidad()));
@@ -188,7 +180,7 @@ public class ComunityAssignController {
     }
     
     @PostMapping("/api/comunity/assigns/find/byStateAndComunity")
-    public ResponseEntity<?> findComunityAsignsByStateAndIdComunity(@RequestBody ComunityAssignFilters filters) throws IOException {
+    public ResponseEntity<Iterable<ComunityAssign>> findComunityAsignsByStateAndIdComunity(@RequestBody ComunityAssignFilters filters) {
         Iterable<ComunityAssign> comunityFind = this.comunityAssignService.findUsersRequestByState(
                 filters.getIdComunidad(), filters.getRegistroAcademico(), filters.getStateAssign());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(comunityFind);

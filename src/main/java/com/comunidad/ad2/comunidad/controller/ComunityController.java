@@ -6,37 +6,14 @@
 package com.comunidad.ad2.comunidad.controller;
 
 import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
-import com.comunidad.ad2.comunidad.controllImage.CreadorDeDirectoriosComunidad;
 import com.comunidad.ad2.comunidad.entity.Comunity;
-import com.comunidad.ad2.comunidad.entity.User;
-import com.comunidad.ad2.comunidad.service.ComunityAssignService;
 import com.comunidad.ad2.comunidad.service.ComunityService;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.filechooser.FileSystemView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.MultipartBodyBuilder;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -63,7 +40,7 @@ public class ComunityController {
      */
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/api/users/creationComunity")//Al no estar bajo /api/users no se necesita autenticacion
-    public ResponseEntity<?> create(@RequestBody Comunity comunity) {
+    public ResponseEntity<Comunity> create(@RequestBody Comunity comunity) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.comunityService.save(comunity));
     }
 
@@ -74,7 +51,7 @@ public class ComunityController {
      * @return
      */
     @PostMapping("/api/users/uploadImageComunity")
-    public ResponseEntity<?> uploadImage(@RequestBody MultipartFile file) {
+    public ResponseEntity<Object> uploadImage(@RequestBody MultipartFile file) {
         try {
             Comunity com = this.comunityService.guardarImagen(file);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(com);//Si se crea la entidad Imagen, devolver el objeto de tipo imagen
@@ -87,7 +64,7 @@ public class ComunityController {
     }
 
     @PostMapping("/api/communities/search")
-    public ResponseEntity<?> getCommunitiesBySearch(@RequestBody OrdinaryObject searchObject) {
+    public ResponseEntity<Iterable<Comunity>> getCommunitiesBySearch(@RequestBody OrdinaryObject searchObject) {
         if (searchObject.getStringParam().trim().isEmpty()) {
             return ResponseEntity.ok(this.comunityService.findAll());
         }

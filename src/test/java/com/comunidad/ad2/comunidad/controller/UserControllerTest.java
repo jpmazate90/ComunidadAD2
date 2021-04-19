@@ -32,7 +32,7 @@ import org.springframework.http.ResponseEntity;
  * @author jpmazate
  */
 @ExtendWith(MockitoExtension.class)
-public class UserControllerTest {
+class UserControllerTest {
 
     @Mock
     private UserServiceImpl userService;
@@ -63,7 +63,7 @@ public class UserControllerTest {
      * Test of create method, of class UserController.
      */
     @Test
-    public void testCreateWhenUserExists() {
+    void testCreateWhenUserExists() {
         User user = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
         when(this.userService.findById(ArgumentMatchers.any())).thenReturn(Optional.of(user));
         when(this.userService.save(ArgumentMatchers.any())).thenReturn(user);
@@ -75,7 +75,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testCreateWhenUserNotExists() {
+    void testCreateWhenUserNotExists() {
         User user = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
         when(this.userService.findById(ArgumentMatchers.any())).thenReturn(Optional.empty());
         when(this.userService.save(ArgumentMatchers.any())).thenReturn(user);
@@ -90,7 +90,7 @@ public class UserControllerTest {
      * Test of authentication method, of class UserController.
      */
     @Test
-    public void testAuthentication() {
+    void testAuthentication() {
         User user = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
         when(this.userService.userAuthentication(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(user);
 
@@ -104,7 +104,7 @@ public class UserControllerTest {
      * Test of findUserByToken method, of class UserController.
      */
     @Test
-    public void testFindUserByTokenWhenExists() {
+    void testFindUserByTokenWhenExists() {
         User token = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
         when(this.userService.findByTokenOwnUser(ArgumentMatchers.any())).thenReturn(Optional.of(token));
 
@@ -114,7 +114,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testFindUserByTokenWhenNotExists() {
+    void testFindUserByTokenWhenNotExists() {
         User token = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
         when(this.userService.findByTokenOwnUser(ArgumentMatchers.any())).thenReturn(Optional.empty());
 
@@ -127,7 +127,7 @@ public class UserControllerTest {
      * Test of adminCreation method, of class UserController.
      */
     @Test
-    public void testAdminCreation() {
+    void testAdminCreation() {
         User user = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
         when(this.userService.adminCreation(ArgumentMatchers.any())).thenReturn(1);
         
@@ -142,7 +142,7 @@ public class UserControllerTest {
      * Test of changePassword method, of class UserController.
      */
     @Test
-    public void testChangePassword() {
+    void testChangePassword() {
         User user = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
         when(this.userService.changePasswordUser(ArgumentMatchers.any(),ArgumentMatchers.any())).thenReturn(1);
         ResponseEntity expResult = ResponseEntity.status(HttpStatus.ACCEPTED).body(1);
@@ -155,7 +155,7 @@ public class UserControllerTest {
      * Test of read method, of class UserController.
      */
     @Test
-    public void testReadWHenExists() {
+    void testReadWHenExists() {
         String userId = "1";
         User user = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
         when(this.userService.findById(ArgumentMatchers.any())).thenReturn(Optional.of(user));
@@ -164,7 +164,7 @@ public class UserControllerTest {
         assertEquals(expResult.getStatusCode(), result.getStatusCode());
     }
     @Test
-    public void testReadWHenNotExists() {
+    void testReadWHenNotExists() {
         String userId = "1";
         when(this.userService.findById(ArgumentMatchers.any())).thenReturn(Optional.empty());
         ResponseEntity expResult = ResponseEntity.notFound().build();
@@ -176,7 +176,7 @@ public class UserControllerTest {
      * Test of all method, of class UserController.
      */
     @Test
-    public void testAll() {
+    void testAll() {
         UserController instance = null;
         when(this.userService.findAll()).thenReturn(null);
         
@@ -190,7 +190,7 @@ public class UserControllerTest {
      * Test of actualizarDatosUser method, of class UserController.
      */
     @Test
-    public void testActualizarDatosUserWHenExists() {
+    void testActualizarDatosUserWHenExists() {
         User user = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
         when(this.userService.findById(ArgumentMatchers.any())).thenReturn(Optional.of(user));
         when(this.userService.actualizarDatosUser(ArgumentMatchers.any())).thenReturn(user);
@@ -201,7 +201,7 @@ public class UserControllerTest {
         
     }
      @Test
-    public void testActualizarDatosUserWHenNotExists() {
+     void testActualizarDatosUserWHenNotExists() {
         User user = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
         when(this.userService.findById(ArgumentMatchers.any())).thenReturn(Optional.empty());
         
@@ -212,7 +212,7 @@ public class UserControllerTest {
     }
     
     @Test
-    public void testGetUsersBySearch() {
+    void testGetUsersBySearch() {
         OrdinaryObject ordinaryObject = new OrdinaryObject();
         String stringParam = "stringParam";
         ordinaryObject.setStringParam(stringParam);
@@ -222,7 +222,7 @@ public class UserControllerTest {
     }
     
     @Test
-    public void testGetUsersBySearchEmptyData() {
+    void testGetUsersBySearchEmptyData() {
         OrdinaryObject ordinaryObject = new OrdinaryObject();
         String stringParam = " ";
         ordinaryObject.setStringParam(stringParam);
@@ -232,7 +232,7 @@ public class UserControllerTest {
     }
     
     @Test
-    public void testByFiltering() {
+    void testByFiltering() {
         User usr = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
         ResponseEntity expResult = ResponseEntity.ok(this.userService.getByFiltering(usr));
         ResponseEntity result = this.userController.getByFiltering(usr);
@@ -240,7 +240,7 @@ public class UserControllerTest {
     }
     
     @Test
-    public void testFiltrarUsuario() {
+    void testFiltrarUsuario() {
         User usr = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
         ResponseEntity expResult = ResponseEntity.ok(this.userService.getByFiltering(usr));
         ResponseEntity result = this.userController.filtrarUsuarios(new NumeroCarnet(usr.getRegistroAcademico()));
@@ -248,7 +248,7 @@ public class UserControllerTest {
     }
     
     @Test
-    public void testFindUserByIdWhenisEmpty() {
+    void testFindUserByIdWhenisEmpty() {
         User usr = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
         ResponseEntity expResult = ResponseEntity.status(HttpStatus.CONFLICT).body("NO EXISTE EL TOKEN DE AUTENTICACION");
         when(this.userService.findById(usr.getRegistroAcademico())).thenReturn(Optional.empty());
@@ -257,7 +257,7 @@ public class UserControllerTest {
     }
     
     @Test
-    public void testFindUserByIdWhenExists() {
+    void testFindUserByIdWhenExists() {
         User usr = CreacionUsuarioParaPruebas.crearUsuario(RolUsuario.SUPER);
         ResponseEntity expResult = ResponseEntity.ok(usr);
         when(this.userService.findById(usr.getRegistroAcademico())).thenReturn(Optional.of(usr));

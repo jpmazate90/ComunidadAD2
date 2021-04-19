@@ -27,7 +27,7 @@ import org.springframework.mock.web.MockMultipartFile;
  * @author jesfrin
  */
     @ExtendWith(MockitoExtension.class)
-public class ComunityControllerTest {
+class ComunityControllerTest {
 
     private Comunity comunidad;
     private Course course;
@@ -47,7 +47,7 @@ public class ComunityControllerTest {
      * Test of create method, of class ComunityController.
      */
     @Test
-    public void testCreate() {
+    void testCreate() {
         System.out.println("Test create");
         Comunity comunity = this.comunidad;
         ComunityController instance = Mockito.spy(this.comunityController);
@@ -64,7 +64,7 @@ public class ComunityControllerTest {
      * Test of uploadImage method, of class ComunityController.
      */
     @Test
-    public void testUploadImage() throws IOException{
+    void testUploadImage() throws IOException{
         //Arrange
         System.out.println("uploadImage");
         RecuperadorDeImagenesDeDisco recuperadorDeImagenesDeDisco = new RecuperadorDeImagenesDeDisco();
@@ -86,7 +86,7 @@ public class ComunityControllerTest {
      * Test of uploadImage method, of class ComunityController.
      */
     @Test
-    public void testUploadImageWithError() throws IOException{
+    void testUploadImageWithError() throws IOException{
         //Arrange
         System.out.println("uploadImageWithError");
         RecuperadorDeImagenesDeDisco recuperadorDeImagenesDeDisco = new RecuperadorDeImagenesDeDisco();
@@ -105,7 +105,7 @@ public class ComunityControllerTest {
     
     
     @Test
-    public void testGetCommunitiesBySearch() {
+    void testGetCommunitiesBySearch() {
         OrdinaryObject ordinaryObject = new OrdinaryObject();
         String stringParam = "stringParam";
         ordinaryObject.setStringParam(stringParam);
@@ -115,7 +115,7 @@ public class ComunityControllerTest {
     }
     
     @Test
-    public void testGetCommunitiesBySearchEmptyData() {
+    void testGetCommunitiesBySearchEmptyData() {
         OrdinaryObject ordinaryObject = new OrdinaryObject();
         String stringParam = " ";
         ordinaryObject.setStringParam(stringParam);
