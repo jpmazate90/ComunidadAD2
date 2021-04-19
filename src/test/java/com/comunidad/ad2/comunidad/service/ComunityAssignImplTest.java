@@ -208,8 +208,8 @@ class ComunityAssignImplTest {
         ComunityAssignImpl instance = Mockito.spy(this.comunityAssignImpl);
         Mockito.when(comunityAssignRepository.save(this.comunityAssign)).thenReturn(comunityAssign);
         //Act
-        Timestamp expResult = this.comunityAssign.getFecha_decision();
-        Timestamp result = instance.updateStateComunityRequest(comunityAssign).getFecha_decision();
+        Timestamp expResult = this.comunityAssign.getFechaDecision();
+        Timestamp result = instance.updateStateComunityRequest(comunityAssign).getFechaDecision();
         //Arrange
         assertNotEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.

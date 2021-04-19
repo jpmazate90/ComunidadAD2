@@ -188,7 +188,7 @@ public class ComunityAssignTest {
         ComunityAssign instance = this.comunityAssign;
         //Arrange
         Timestamp expResult = FECHA_DECISION;
-        Timestamp result = instance.getFecha_decision();
+        Timestamp result = instance.getFechaDecision();
         //Assert
         assertEquals(expResult, result);
     }
@@ -203,9 +203,9 @@ public class ComunityAssignTest {
         ComunityAssign instance = this.comunityAssign;
         Timestamp nuevo = new Timestamp(System.currentTimeMillis());
         //Arrange
-        instance.setFecha_decision(nuevo);
+        instance.setFechaDecision(nuevo);
         Timestamp expResult = nuevo;
-        Timestamp result = instance.getFecha_decision();
+        Timestamp result = instance.getFechaDecision();
         //Assert
         assertEquals(expResult, result);
     }

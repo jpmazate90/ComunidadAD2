@@ -114,7 +114,7 @@ public class ComunityAssignImpl implements ComunityAssignService {
 
     @Override
     public ComunityAssign updateStateComunityRequest(ComunityAssign comunityAssign) {
-        comunityAssign.setFecha_decision(getFechaActual());
+        comunityAssign.setFechaDecision(getFechaActual());
         return this.comunityAssignRepository.save(comunityAssign);
 
     }

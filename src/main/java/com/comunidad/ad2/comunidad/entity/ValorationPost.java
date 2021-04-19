@@ -5,7 +5,6 @@
  */
 package com.comunidad.ad2.comunidad.entity;
 
-import com.comunidad.ad2.comunidad.service.enums.EstadoComunityAssign;
 import com.comunidad.ad2.comunidad.service.enums.ValorationType;
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -14,8 +14,6 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
@@ -31,27 +29,26 @@ public class ComunityAssign implements Serializable {
     public ComunityAssign() {
     }
 
-    public ComunityAssign(ComunityAssignKey id, User user, Comunity comunity, TipoComunityAssign tipo, Timestamp fecha_decision, EstadoComunityAssign estado, Timestamp fechaCreacion_O_Aceptacion) {
+    public ComunityAssign(ComunityAssignKey id, User user, Comunity comunity, TipoComunityAssign tipo, Timestamp fechaDecision, EstadoComunityAssign estado, Timestamp fechaCreacionOAceptacion) {
         this.idComunityAssign = id;
         this.user = user;
         this.comunity = comunity;
         this.tipo = tipo;
-        this.fecha_decision = fecha_decision;
+        this.fechaDecision = fechaDecision;
         this.estado = estado;
-        this.fechaCreacion = fechaCreacion_O_Aceptacion;
+        this.fechaCreacion = fechaCreacionOAceptacion;
     }
 
-    public ComunityAssign(ComunityAssignKey idComunityAssign, TipoComunityAssign tipo, Timestamp fecha_decision, EstadoComunityAssign estado, Timestamp fechaCreacion) {
+    public ComunityAssign(ComunityAssignKey idComunityAssign, TipoComunityAssign tipo, Timestamp fechaDecision, EstadoComunityAssign estado, Timestamp fechaCreacion) {
         this.idComunityAssign = idComunityAssign;
         this.tipo = tipo;
-        this.fecha_decision = fecha_decision;
+        this.fechaDecision = fechaDecision;
         this.estado = estado;
         this.fechaCreacion = fechaCreacion;//Cabiar nombre a fecha_creacion
     }
 
-    public ComunityAssign(TipoComunityAssign tipo,EstadoComunityAssign estado,Timestamp fecha_decision, Timestamp fechaCreacion) {
-       // this.idComunityAssign = idComunityAssign;
-        this.fecha_decision = fecha_decision;
+    public ComunityAssign(TipoComunityAssign tipo,EstadoComunityAssign estado,Timestamp fechaDecision, Timestamp fechaCreacion) {
+        this.fechaDecision = fechaDecision;
         this.fechaCreacion = fechaCreacion;
         this.tipo=tipo;
         this.estado=estado;
@@ -76,7 +73,7 @@ public class ComunityAssign implements Serializable {
     private TipoComunityAssign tipo;
 
     @Column(name = "fecha_decision", nullable = true)
-    private Timestamp fecha_decision;//Guarda la fecha cuando se acepto o se denego una solicitud
+    private Timestamp fechaDecision;//Guarda la fecha cuando se acepto o se denego una solicitud
 
     @Column(name = "estado_solicitud", nullable = true)
     @Enumerated(EnumType.STRING)
@@ -117,12 +114,12 @@ public class ComunityAssign implements Serializable {
         this.tipo = tipo;
     }
 
-    public Timestamp getFecha_decision() {
-        return fecha_decision;
+    public Timestamp getFechaDecision() {
+        return fechaDecision;
     }
 
-    public void setFecha_decision(Timestamp fecha_decision) {
-        this.fecha_decision = fecha_decision;
+    public void setFechaDecision(Timestamp fechaDecision) {
+        this.fechaDecision = fechaDecision;
     }
 
     public EstadoComunityAssign getEstado() {
@@ -145,7 +142,7 @@ public class ComunityAssign implements Serializable {
 
     @Override
     public String toString() {
-        return "ComunityAssign{" + "registro,id=" + idComunityAssign.getRegistroAcademico() +"  "+idComunityAssign.getIdComunidad()+ ", user=" + user + ", comunity=" + comunity + ", tipo=" + tipo + ", fecha_decision=" + fecha_decision + ", estado=" + estado + ", fechaCreacion_O_Aceptacion=" + fechaCreacion + '}';
+        return "ComunityAssign{" + "registro,id=" + idComunityAssign.getRegistroAcademico() +"  "+idComunityAssign.getIdComunidad()+ ", user=" + user + ", comunity=" + comunity + ", tipo=" + tipo + ", fecha_decision=" + fechaDecision + ", estado=" + estado + ", fechaCreacion_O_Aceptacion=" + fechaCreacion + '}';
     }
 
     

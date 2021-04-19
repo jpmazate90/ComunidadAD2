@@ -12,15 +12,11 @@ import com.comunidad.ad2.comunidad.service.enums.Visibilidad;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.annotations.Type;
@@ -33,7 +29,6 @@ import org.hibernate.annotations.Type;
 @Table(name = "users")
 public class User implements Serializable {
 
-    //private static final long serialVersioinUID = -9069060843698080433L;
     @Id
     @Column(name = "registroAcademico", length = 9)
     private String registroAcademico;
