@@ -5,11 +5,13 @@ import com.comunidad.ad2.comunidad.controllImage.CreadorDeDirectoriosCommunityPo
 import com.comunidad.ad2.comunidad.controllImage.DibujadorDeImagenesEnDisco;
 import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
 import com.comunidad.ad2.comunidad.entity.CommunityPost;
+import com.comunidad.ad2.comunidad.entity.ComunityAssign;
 import com.comunidad.ad2.comunidad.repository.CommunityPostRepository;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -78,4 +80,13 @@ public class CommunityPostImpl implements CommunityPostService {
         }
     }
 
+    @Override
+    public int deletedCommunityPost(int idComunityPost) {
+        return this.communityPostRepository.deletedCommunityPost(idComunityPost);
+    }
+
+    @Override
+    public Optional<CommunityPost> getComunityPostById(int idComunityPost) {
+        return this.communityPostRepository.getComunityPostById(idComunityPost);
+    }
 }
