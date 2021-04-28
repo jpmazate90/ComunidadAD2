@@ -1,5 +1,6 @@
 package com.comunidad.ad2.comunidad.service;
 
+import com.comunidad.ad2.comunidad.AuxObject.FiltrosComunityPost;
 import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.entity.CommunityPost;
 import com.comunidad.ad2.comunidad.entity.ComunityAssign;
@@ -17,6 +18,8 @@ public interface CommunityPostService {
 
     public Iterable<CommunityPost> getAllCommunityPostByIdComunity(OrdinaryObject ordinaryObject);
 
+    public Iterable<CommunityPost> getAllCommunityPostByIdComunityWithFilters(FiltrosComunityPost filtros);
+
     public CommunityPost savePostImage(MultipartFile file) throws IOException;
 
     /**
@@ -26,6 +29,6 @@ public interface CommunityPostService {
      * @return
      */
     public int deletedCommunityPost(int idComunityPost);
-   
-     public Optional<CommunityPost> getComunityPostById(int idComunityPost);
+
+    public Optional<CommunityPost> getComunityPostById(int idComunityPost);
 }

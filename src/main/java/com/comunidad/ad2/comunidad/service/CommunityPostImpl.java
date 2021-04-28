@@ -1,18 +1,21 @@
 package com.comunidad.ad2.comunidad.service;
 
+import com.comunidad.ad2.comunidad.AuxObject.FiltrosComunityPost;
 import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.controllImage.CreadorDeDirectoriosCommunityPost;
 import com.comunidad.ad2.comunidad.controllImage.DibujadorDeImagenesEnDisco;
 import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
 import com.comunidad.ad2.comunidad.entity.CommunityPost;
-import com.comunidad.ad2.comunidad.entity.ComunityAssign;
 import com.comunidad.ad2.comunidad.repository.CommunityPostRepository;
+import static com.comunidad.ad2.comunidad.specifications.EspecificacionesPersonalizadas.*;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -89,4 +92,26 @@ public class CommunityPostImpl implements CommunityPostService {
     public Optional<CommunityPost> getComunityPostById(int idComunityPost) {
         return this.communityPostRepository.getComunityPostById(idComunityPost);
     }
+
+    @Override
+    public Iterable<CommunityPost> getAllCommunityPostByIdComunityWithFilters(FiltrosComunityPost filtros) {
+
+        //List<CommunityPost> result = new LinkedList<>(this.communityPostRepository.findAll(Specification.where(filtros.getUsuario() == null ? null : contieneUsuario(filtros.getUsuario()))));
+        List<CommunityPost> result = new LinkedList<>(this.communityPostRepository.findAll(Specification.where(
+                filtros.getFechaInicial().equals("") ? null : contieneFechaInicial(filtros.getFechaInicial()))
+                .and(filtros.getFechaFinal().equals("") ? null : contieneFechaFinal(filtros.getFechaFinal()))
+                .and(filtros.getUsuario().equals("") ? null : contieneUsuario(filtros.getUsuario()))
+                .and(contieneIdComunidad(filtros.getIdComunidad(), filtros.getValoracion()))
+                .and(esComunidadActiva()
+                        .or(esComunidadPrivada())
+                )));
+        for (CommunityPost post : result) {
+            agregarFotoAComunidad(post);
+        }
+        this.commenPostService.addCommentsToPost(result);
+        this.valorationPostService.addValoration(result, filtros.getRegistroAcademico());
+        return result;
+
+    }
+
 }

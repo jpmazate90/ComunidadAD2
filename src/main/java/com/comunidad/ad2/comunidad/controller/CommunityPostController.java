@@ -1,6 +1,7 @@
 package com.comunidad.ad2.comunidad.controller;
 
 import com.comunidad.ad2.comunidad.AuxObject.CommunitytPostAndUserToken;
+import com.comunidad.ad2.comunidad.AuxObject.FiltrosComunityPost;
 import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.entity.CommunityPost;
 import com.comunidad.ad2.comunidad.entity.ComunityAssign;
@@ -65,6 +66,14 @@ public class CommunityPostController {
         Iterable<CommunityPost> communityPost = this.communityPostService.getAllCommunityPostByIdComunity(params);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(communityPost);
     }
+    
+    @PostMapping("/api/community/post/get/allByCommunityFilters")//Al no estar bajo /api/users no se necesita autenticacion
+    public ResponseEntity<Iterable<CommunityPost>> getAllCommunityPostByIdComunityWithFilters(@RequestBody FiltrosComunityPost params) {
+        Iterable<CommunityPost> communityPost = this.communityPostService.getAllCommunityPostByIdComunityWithFilters(params);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(communityPost);
+    }
+    
+    
 
     @PostMapping("/api/community/post/upload/images")
     public ResponseEntity<Object> uploadPostImage(@RequestBody MultipartFile file) {
