@@ -94,30 +94,8 @@ public class CommunityPostImpl implements CommunityPostService {
         }
     }
 
-//    public static Specification<CommunityPost> realizarFiltrosQuery(FiltrosComunityPost filtros) {
-//        return (Root<CommunityPost> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
-//            List<Predicate> predicates = new ArrayList<>();
-//            if(filtros.getUsuario()!=null) {
-//                predicates.add(builder.and(builder.equal(root.get("user.nombreCompleto"), filtros.getUsuario())));
-//            }
-//            return builder.and(predicates.toArray(new Predicate[predicates.size()]));
-//        };
-//    }
-    @Override
-    public Iterable<CommunityPost> getAllCommunityPostByIdComunityWithFilters(FiltrosComunityPost filtros) {
-
-        //List<CommunityPost> result = this.communityPostRepository.findAll(realizarFiltrosQuery(filtros));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        List<CommunityPost> result = new LinkedList<>(this.communityPostRepository.getAllCommunityPostByIdComunityWithFilters(filtros.getIdComunidad(), filtros.getUsuario(), filtros.getFechaInicial(), filtros.getFechaFinal()));
-        for (CommunityPost post : result) {
-            agregarFotoAComunidad(post);
-        }
-        this.commenPostService.addCommentsToPost(result);
-        this.valorationPostService.addValoration(result, filtros.getRegistroAcademico());
-        return result;
-    }
         @Override
-        public Iterable<CommunityPost> getAllCommunityPostByIdComunityWithDinamicFilters(FiltrosComunityPost filtros) {
+        public Iterable<CommunityPost> getAllCommunityPostByIdComunityWithFilters(FiltrosComunityPost filtros) {
         
             //List<CommunityPost> result = new LinkedList<>(this.communityPostRepository.findAll(Specification.where(filtros.getUsuario() == null ? null : contieneUsuario(filtros.getUsuario()))));
             List<CommunityPost> result = new LinkedList<>(this.communityPostRepository.findAll(Specification.where(

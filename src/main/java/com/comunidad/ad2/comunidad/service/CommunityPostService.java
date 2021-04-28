@@ -18,5 +18,5 @@ public interface CommunityPostService {
     public Iterable<CommunityPost> getAllCommunityPostByIdComunityWithFilters(FiltrosComunityPost filtros);
     
     public CommunityPost savePostImage(MultipartFile file) throws IOException;
-    public Iterable<CommunityPost> getAllCommunityPostByIdComunityWithDinamicFilters(FiltrosComunityPost filtros);
+    
 }
