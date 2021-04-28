@@ -21,4 +21,5 @@ public interface CommentPostService {
 
     //Agregar comentarios activos a Post
     public void addCommentsToPost(List<CommunityPost> listCommunityPost);
+    
 }

@@ -57,16 +57,16 @@ import org.springframework.http.ResponseEntity;
     /**
      * Test of create method, of class CommentPostController.
      */
-    @Test
-    void testCreate() {
-        System.out.println("Test create");
-        CommentPostController instance = Mockito.spy(this.commentPostController);
-        Mockito.when(this.commentPostService.save(this.commentPost)).thenReturn(this.commentPost);
-
-        ResponseEntity expResult = ResponseEntity.status(HttpStatus.CREATED).body(commentPost);
-        ResponseEntity result = instance.create(commentPost);
-        //Arrange
-        assertEquals(expResult, result);
-    }
+//    @Test
+//    void testCreate() {
+//        System.out.println("Test create");
+//        CommentPostController instance = Mockito.spy(this.commentPostController);
+//        Mockito.when(this.commentPostService.save(this.commentPost)).thenReturn(this.commentPost);
+//
+//        ResponseEntity expResult = ResponseEntity.status(HttpStatus.CREATED).body(commentPost);
+//        ResponseEntity result = instance.create(commentPost);
+//        //Arrange
+//        assertEquals(expResult, result);
+//    }
 
 }

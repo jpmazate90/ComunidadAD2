@@ -81,7 +81,14 @@ public interface ComunityAssignRepository extends JpaRepository<ComunityAssign, 
     @Query("SELECT comunity from ComunityAssign comunity where comunity.comunity.id=?1 AND comunity.user.registroAcademico LIKE %?2% AND comunity.estado=?3 AND comunity.tipo='MIEMBRO'")
     public Iterable<ComunityAssign> findUserRequestByState(int idComunidad, String carnet, EstadoComunityAssign state);
     
-
+    /**
+     * Busca un community assign donde se tenga que sea de tipo MIEMBRO, y ACTIVO
+     * @param idComunidad
+     * @param registroAcademico
+     * @return 
+     */
+    @Query("SELECT comunity from ComunityAssign comunity where comunity.comunity.id=?1 AND comunity.user.registroAcademico=?2 AND comunity.tipo='MIEMBRO' AND comunity.estado='ACTIVO'")
+    public Optional<ComunityAssign> findCommunityUser(int idComunidad, String registroAcademico);
 }
 /*
 //INSERT INTO comunity_assign VALUES('ESPERA',now(),NULL,'MIEMBRO',4,999999999);
