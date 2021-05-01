@@ -117,6 +117,22 @@ class CommunityPostImplTest {
         //Assert
         assertEquals(expListPost, result);
     }
+    
+    @Test
+    void testGetAllCommunityPostOfUser () {
+        //Arrange
+        OrdinaryObject ordinaryObject = new OrdinaryObject();
+        ordinaryObject.setNumberParam(10);
+        ordinaryObject.setStringParam("111111111");
+        
+        List<CommunityPost> expListPost = getPostList(3);
+        CommunityPostImpl spy = Mockito.spy(this.communityPostImpl);
+        //Act
+        Mockito.when(this.communityPostRepository.getAllCommunityPostOfUserComunities(ordinaryObject.getStringParam(), ordinaryObject.getNumberParam(), 10)).thenReturn(expListPost);
+        List<CommunityPost> result = (List<CommunityPost>) spy.getAllCommunityPostOfUser(ordinaryObject);
+        //Assert
+        assertEquals(expListPost, result);
+    }
 
     @Test
     void testAgregarFotoAComunidad() {
