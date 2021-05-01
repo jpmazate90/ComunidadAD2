@@ -5,12 +5,18 @@
  */
 package com.comunidad.ad2.comunidad.controller;
 
+import com.comunidad.ad2.comunidad.AuxObject.CommunitytPostAndUserToken;
 import com.comunidad.ad2.comunidad.entity.CommentPost;
 import com.comunidad.ad2.comunidad.entity.CommunityPost;
+import com.comunidad.ad2.comunidad.entity.Comunity;
+import com.comunidad.ad2.comunidad.entity.ComunityAssign;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.service.CommentPostService;
+import com.comunidad.ad2.comunidad.service.ComunityAssignService;
+import com.comunidad.ad2.comunidad.service.UserService;
 import com.comunidad.ad2.comunidad.service.enums.StateComment;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,9 +35,10 @@ import org.springframework.http.ResponseEntity;
  */
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
- class CommentPostControllerTest {
+class CommentPostControllerTest {
 
-    private static final int ID = 1;
+    private static final int ID_COMUNIDAD = 1;
+    private static final int ID_COMMENT_POST = 1;
     private static final String DESCRIPCION = "DESCRIPCION";
     private static final LocalDateTime CREATED_AT = LocalDateTime.now();
     private static final StateComment stateComment = StateComment.ACTIVE;
@@ -40,9 +47,13 @@ import org.springframework.http.ResponseEntity;
     private CommunityPost communityPost;
     private User user;
     private CommentPost commentPost;
-
+    private ComunityAssign comunityAssign;
+    
     @Mock
     private CommentPostService commentPostService;
+
+    @Mock
+    private ComunityAssignService comunityAssignService;
 
     @InjectMocks
     private CommentPostController commentPostController; // es la implementacion
@@ -50,23 +61,27 @@ import org.springframework.http.ResponseEntity;
     public CommentPostControllerTest() {
         this.communityPost = new CommunityPost();
         this.communityPost.setId(ID_COMM_POST);
+        this.communityPost.setComunity(new Comunity(ID_COMUNIDAD));
         this.user = new User(REGISTRO_ACADEMICO);
-        this.commentPost = new CommentPost(ID, DESCRIPCION, CREATED_AT, stateComment, communityPost, user);
+        this.commentPost = new CommentPost(ID_COMMENT_POST, DESCRIPCION, CREATED_AT, stateComment, communityPost, user);
+        this.comunityAssign = new ComunityAssign();
+        this.comunityAssign.setUser(user);
     }
 
     /**
      * Test of create method, of class CommentPostController.
      */
-//    @Test
-//    void testCreate() {
-//        System.out.println("Test create");
-//        CommentPostController instance = Mockito.spy(this.commentPostController);
-//        Mockito.when(this.commentPostService.save(this.commentPost)).thenReturn(this.commentPost);
-//
-//        ResponseEntity expResult = ResponseEntity.status(HttpStatus.CREATED).body(commentPost);
-//        ResponseEntity result = instance.create(commentPost);
-//        //Arrange
-//        assertEquals(expResult, result);
-//    }
+    @Test
+    void testCreate() {
+        CommentPostController instance = Mockito.spy(this.commentPostController);
 
+        Mockito.when(this.comunityAssignService.findCommunityUser(ID_COMM_POST, REGISTRO_ACADEMICO)).thenReturn(Optional.of(this.comunityAssign));
+        Mockito.when(this.comunityAssignService.findComunityOwnerByIdComunity(ID_COMUNIDAD)).thenReturn(Optional.of(this.comunityAssign));
+        Mockito.when(this.commentPostService.save(this.commentPost)).thenReturn(this.commentPost);
+
+        ResponseEntity expResult = ResponseEntity.status(HttpStatus.CREATED).body(commentPost);
+        ResponseEntity result = instance.create(commentPost);
+        //Arrange
+        assertEquals(expResult, result);
+    }
 }
