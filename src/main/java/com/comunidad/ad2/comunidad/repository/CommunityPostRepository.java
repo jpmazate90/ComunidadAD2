@@ -18,7 +18,14 @@ public interface CommunityPostRepository extends JpaRepository<CommunityPost, In
     @Query("SELECT comunity from CommunityPost comunity where comunity.comunity.id=?1 "
             + "AND (comunity.state = 'ACTIVE' OR comunity.state = 'PRIVATE') order by comunity.createdAt desc")
     public List<CommunityPost> getAllCommunityPostByIdComunity(int idComunidad);
-
+    
+    @Query(value="select * from comunity_post as "
+            + "post right join (select comunity_id_comunity  from comunity_assign "
+            + "where user_registro_academico=?1 AND (estado_solicitud= 'ACTIVO' "
+            + "OR tipo_assign = 'ADMINISTRADOR')) as com ON "
+            + "post.comunity_id_comunity = com.comunity_id_comunity order by created_at desc limit ?2,?3", nativeQuery = true)
+    public List<CommunityPost> getAllCommunityPostOfUserComunities(String registroAcademico, int offset, int limit);
+    
     /**
      * Cambia el estado a DELETED de un Post de una comunidad
      *
