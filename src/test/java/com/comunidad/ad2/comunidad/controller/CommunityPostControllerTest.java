@@ -218,6 +218,8 @@ class CommunityPostControllerTest {
 
     @Test
     void testGetCommunityPostFail() {
+        this.communitytPostAndUserToken.setCommunityPost(this.communityPost);
+        this.communitytPostAndUserToken.setToken(TOKEN);
         CommunityPostController instance = Mockito.spy(this.communityPostController);
         Mockito.when(this.communityPostService.getComunityPostById(ID_COMUNITY_POST)).thenReturn(Optional.empty());
         ResponseEntity expResult = ResponseEntity.status(HttpStatus.CONFLICT).body(new CommunityPost());
