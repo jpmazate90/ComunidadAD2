@@ -123,25 +123,26 @@ public class ComunityAssignImpl implements ComunityAssignService {
     public Iterable<User> getAllUsersInCommunity(int idComunidad) {
         return this.comunityAssignRepository.getAllUsersInCommunity(idComunidad);
     }
-    public Iterable<ComunityAssign> findActiveMembersOfComunity(int idComunidad,String carnet){
+
+    public Iterable<ComunityAssign> findActiveMembersOfComunity(int idComunidad, String carnet) {
         return this.comunityAssignRepository.findActiveMembersOfComunity(idComunidad, carnet);
     }
 
     /**
-     * Busca las comunidades donde el usuario con registroAcademico indicado es miembro
+     * Busca las comunidades donde el usuario con registroAcademico indicado es
+     * miembro
+     *
      * @param registroAcademicoDeUsuario
-     * @return 
+     * @return
      */
     @Override
     public Iterable<ComunityAssign> findUserComunitys(String registroAcademicoDeUsuario) {
-        Iterable<ComunityAssign> comunidades=this.comunityAssignRepository.findUserComunitys(registroAcademicoDeUsuario);
+        Iterable<ComunityAssign> comunidades = this.comunityAssignRepository.findUserComunitys(registroAcademicoDeUsuario);
         for (ComunityAssign comunidad : comunidades) {
             agregarFotoAComunidad(comunidad);
         }
         return comunidades;
     }
-
-
 
     @Override
     @Transactional
@@ -152,19 +153,24 @@ public class ComunityAssignImpl implements ComunityAssignService {
     }
 
     @Override
-    @Transactional /*
+    @Transactional
+    /*
                     Es importantisimo tener esta etiqueta de transactional cuando lo que se quiere es eliminar con la query 
                     que se manda a ejecutar con el repository
-                    */
+     */
     public boolean deleteSpecificComunityAssignMember(String idComunidad, String registroAcademico) {
-        this.comunityAssignRepository.deleteSpecificComunityAssignMember(Integer.parseInt(idComunidad),registroAcademico);
+        this.comunityAssignRepository.deleteSpecificComunityAssignMember(Integer.parseInt(idComunidad), registroAcademico);
         return true;
     }
-    
-    @Override 
-    public Iterable<ComunityAssign> findUsersRequestByState(Integer idComunidad, String registroAcademico, String requestState){
+
+    @Override
+    public Iterable<ComunityAssign> findUsersRequestByState(Integer idComunidad, String registroAcademico, String requestState) {
         return this.comunityAssignRepository.findUserRequestByState(idComunidad, registroAcademico, EstadoComunityAssign.valueOf(requestState));
     }
 
-}
+    @Override
+    public Optional<ComunityAssign> findCommunityUser(int idComunidad, String registroAcademico) {
+        return this.comunityAssignRepository.findCommunityUser(idComunidad, registroAcademico);
+    }
 
+}

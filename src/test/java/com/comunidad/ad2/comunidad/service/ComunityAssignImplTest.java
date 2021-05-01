@@ -61,12 +61,12 @@ class ComunityAssignImplTest {
         this.comunityAssign = new ComunityAssign(comunityAssignKey, user, comunity, TIPO, FECHA_DECISION, ESTADO, FECHA_CREACION);
 
     }
-    
-    private User createUser(String id){
+
+    private User createUser(String id) {
         return new User(id);
     }
-    
-    private List<User> getUsersList(int sizeList){
+
+    private List<User> getUsersList(int sizeList) {
         List<User> result = new LinkedList<>();
         for (int i = 0; i < sizeList; i++) {
             result.add(createUser(Integer.toString(i)));
@@ -214,7 +214,7 @@ class ComunityAssignImplTest {
         assertNotEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
     }
-    
+
     /**
      * Test para validar los miembros de una comunidad
      */
@@ -230,27 +230,26 @@ class ComunityAssignImplTest {
         //Act
         String expResult = REGISTRO_ACADEMICO;
         Iterable<ComunityAssign> resultIterable = instance.findActiveMembersOfComunity(ID_COMUNIDAD, REGISTRO_ACADEMICO);
-        ArrayList<ComunityAssign> resultList =(ArrayList<ComunityAssign>)resultIterable;
+        ArrayList<ComunityAssign> resultList = (ArrayList<ComunityAssign>) resultIterable;
         String result = resultList.get(0).getUser().getRegistroAcademico();
         //Assert
-        System.out.println("Exp result:"+expResult+ " Result:"+result);
+        System.out.println("Exp result:" + expResult + " Result:" + result);
         assertEquals(expResult, result);
     }
 
-
     @Test
-    void testFindUserComunitys(){
+    void testFindUserComunitys() {
         //Arrange
         System.out.println("FindUserComunitys");
         ArrayList<ComunityAssign> comunityAssignList = new ArrayList<>();
         comunityAssignList.add(comunityAssign);
-        Iterable<ComunityAssign> comunityAssignIterable=comunityAssignList;
+        Iterable<ComunityAssign> comunityAssignIterable = comunityAssignList;
         Mockito.when(comunityAssignRepository.findUserComunitys(REGISTRO_ACADEMICO)).thenReturn(comunityAssignIterable);
         //Act
         String expResult = comunityAssignList.get(0).getUser().getRegistroAcademico();
-        Iterable<ComunityAssign>resultIterable = comunityAssignImpl.findUserComunitys(REGISTRO_ACADEMICO);
-        ArrayList<ComunityAssign> resultList =(ArrayList<ComunityAssign>)resultIterable;
-        String result=resultList.get(0).getUser().getRegistroAcademico();
+        Iterable<ComunityAssign> resultIterable = comunityAssignImpl.findUserComunitys(REGISTRO_ACADEMICO);
+        ArrayList<ComunityAssign> resultList = (ArrayList<ComunityAssign>) resultIterable;
+        String result = resultList.get(0).getUser().getRegistroAcademico();
         //Assert
         assertEquals(expResult, result);
         //Asset
@@ -274,21 +273,21 @@ class ComunityAssignImplTest {
     void testDeleteSpecificComunityAssignMember() {
         //Arrange
         ComunityAssignFilters com = new ComunityAssignFilters("10", 10);
-        doNothing().when(this.comunityAssignRepository).deleteSpecificComunityAssignMember(com.getIdComunidad(),com.getRegistroAcademico());
+        doNothing().when(this.comunityAssignRepository).deleteSpecificComunityAssignMember(com.getIdComunidad(), com.getRegistroAcademico());
         //Act
         boolean expResult = true;
-        boolean result = this.comunityAssignImpl.deleteSpecificComunityAssignMember(com.getIdComunidad()+"", com.getRegistroAcademico());
+        boolean result = this.comunityAssignImpl.deleteSpecificComunityAssignMember(com.getIdComunidad() + "", com.getRegistroAcademico());
         //Arrange
         assertEquals(expResult, result);
-        verify(this.comunityAssignRepository).deleteSpecificComunityAssignMember(com.getIdComunidad(),com.getRegistroAcademico());
+        verify(this.comunityAssignRepository).deleteSpecificComunityAssignMember(com.getIdComunidad(), com.getRegistroAcademico());
     }
 
     private Comunity crearComunidad() {
         return new Comunity(4);
     }
-    
+
     @Test
-    void testGetAllUsersInCommunity(){
+    void testGetAllUsersInCommunity() {
         //Arrange
         List<User> expResult = getUsersList(3);
         int idComunidad = 10;
@@ -298,6 +297,15 @@ class ComunityAssignImplTest {
         List<User> result = (List<User>) spy.getAllUsersInCommunity(idComunidad);
         //Assert
         assertEquals(expResult.size(), result.size());
+    }
+
+    @Test
+    void testfindCommunityUser() {
+        ComunityAssignImpl instance = Mockito.spy(this.comunityAssignImpl);
+        Mockito.when(this.comunityAssignRepository.findCommunityUser(ID_COMUNIDAD, REGISTRO_ACADEMICO)).thenReturn(Optional.of(this.comunityAssign));
+        ComunityAssign expResult = this.comunityAssign;
+        ComunityAssign result = instance.findCommunityUser(ID_COMUNIDAD, REGISTRO_ACADEMICO).get();
+        assertEquals(expResult, result);
     }
 
 }

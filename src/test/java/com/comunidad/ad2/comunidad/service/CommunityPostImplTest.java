@@ -16,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
@@ -42,36 +43,36 @@ class CommunityPostImplTest {
 
     @Mock
     private CommunityPostRepository communityPostRepository;  // es el mock
-    
+
     @Mock
     private ValorationPostService valorationPostService;
-    
+
     @Mock
     private CommentPostService commentPostService;
-    
+
     @InjectMocks
     private CommunityPostImpl communityPostImpl;
-    
+
     private RecuperadorDeImagenesDeDisco recuperadorDeImagenesDeDisco;
 
     public CommunityPostImplTest() {
         this.recuperadorDeImagenesDeDisco = new RecuperadorDeImagenesDeDisco();
     }
-    
-    private CommunityPost createCommunityPost(){
+
+    private CommunityPost createCommunityPost() {
         return new CommunityPost();
     }
-    
-    private List<CommunityPost> getPostList(int sizeList){
+
+    private List<CommunityPost> getPostList(int sizeList) {
         List<CommunityPost> result = new LinkedList<>();
         for (int i = 0; i < sizeList; i++) {
             result.add(createCommunityPost());
         }
         return result;
     }
-    
+
     @Test
-    void testSave(){
+    void testSave() {
         //Arrange
         int rated = 0;
         CommunityPost post = createCommunityPost();
@@ -82,9 +83,9 @@ class CommunityPostImplTest {
         //Assert
         assertEquals(post.getRated(), rated);
     }
-    
+
     @Test
-    void testSavePostImage() throws IOException{
+    void testSavePostImage() throws IOException {
         //Arrange
         String fotoDePerfil = "foto.jpg";
         CommunityPost post = new CommunityPost();
@@ -99,11 +100,11 @@ class CommunityPostImplTest {
         CommunityPost expResult = post;
         CommunityPost result = spy.savePostImage(file);
         //Assert
-        Assertions.assertEquals(expResult,result);
+        Assertions.assertEquals(expResult, result);
     }
-    
-   @Test
-    void testGetAllCommunityPostByIdComunity(){
+
+    @Test
+    void testGetAllCommunityPostByIdComunity() {
         //Arrange
         OrdinaryObject ordinaryObject = new OrdinaryObject();
         ordinaryObject.setNumberParam(10);
@@ -112,14 +113,13 @@ class CommunityPostImplTest {
         CommunityPostImpl spy = Mockito.spy(this.communityPostImpl);
         //Act
         Mockito.when(this.communityPostRepository.getAllCommunityPostByIdComunity(10)).thenReturn(expListPost);
-        List<CommunityPost> result = (List <CommunityPost>) spy.getAllCommunityPostByIdComunity(ordinaryObject);
+        List<CommunityPost> result = (List<CommunityPost>) spy.getAllCommunityPostByIdComunity(ordinaryObject);
         //Assert
         assertEquals(expListPost, result);
     }
-    
-    
+
     @Test
-    void testAgregarFotoAComunidad(){
+    void testAgregarFotoAComunidad() {
         //Arrange
         byte[] datosFoto = "DatosFoto".getBytes();
         String photo = "foto.jpg";
@@ -158,4 +158,29 @@ class CommunityPostImplTest {
         assertEquals(expListPost.size(), result.size());
     }
     
+
+    @Test
+    void testDeletedCommunityPost() {
+        int idComunityPost = 1;
+        int enteroADevolver = 0;
+        Mockito.when(this.communityPostRepository.deletedCommunityPost(idComunityPost)).thenReturn(enteroADevolver);
+        CommunityPostImpl instance = Mockito.spy(this.communityPostImpl);
+        int expResult = enteroADevolver;
+        int result = instance.deletedCommunityPost(idComunityPost);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void testGetComunityPostById() {
+        //Arrange
+        int idComunityPost = 0;
+        CommunityPostImpl instance = Mockito.spy(this.communityPostImpl);
+        CommunityPost communityPost = new CommunityPost();
+        communityPost.setId(idComunityPost);
+        Mockito.when(this.communityPostRepository.getComunityPostById(idComunityPost)).thenReturn(Optional.of(communityPost));
+        CommunityPost expResult = communityPost;
+        CommunityPost result = instance.getComunityPostById(idComunityPost).get();
+        assertEquals(expResult.getId(), result.getId());
+    }
+
 }
