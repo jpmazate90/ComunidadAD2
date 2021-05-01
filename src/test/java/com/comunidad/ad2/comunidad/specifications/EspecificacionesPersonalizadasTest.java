@@ -8,10 +8,6 @@ package com.comunidad.ad2.comunidad.specifications;
 import com.comunidad.ad2.comunidad.entity.CommunityPost;
 import java.time.LocalDateTime;
 import java.time.Month;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.data.jpa.domain.Specification;
@@ -30,12 +26,28 @@ public class EspecificacionesPersonalizadasTest {
     
     
     
+     @Test
+    public void testLambdaIdComunidadNull() {
+        
+        Specification<CommunityPost> result = Specification.where(EspecificacionesPersonalizadas.contieneIdComunidad(1,""));
+         assertNotNull(result);
+        
+    }
+    
+    @Test
+    public void testLambdaldComunidad() {
+        
+        Specification<CommunityPost> result = Specification.where(EspecificacionesPersonalizadas.contieneIdComunidad(1,"MAS_VALORACION"));
+         assertNotNull(result);
+        
+    }
+    
+    
     @Test
     public void testContieneUsuario() {
         String usuario = "user";
         Specification<CommunityPost> result = EspecificacionesPersonalizadas.contieneUsuario(usuario);
         assertNotNull(result);
-        
     }
     
     @Test

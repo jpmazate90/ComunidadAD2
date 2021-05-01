@@ -1,9 +1,9 @@
 package com.comunidad.ad2.comunidad.controller;
 
- import com.comunidad.ad2.comunidad.AuxObject.FiltrosComunityPost;
- 
+import com.comunidad.ad2.comunidad.AuxObject.FiltrosComunityPost;
+
 import com.comunidad.ad2.comunidad.AuxObject.CommunitytPostAndUserToken;
- import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
+import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
 import com.comunidad.ad2.comunidad.entity.CommunityPost;
 import com.comunidad.ad2.comunidad.entity.Comunity;
@@ -157,14 +157,13 @@ class CommunityPostControllerTest {
         //Assert
         assertEquals(expResult, result);
     }
-    
-    
+
     @Test
     void testGetAllCommunityPostByIdComunityWithFilters() throws IOException {
         //Arrange
         int numParam = 10;
         String stringParam = "111111111";
-        
+
         FiltrosComunityPost filtros = new FiltrosComunityPost(numParam, stringParam, stringParam, stringParam, stringParam, stringParam);
         List<CommunityPost> expListPost = getPostList(3);
         Mockito.when(this.communityPostService.getAllCommunityPostByIdComunityWithFilters(filtros)).thenReturn(expListPost);
@@ -237,6 +236,8 @@ class CommunityPostControllerTest {
 
     @Test
     void testGetCommunityPostFail() {
+        this.communitytPostAndUserToken.setCommunityPost(this.communityPost);
+        this.communitytPostAndUserToken.setToken(TOKEN);
         CommunityPostController instance = Mockito.spy(this.communityPostController);
         Mockito.when(this.communityPostService.getComunityPostById(ID_COMUNITY_POST)).thenReturn(Optional.empty());
         ResponseEntity expResult = ResponseEntity.status(HttpStatus.CONFLICT).body(new CommunityPost());
