@@ -81,7 +81,7 @@ public class EspecificacionesPersonalizadas {
     }
 
 
-    private static LocalDateTime convertirFecha(String date) {
+    public static LocalDateTime convertirFecha(String date) {
         try {
             SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
             Date f = d.parse(date);
@@ -93,7 +93,7 @@ public class EspecificacionesPersonalizadas {
         }
     }
 
-    private static String contains(String expression) {
+    public static String contains(String expression) {
         return MessageFormat.format("%{0}%", expression);
     }
 }

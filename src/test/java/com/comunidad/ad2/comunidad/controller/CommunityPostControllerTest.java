@@ -1,5 +1,6 @@
 package com.comunidad.ad2.comunidad.controller;
 
+import com.comunidad.ad2.comunidad.AuxObject.FiltrosComunityPost;
 import com.comunidad.ad2.comunidad.AuxObject.OrdinaryObject;
 import com.comunidad.ad2.comunidad.controllImage.RecuperadorDeImagenesDeDisco;
 import com.comunidad.ad2.comunidad.entity.CommunityPost;
@@ -131,6 +132,23 @@ class CommunityPostControllerTest {
         //Act
         ResponseEntity expResult = ResponseEntity.status(HttpStatus.CONFLICT).body("NO SE RECIBIO LA IMAGEN");
         ResponseEntity result = instance.uploadPostImage(file);
+        //Assert
+        assertEquals(expResult, result);
+    }
+    
+    
+    @Test
+    void testGetAllCommunityPostByIdComunityWithFilters() throws IOException {
+        //Arrange
+        int numParam = 10;
+        String stringParam = "111111111";
+        
+        FiltrosComunityPost filtros = new FiltrosComunityPost(numParam, stringParam, stringParam, stringParam, stringParam, stringParam);
+        List<CommunityPost> expListPost = getPostList(3);
+        Mockito.when(this.communityPostService.getAllCommunityPostByIdComunityWithFilters(filtros)).thenReturn(expListPost);
+        //Act
+        ResponseEntity expResult = ResponseEntity.status(HttpStatus.ACCEPTED).body(expListPost);
+        ResponseEntity result = this.communityPostController.getAllCommunityPostByIdComunityWithFilters(filtros);
         //Assert
         assertEquals(expResult, result);
     }
