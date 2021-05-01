@@ -66,7 +66,12 @@ public class CommunityPostController {
         Iterable<CommunityPost> communityPost = this.communityPostService.getAllCommunityPostByIdComunity(params);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(communityPost);
     }
-
+    
+    @PostMapping("/api/community/post/get/allUserCommunities")//Al no estar bajo /api/users no se necesita autenticacion
+    public ResponseEntity<Iterable<CommunityPost>> getAllCommunityPostOfUserCommunities(@RequestBody OrdinaryObject params) {
+        Iterable<CommunityPost> communityPost = this.communityPostService.getAllCommunityPostOfUser(params);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(communityPost);
+    }
     @PostMapping("/api/community/post/get/allByCommunityFilters")//Al no estar bajo /api/users no se necesita autenticacion
     public ResponseEntity<Iterable<CommunityPost>> getAllCommunityPostByIdComunityWithFilters(@RequestBody FiltrosComunityPost params) {
         Iterable<CommunityPost> communityPost = this.communityPostService.getAllCommunityPostByIdComunityWithFilters(params);

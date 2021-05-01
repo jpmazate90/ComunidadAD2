@@ -17,6 +17,8 @@ public interface CommunityPostService {
     public CommunityPost save(CommunityPost communityPost);
 
     public Iterable<CommunityPost> getAllCommunityPostByIdComunity(OrdinaryObject ordinaryObject);
+    
+    public Iterable<CommunityPost> getAllCommunityPostOfUser(OrdinaryObject ordinaryObject);
 
     public Iterable<CommunityPost> getAllCommunityPostByIdComunityWithFilters(FiltrosComunityPost filtros);
 

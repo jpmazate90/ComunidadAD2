@@ -59,6 +59,18 @@ public class CommunityPostImpl implements CommunityPostService {
         this.valorationPostService.addValoration(result, ordinaryObject.getStringParam());
         return result;
     }
+    
+    @Override
+    public Iterable<CommunityPost> getAllCommunityPostOfUser(OrdinaryObject ordinaryObject){
+        List<CommunityPost> result = new LinkedList<>(this.communityPostRepository.getAllCommunityPostOfUserComunities(ordinaryObject.getStringParam(), ordinaryObject.getNumberParam(), 10));
+        for (CommunityPost post : result) {
+            agregarFotoAComunidad(post);
+        }
+        this.commenPostService.addCommentsToPost(result);
+        this.valorationPostService.addValoration(result, ordinaryObject.getStringParam());
+        return result;
+    };
+    
 
     @Override
     public CommunityPost savePostImage(MultipartFile file) throws IOException {
