@@ -168,6 +168,7 @@ public class ComunityAssignImpl implements ComunityAssignService {
         return this.comunityAssignRepository.findUserRequestByState(idComunidad, registroAcademico, EstadoComunityAssign.valueOf(requestState));
     }
 
+    @Override
     public Optional<ComunityAssign> findCommunityUser(int idComunidad, String registroAcademico) {
         return this.comunityAssignRepository.findCommunityUser(idComunidad, registroAcademico);
     }

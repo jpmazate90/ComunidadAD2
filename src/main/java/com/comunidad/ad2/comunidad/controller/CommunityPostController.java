@@ -72,14 +72,11 @@ public class CommunityPostController {
         Iterable<CommunityPost> communityPost = this.communityPostService.getAllCommunityPostOfUser(params);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(communityPost);
     }
-    
     @PostMapping("/api/community/post/get/allByCommunityFilters")//Al no estar bajo /api/users no se necesita autenticacion
     public ResponseEntity<Iterable<CommunityPost>> getAllCommunityPostByIdComunityWithFilters(@RequestBody FiltrosComunityPost params) {
         Iterable<CommunityPost> communityPost = this.communityPostService.getAllCommunityPostByIdComunityWithFilters(params);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(communityPost);
     }
-    
-    
 
     @PostMapping("/api/community/post/upload/images")
     public ResponseEntity<Object> uploadPostImage(@RequestBody MultipartFile file) {
@@ -101,13 +98,6 @@ public class CommunityPostController {
      */
     @PostMapping("/api/community/post/adminDeleteComunity")
     public ResponseEntity<CommunityPost> deletedCommunityPostByCommunityOwner(@RequestBody CommunitytPostAndUserToken communitytPostAndUserToken) {
-        /*  if(communitytPostAndUserToken==null){
-            System.out.println("\n\n\n\n\n Viene nulo \n\n\n\n\n");
-        }else{
-            System.out.println("No viene nulo");
-            System.out.println("\n\n"+communitytPostAndUserToken.getToken()+"\n\n");
-            System.out.println("\n\n"+communitytPostAndUserToken.getCommunityPost());
-        }*/
         CommunityPost com = new CommunityPost();
         Optional<User> userOptional = userService.findByTokenOwnUser(communitytPostAndUserToken.getToken());
         int idComunidad = communitytPostAndUserToken.getCommunityPost().getComunity().getId();
@@ -159,7 +149,7 @@ public class CommunityPostController {
     @PostMapping("/api/community/post/getPost")
     public ResponseEntity<CommunityPost> getCommunityPost(@RequestBody CommunityPost communityPost) {
         Optional<CommunityPost> communityPostOptional = this.communityPostService.getComunityPostById(communityPost.getId());
-        if(communityPostOptional.isPresent()){
+        if (communityPostOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(communityPostOptional.get());
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new CommunityPost());

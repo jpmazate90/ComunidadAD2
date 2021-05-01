@@ -117,7 +117,7 @@
                                         <limit>
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.00</minimum>
+                                            <minimum>0.80</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -125,8 +125,9 @@
                             <excludes>
                                 <exclude>com/comunidad/ad2/comunidad/security/**/*</exclude>
                                 <exclude>com/comunidad/ad2/comunidad/*</exclude>
-                                <!--                                <exclude>com/comunidad/ad2/comunidad/ComunidadApplication.class</exclude>
-                                <exclude>com/comunidad/ad2/comunidad/ServletInitializer.class</exclude>-->
+                                <exclude>com/comunidad/ad2/comunidad/specifications/*</exclude>
+                                <exclude>com/comunidad/ad2/comunidad/ComunidadApplication.class</exclude>
+                                <exclude>com/comunidad/ad2/comunidad/ServletInitializer.class</exclude>
                             </excludes>
                         </configuration>
                     </execution>

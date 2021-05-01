@@ -25,9 +25,12 @@ class CreacionUsuarioParaPruebasTest {
      */
     @Test
     void testCrearUsuario() {
+        CreacionUsuarioParaPruebas b = new CreacionUsuarioParaPruebas();
         RolUsuario a = RolUsuario.SUPER;
         User expResult = new User("201029301");
         User result = CreacionUsuarioParaPruebas.crearUsuario(a);
         assertEquals(expResult.getRegistroAcademico(), result.getRegistroAcademico());
     }
+    
+    
 }

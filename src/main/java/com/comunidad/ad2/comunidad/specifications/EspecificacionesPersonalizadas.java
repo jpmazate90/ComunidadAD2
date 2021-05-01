@@ -9,18 +9,13 @@ import com.comunidad.ad2.comunidad.entity.CommunityPost;
 import com.comunidad.ad2.comunidad.entity.Comunity;
 import com.comunidad.ad2.comunidad.entity.User;
 import com.comunidad.ad2.comunidad.service.enums.CommunityPostState;
-import com.comunidad.ad2.comunidad.service.enums.TipoValoracion;
-import static com.comunidad.ad2.comunidad.service.enums.TipoValoracion.MAS_VALORACION;
-import static com.comunidad.ad2.comunidad.service.enums.TipoValoracion.MENOS_VALORACION;
 import java.text.MessageFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import javax.persistence.criteria.Join;
-import org.mockito.ArgumentMatchers;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
@@ -81,7 +76,7 @@ public class EspecificacionesPersonalizadas {
     }
 
 
-    private static LocalDateTime convertirFecha(String date) {
+    public static LocalDateTime convertirFecha(String date) {
         try {
             SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
             Date f = d.parse(date);
@@ -93,7 +88,7 @@ public class EspecificacionesPersonalizadas {
         }
     }
 
-    private static String contains(String expression) {
+    public static String contains(String expression) {
         return MessageFormat.format("%{0}%", expression);
     }
 }
