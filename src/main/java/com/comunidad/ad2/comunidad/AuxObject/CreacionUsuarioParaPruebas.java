@@ -17,10 +17,7 @@ import java.sql.Timestamp;
  */
 public class CreacionUsuarioParaPruebas {
 
-    private CreacionUsuarioParaPruebas() {
-        throw new IllegalStateException("Utility class");
-    }
-
+    
     public static User crearUsuario(RolUsuario a) {
         return new User("201029301", "aaa", "aaa", new Timestamp(400000000), GeneroUsuario.N, "aa", "aa@a.com", a, "xela", EstadoUsuario.ACTIVO);
     }

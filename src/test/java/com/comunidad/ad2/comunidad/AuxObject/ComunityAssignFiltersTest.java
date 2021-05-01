@@ -72,6 +72,29 @@ class ComunityAssignFiltersTest {
         assertEquals(registroAcademico, a.getRegistroAcademico());
     }
     
+    @Test
+    void ComunityAssignFiltersTestGetState() {
+        ComunityAssignFilters a = new ComunityAssignFilters("1","a",1);
+        String state ="a";
+        assertEquals(state, a.getStateAssign());
+    }
+    
+    @Test
+    void ComunityAssignFiltersTestSetState() {
+        ComunityAssignFilters a = new ComunityAssignFilters("1","a",1);
+        String state ="b";
+        a.setStateAssign(state);
+        assertEquals(state, a.getStateAssign());
+    }
+    
+    @Test
+    void ComunityAssignFiltersTestToString() {
+        ComunityAssignFilters a = new ComunityAssignFilters("1","a",1);
+        String string ="ComunityAssignFilters{" + "registroAcademico=" + "1" + ", stateAssign=" + "a" + ", idComunidad=" + 1 + '}';
+        String result = a.toString();
+        assertEquals(result,string);
+    }
+    
     public ComunityAssignFilters instance(){
         return new ComunityAssignFilters("111111111", 4);
     }
